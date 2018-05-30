@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="Zh-hans" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title th:text="${'探果网 - ' + course.seoTitle}">探果网-试卷</title>
+		<meta name="author" content="Tamguo Team" />
+		<meta name="copyright" content="Tamguo" />
+		<meta name="keywords" th:content="${course.seoKeywords}" />
+		<meta name="description" th:content="${course.seoDescription}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/main.css'}"></link>
+		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/iconfont.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/subject.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/footer.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/member/minilogin.css'}" />
+		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
+	</head>
+	<body>
+
+	<!-- 头部-->
+	<div th:replace="include/header :: header"></div>
+	
+	<!--主体-->
+	<div class="content-wp">
+        <div class="main">
+    		<div class="main-container">
+    			<!--二级导航开始-->
+    			<div class="main-submenu">
+				    <div class="submenu-contain clearfix">
+				        <span class="contain-title">
+				            <a th:href="${setting.domain + 'subject/' + subject.uid + '.html'}">高考</a>
+				        </span>
+				        <ul class="contain-ul">
+				            <li class="contain-li">
+				                <a th:href="${setting.domain + 'subject/' + subject.uid + '.html'}" class=" curr ">考试首页</a>
+				            </li>
+				            <li class="contain-li curr">
+				                <a class="" th:href="${setting.domain + 'chapter/' + subject.uid + '/'+course.uid+'.html'}">章节学习</a>
+				            </li>
+				            <li class="contain-li">
+				                <a class="" th:href="${setting.domain + 'paperlist/' + subject.uid + '/'+course.uid+'-'+setting.PAPER_TYPE_ZHENTI+'-0-0-1.html'}">真题试卷</a>
+				            </li>
+				            <li class="contain-li">
+				                <a class="" th:href="${setting.domain + 'paperlist/' + subject.uid + '/'+course.uid+'-'+setting.PAPER_TYPE_MONI+'-0-0-1.html'}">模拟试卷</a>
+				            </li>
+				            <li class="contain-li">
+				                <a class="" th:href="${setting.domain + 'paperlist/' + subject.uid + '/'+course.uid+'-'+setting.PAPER_TYPE_YATI+'-0-0-1.html'}">考前押题</a>
+				            </li>
+				        </ul>
+				    </div>
+    			</div>
+    			<!--二级导航结束-->
+    			
+    			<!--头部轮播开始-->
+				<div class="banner" th:if="${a.businessKey == 'subject_' + subject.uid}" th:each="a,aStat:${adList}">
+					<ul class="banner-list">
+						<li class="img-list" th:style="${ad.index == 1} ? 'opacity: 1; z-index: 9;' : 'opacity: 1; z-index: 1;'" th:each="ad,adStat:${a.ads}">
+							<a th:attr="data-href=${ad.href},data-index=${ad.index}" class="banner-link img-1" th:href="${ad.href}" target="_blank">
+								<div th:style="${'background-image:url(' + ad.bgimage + ');'}" class="banner-pic"></div>
+							</a>
+						</li>
+					</ul>
+					<ul class="play-nav">
+						<li th:attr="data-idx=${ad.index}" th:class="${ad.index == 1} ? 'cur' : ''" th:each="ad,adStat:${a.ads}">
+							<a href="javascript:void(0);" th:text="${ad.index}">1</a>
+						</li>
+					</ul>
+				</div>
+				<!--头部轮播结束-->
+				
+				<!--伴您走过-->
+				<div class="withyou-container-box">
+				    <div class="withyou-container">
+				    	<p class="container-title">伴您走过</p>
+				    	<p class="title-detail">学习中每一个阶段</p>
+				    	<div class="title-underline">
+				        </div>
+				        <div class="withyou-main">
+				        	<a class="withyou-box withyou-box-learn log-withyou-box " th:href="${setting.domain + 'chapter/' + subject.uid + '/'+course.uid+'.html'}" data-info="kp">
+				        		<div class="box-title">
+				        			<p class="box-title-name">章节学习</p>
+				        			<p class="box-title-detail">考点各个击破</p>
+				        			<div class="box-title-bg"></div>
+				        		</div>
+				        		<p class="box-content">串考点<span class="box-content-icon iconfont icon-right"></span></p>
+				        	</a>
+				        	<a class="withyou-box withyou-box-paper log-withyou-box " th:href="${setting.domain + 'paperlist/' + subject.uid + '/'+course.uid+'-'+setting.PAPER_TYPE_ZHENTI+'-0-0-1.html'}" data-info="zhenti">
+				        		<div class="withyou-box-mod-triangle">
+				        			<div class="triangle-border"></div>
+				        			<div class="triangle-inset"></div>
+				        		</div>
+				        		<div class="box-title">
+				        			<p class="box-title-name">真题模拟</p>
+				        			<p class="box-title-detail">巩固核心重点</p>
+				        			<div class="box-title-bg"></div>
+				        		</div>
+				        		<p class="box-content">练重点<span class="box-content-icon iconfont icon-right"></span></p>
+				        	</a> 
+				        	<a class="withyou-box withyou-box-score log-withyou-box " th:href="${setting.domain + 'paperlist/' + subject.uid + '/'+course.uid+'-'+setting.PAPER_TYPE_YATI+'-0-0-1.html'}" data-info="yuce">
+				        		<div class="withyou-box-mod-triangle">
+				        			<div class="triangle-border"></div>
+				        			<div class="triangle-inset"></div>
+				        		</div>
+				        		<div class="box-title">
+				        			<p class="box-title-name">考前押题</p>
+				        			<p class="box-title-detail">成功斩获得分数</p>
+				        			<div class="box-title-bg"></div>
+				        		</div>
+				        		<p class="box-content">去冲刺<span class="box-content-icon iconfont icon-right"></span></p>
+				        	</a>
+				        </div>
+				        <div class="withyou-circle circle1"></div>
+				        <div class="withyou-circle circle2"></div>
+				        <div class="withyou-circle circle3"></div>
+				    </div>
+				</div>
+    			<!--伴您走过-->
+    			
+    			<!-- 章节学习-->
+    			<div class="course-container">
+					<div class="course-container-main">
+					<p class="container-title">章节学习</p>
+					<div class="course-list-container">
+						<div class="course-list">
+							<a th:class="${cStat.index == 0} ? 'course-item  course-item-select' : 'course-item'" th:attr="courseid=${c.uid},data-courseid=${c.uid}"  th:each="c,cStat:${courseList}" th:text="${c.name}">
+								理科数学
+							</a>
+						</div>
+					</div>
+					<div class="chapter-list">
+						<ul class="chapterlist-container">
+							<li class="chapterlist-item" th:each="c,cStat:${chapterList}" th:if="${cStat.index < 5}">
+								<p class="chapterlist-item-name">
+									<a class="chapterlist-item-name-link" data-kp="a9d6195f312b3169a451a405" th:href="${setting.domain + 'chapter/' + subject.uid + '/'+course.uid+'.html'}">
+										<span th:text="${c.name}">第一章 集合与常用逻辑用语</span>
+									</a>
+								</p>
+								<p class="chapterlist-detail"><span th:text="${c.pointNum}">21</span>知识点 | <span th:text="${c.questionNum}">2295</span>试题</p>
+								<a class="chapterlist-item-btn" data-kp="a9d6195f312b3169a451a405" th:href="${setting.domain + 'chapter/' + subject.uid + '/'+course.uid+'.html'}">开始学习</a>
+							</li>
+							
+						</ul>
+						<p class="more-chapterlist-item">
+							<a class="more-item" th:href="${setting.domain + 'chapter/' + subject.uid + '/'+course.uid+'.html'}">更多章节 &gt; </a>
+						</p>
+					</div>
+				
+					<div class="alllearn-list">
+						<div class="class-feed-box-wrap">
+							<h3 class="feed-title">
+							大家都在学
+							</h3>
+							<div class="feed-list-content">
+								<ul class="feed-list" style="top: 0px;">
+									<li class="feed-list-item list-border">
+										<img th:src="${setting.domain + 'images/avatar.png'}" class="item-img">
+										<div class="feed-list-detail">
+											<p class="detail-item"><span class="item-name">刘刘</span>已学完了239个知识点</p>
+											<p class="detail-item">今天学了
+												<a class="item-link" th:href="${setting.domain}">中和热</a>等<span class="course-num">15</span>个知识点</p>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<p class="feed-more-link-item">
+								<a class="feed-more-link" th:href="${setting.domain}">我也要学 &gt; </a>
+							</p>
+						</div>
+					</div>
+				</div>
+				</div>
+    			<!-- 章节学习结束-->
+    			
+    			<!-- 高考试卷资源-->
+    			<div class="gaokaopaper-container">
+					<p class="container-title">试卷资源</p>
+					<p class="title-detail">一考知底，高分必刷，全面提分</p>
+					<div class="title-underline"></div>
+					<div class="cityArea">
+						<a th:class="${a.uid == '1'} ? 'cityname selected' : 'cityname'" th:attr="provinceid=${a.uid},data-provinceid=${a.uid}" th:each="a,aStat:${areaList}" th:text="${a.name}">北京</a>
+					</div>
+					<div class="paper-main">
+						<div class="paper-box zhenti-box homepage-zhenti-box">
+							<div class="paper-list-wrap">
+								<h3 class="paper-title">历年真题
+									<a class="list-more-link" th:href="${setting.domain + 'paperlist/' + subject.uid + '/'+course.uid+'-'+setting.PAPER_TYPE_ZHENTI+'-0-0-1.html'}">更多真题试卷 &gt;</a>
+								</h3>
+								<ul class="paper-list paper-list-zhenti">
+									<li class="list-item" th:each="h,hStat:${historyPaperList}">
+										<p class="list-item-name">
+											<a class="list-item-name-link" data-paperid="d08fb966f5335a8102d220a5" th:href="${setting.domain + 'paper/'+h.uid+'.html'}" th:text="${h.name}">2017年高考真题 语文 (北京卷)</a>
+										</p>
+										<p class="list-item-detail">
+											<a class="list-item-link list-item-link-jiexi" th:href="${setting.domain + 'paper/'+h.uid+'.html'}" data-paperid="d08fb966f5335a8102d220a5" target="_blank">解析</a><span class="item-separate">|</span>
+											<a th:href="${setting.domain + 'paper/'+h.uid+'.html'}" class=" list-item-link  list-item-link-xiazai" "=" " data-paperid="d08fb966f5335a8102d220a5 " target="_blank ">下载</a>
+										</li>
+								</ul>
+							</div>
+						</div>
+						<div class="paper-box moni-box homepage-moni-box">
+							<div class="paper-list-wrap">
+								<h3 class="paper-title">模拟试卷
+									<a class="list-more-link" th:href="${setting.domain + 'paperlist/' + subject.uid + '/'+course.uid+'-'+setting.PAPER_TYPE_MONI+'-0-0-1.html'}">更多模拟试卷 &gt;</a>
+								</h3>
+								<ul class="paper-list paper-list-moni">
+									<li class="list-item" th:each="s,sStat:${simulationPaperList}">
+										<p class="list-item-name">
+											<a class="list-item-name-link" data-paperid="19f2517101f69e31433294f3" th:href="${setting.domain + 'paper/'+s.uid+'.html'}" th:text="${s.name}">英语 西城区2017年高三期末考试</a>
+										</p>
+										<p class="list-item-detail">
+											<a class="list-item-link list-item-link-jiexi" th:href="${setting.domain + 'paper/'+s.uid+'.html'}" data-paperid="19f2517101f69e31433294f3" target="_blank">解析</a><span class="item-separate">|</span>
+											<a th:href="${setting.domain + 'paper/'+s.uid+'.html'}" class=" list-item-link  list-item-link-xiazai" "=" " data-paperid="19f2517101f69e31433294f3 " target="_blank ">下载</a></p>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="homepage-paper-box shiti-box">
+							<div class="hotpaper-list-wrap">
+								<h3 class="hotpaper-title">热门试卷<a class="list-more-link" th:href="${setting.domain + 'paperlist/' + subject.uid + '/0-0-0-0-0.html'}">更多热门试卷 &gt; </a>
+								</h3>
+								<ul class="hotpaper-list">
+									<li class="hotpaper-list-item" th:each="h,hStat:${hotPaperList}">
+										<a class="hotpaper-name" data-paperid="d08fb966f5335a8102d220a5" th:href="${setting.domain + 'paper/'+h.uid+'.html'}">
+											<span th:class="${'rank-'+(hStat.index+1) + ' hotpaper-rank'}"></span><span th:text="${h.name}">2017年高考真题 语文 (北京卷)</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="school-paper-main">
+						<div class="school-paper-container homepage-school-container">
+							<h3 class="school-container-title">名校精品试卷
+								<a class="school-paper-more-link" th:href="${setting.domain + 'paperlist/'+subject.uid+'/0-4-0-0-1.html'}">更多名校精品卷 &gt; </a>
+							</h3>
+							<div class="school-list">
+								<div th:class="${sStat.index == 2} ? 'school-list-item school-list-item-lastchild':'school-list-item'" th:each="s,sStat:${eliteSchoolPaperList}">
+									<div class="school-wrap school-wrap-bg1">
+										<a class="famous-school-link" th:href="${setting.domain + 'paperlist/'+subject.uid+'/0-4-0-0-1.html'}">
+											<div class="school-info">
+												<p class="name" th:text="${s.name}">北京大学附属中学</p>
+												<p class="info">
+													<b>
+						                        	同地区推荐 
+						                        	</b> 共
+													<span class="info-num" th:text="${#lists.size(s.paperList)}">8</span>套试卷
+												</p>
+											</div>
+										</a>
+									</div>
+									<ul class="paper-wrap">
+										<li class="paper-item" th:each="p,pStat:${s.paperList}">
+											<a class="paper-item-name" th:href="${setting.domain + 'paper/'+p.uid+'.html'}" th:text="${p.name}">
+												语文 海淀区2016年高三期末试卷
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="more-school-list">
+							<a class="more-school-name" th:each="s,sStat:${eliteSchoolList}" th:text="${s.name}" th:href="${setting.domain + 'paperlist/'+subject.uid+'/0-4-0-0-1.html'}">
+								北京市八一学校
+							</a>
+						</div>
+				
+					</div>
+				</div>
+    			<!-- 高考试卷资源结束-->
+    			
+    			<!-- 页尾开始-->
+    			<div class="gaokao-crumbs-box">
+				    <div class="homepage-crumbs">
+				        <a th:href="${setting.domain}">探果题库</a> &gt;
+				        <a th:href="${setting.domain}" class="cur-crumbs">高考</a> 
+				    </div>
+				</div>
+    			<!-- 页尾结束-->
+    		</div>
+    	</div>
+    </div>
+
+	<!--尾部-->
+	<div th:replace="include/footer :: footer"></div>
+	
+	<!-- 登录 -->
+	<div th:replace="include/minilogin :: minilogin"></div>
+</body>
+	
+<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}" ></script>
+<script type="text/javascript" th:src="${setting.domain + 'js/main.js'}" ></script>
+<script type="text/javascript" th:src="${setting.domain + 'js/jquery.iDialog.js'}"></script>
+<script type="text/javascript" th:src="${setting.domain + 'js/member/minlogin.js'}"></script>
+<script type="text/javascript" th:src="${setting.domain + 'js/subject.js'}" ></script>
+</html>

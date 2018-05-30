@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="Zh-hans" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>探果-科目</title>
+		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/iconfont.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/member/account.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/member/memberMain.css'}" />
+		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
+	</head>
+	<body>
+	<!-- 头部-->
+	<div th:replace="include/memberHeader :: memberHeader"></div>
+	
+	<div class="cnav">
+			<div class="public cnav_b">
+				<div class="cnav_left">
+					考试五步曲
+				</div>
+				<div class="cnav_right">
+					<ul>
+						<li><span class="Cnav_t">1</span><b>新建试卷</b></li>
+						<li><span>2</span>添加试题</li>
+						<li><span>3</span>发起一场考试</li>
+						<li><span>4</span>导考生，发通知</li>
+						<li><span>5</span>查看报告</li>
+					</ul>
+				</div>
+			</div>
+		</div>	
+		
+		<div class="acm-container">
+			<div class="cnt-box public infoCnt-box contentBox ">
+				<div class="info-cnt">
+					<div class="navLeft">
+	                 <dl>
+							<dt class="down">
+								<img th:src="${setting.domain + 'images/member/index/person.png'}" style="width: 14px;
+	    margin-right: 6px;margin-top: -5px;"> 个人信息 <i class="fa fa-minus icon-w"></i>
+							</dt>
+							<div class="list">
+							<a th:href="${setting.domain + 'member/account.html'}"><dd class="activeDd"><i></i>基本信息</dd></a>
+							<!--  <dd>绑定账号</dd> -->
+							<a th:href="${setting.domain + 'member/updatePwd.html'}"><dd><i></i>修改密码</dd></a>
+							</div>
+							<dt class="down">
+								<img th:src="${setting.domain + 'images/member/index/compnew.png'}" style="width: 14px;
+	    margin-right: 6px;margin-top: -5px;"> 公司信息 <i class="fa fa-minus icon-w"></i>
+							</dt>
+							<div class="list">
+							<a href="/b/entInfo"><dd><i></i>基本信息</dd></a>
+							</div>
+							<dt class="down">
+								 <img th:src="${setting.domain + 'images/member/account/cog.png'}" style="width: 14px;
+									margin-right: 6px;"> 账户信息 <i class="fa fa-minus icon-w"></i>
+							 </dt>
+							 <div class="list">
+								 <a href="/b/order">
+									 <dd><i></i>账户管理</dd>
+								 </a>
+								 <a href="/b/orderBill">
+									 <dd><i></i>发票信息</dd>
+								 </a>
+							 </div>
+						</dl>
+	              </div>
+					<div class="info-right newsRight" id="">
+						<div class="info-rBox" style="padding-bottom: 20px;">
+								<div class=" user_list clearfix">
+									<table class="info-table" border="0" cellspacing="0" cellpadding="0">
+										<tbody>
+										<tr>
+											<td><label class="info-label" style="left: 30px;"><span></span>头像：</label></td>
+											<td><div class="clearfix" style="width: ; margin-bottom: 15px">
+												<div class="clearfix" id="upPhoto">
+													<img class="acphoto" th:src="${setting.domain + member.avatar}">
+													<div class="mybtn">
+														<span>支持jpg、jpeg和png格式，最大2M</span><br>
+														<input type="button" id="up_photo" class="up_photo" value="上传头像">
+														<input type="button" id="def_photo" class="up_photo" value="默认头像" style="background: #fff;color: #29bdb9;">
+													</div>
+													<form id="fileForm" name="fileForm" action="/b/.action" method="post" enctype="multipart/form-data">
+														<input type="file" style="display: none;" id="f" name="fileInput"><table class="wwFormTable">
+																										</table></form>
+														<input type="text" id="contactPhoto" name="contactPhoto" hidden="" class="cvcadd-text input" placeholder="请输入姓名/昵称" value="/images/defphoto/peopleSix.png">
+												</div>
+	
+											</div>
+											</td>
+											<td>
+	
+											</td>
+										</tr>
+										<tr>
+											<td><label class="info-label" style="left: 30px;"><span>*</span>姓名：</label></td>
+											<td><div class="clearfix" style="width: ; margin-bottom: 15px">
+												<div class="clearfix">
+													<input type="text" name="username" class="cvcadd-text input" placeholder="请输入姓名/昵称" th:value="${member.username}">
+												</div>
+											</div></td>
+										</tr>
+	
+										<tr>
+	                                        <td><label class="info-label" style="left: 30px;"><span>*</span>邮箱：</label></td>
+	                                        <td><div class="clearfix" style="width: ; margin-bottom: 15px">
+	                                        <div class="clearfix">
+	                                            <input type="text" name="email" class="cvcadd-text input" placeholder="请输入邮箱" th:value="${member.email}">
+	                                        </div>
+	                                    </div></td>
+	                                    </tr>
+	
+										<tr>
+											<td><label class="info-label" style="left: 30px;"><span>*</span>手机：</label></td>
+											<td><div class="clearfix" style="width: ; margin-bottom: 15px">
+												<div class="clearfix">
+													<input type="text" name="mobile" class="cvcadd-text input" placeholder="请输入手机" th:value="${member.mobile}">
+												</div>
+											</div></td>
+										</tr>
+										</tbody>
+									</table>
+								</div>
+								<p class="saveBtn">
+									<a @click="updateMember" class="btn_ok" rel="cxdialog" rev="btn_ok" id="confirm_btn" style="position: relative;left: 103px;padding: 5px 60px;top: 10px;">保存</a>
+								</p>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<!--content end-->
+		</div>
+		
+		<!-- 尾部-->
+		<div th:replace="include/memberFooter :: memberFooter"></div>
+		
+		<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}" ></script>
+		<script type="text/javascript" th:inline="javascript">
+			var mainHttp = [[${setting.domain}]];
+		</script>
+		<script type="text/javascript" th:src="${setting.domain + 'libs/vue.min.js'}"></script>
+		<script th:src="${setting.domain + 'js/plugins/layer/layer.js'}"></script>
+		<script type="text/javascript" th:src="${setting.domain + 'js/member/account.js'}"></script>
+	</body>
+</html>

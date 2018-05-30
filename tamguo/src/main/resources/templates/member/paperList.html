@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="Zh-hans" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>会员中心-添加试卷</title>
+		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/iconfont.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/member/paperList.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'js/plugins/layui/css/layui.css'}">
+		<link rel="stylesheet" th:href="${setting.domain + 'css/member/memberMain.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'js/plugins/ztree/css/metroStyle/metroStyle.css'}">
+		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
+	</head>
+	<body  style="position: relative;height: auto;min-height: 100%;">
+		<!-- 头部-->
+		<div th:replace="include/memberHeader :: memberHeader"></div>
+		
+		<div class="cnav">
+			<div class="public cnav_b">
+				<div class="cnav_left">
+					考试五步曲
+				</div>
+				<div class="cnav_right">
+					<ul>
+						<li><span class="Cnav_t">1</span><b>新建试卷</b></li>
+						<li><span>2</span>添加试题</li>
+						<li><span>3</span>发起一场考试</li>
+						<li><span>4</span>导考生，发通知</li>
+						<li><span>5</span>查看报告</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="plist test_public myPositionList ng-scope">
+		    <div class="topbt topbt-2">
+		        <h3>我的试卷</h3>
+		    </div>
+		
+		    <div class="pageShow">
+		        <div class="con_top addNewPaper">
+		            <div style="position:absolute;top:12px;">
+		                <div class="fl">
+		                    <input class="select-n" name="keySearch" type="text" placeholder="试卷名称关键字">
+		                    <a class="select-t" href="javascript:void(0)" v-on:click="reload"></a>
+		                </div>
+		            </div>
+		            <span style="text-align: center;" id="addSiama" v-on:click="addPaperFn()"><a href="javascript:void(0)">+ 新建试卷</a></span>
+		           
+		        </div>
+		
+		        <table class="public-tab">
+		            <tbody>
+		            <tr align="center" valign="middle">
+		                <td width="254">试卷名称</td>
+		                <td width="100">科目</td>
+		                <td width="100">年份</td>
+		                <td width="100">下载数</td>
+		                <td width="100">查阅数</td>
+		                <td>操作</td>
+		            </tr>
+		            </tbody>
+		        </table>
+				
+				<div id="paperListDiv">
+		        <div class="plist-table positionList ng-scope" style="" v-for="paper in paperList">
+		            <div class="selectImg"></div>
+		            <table class="plist-ctab" data-positiontitle="赛码样卷（示例）" data-aftertitle="Demo体验使用" data-timetype="0" data-opentype="" data-opentime="0" data-papercode="">
+		                <tbody>
+		                <tr align="center" valign="middle" style="height:66px">
+		                    <td width="300" class="plist-bt">
+		                        <span>-</span>
+		                        <div class="M ng-binding" style="line-height: 40px;" title="软件JAVA">{{paper.name}}
+                        		</div>
+		                    </td>
+		                    <td width="100"><span style="font-weight: bolder;font-size: 14px;" class="ng-binding">{{paper.courseId}}</span>
+		                    </td>
+		                    <td width="100"><span style="font-weight: bolder;font-size: 14px;" class="ng-binding">{{paper.year}}</span>
+		                    </td>
+		                    <td width="100"><span style="font-weight: bolder;font-size: 14px;" class="ng-binding">{{paper.downHits}}</span> 次
+		                    </td>
+		                    <td width="100"><span style="font-weight: bolder;font-size: 14px;" class="ng-binding">{{paper.openHits}}</span> 次
+		                    </td>
+		
+		                    <td class="plist-x">
+		                    <span>
+		                    	<a href="javascript:void(0)" v-on:click="updatePaperFn(paper.uid , paper.name)">编辑</a>|<a href="javascript:void(0)" v-on:click="deletePaperFn(paper.uid)">删除</a>
+		                	</span>
+		                        <ul class="testPaper-list">
+		                            <li><a class="addPaperQuestionInfoBtn" v-on:click="addPaperQuestionInfoFn(paper.uid)">添加子卷</a>
+		                            </li>
+		                            <li><a href="#" target="_blank" class="ng-scope">预览试卷</a>
+		                        </ul>
+		                    </td>
+		                </tr>
+		                </tbody>
+		            </table>
+		            <div>
+			           <table class="plist-ctab2 able">
+			                <tbody>
+			                <tr class="tr_header" align="center" valign="middle">
+			                    <td width="62">No. <span></span></td>
+			                    <td width="500">子卷标题<span></span></td>
+			                    <td width="100">题目类型</td>
+			                    <td>操作</td>
+			                </tr>
+			                <tr v-for="qInfo in paper.queInfo" class="paperData ng-scope" align="center" valign="middle" data-arrayindex="">
+			                    <td class="ng-binding">{{qInfo.uid}}</td>
+			                    <td style="position: relative">
+			                        <div class="paperTitle ng-binding" title="软件JS" style="max-width: 450px;">{{qInfo.title}}</div>
+			                        <span title="" class="ng-binding"></span></td>
+			                    <td class="ng-binding">{{qInfo.name}}</td>
+			                    <td class="plist-x" style="float:none">
+			                        <div>
+			                        <span style="margin-left:0;">
+			                            <a href="javascript:void(0)" class="update_paper2" v-on:click="updatePaperQuestionInfoFn(paper.uid,qInfo.name,qInfo.type,qInfo.title,qInfo.uid)">编辑</a>|
+			                            <a href="javascript:void(0)" class="del" v-on:click="deletePaperQuestionInfoFn(paper.uid , qInfo.uid)">删除</a><!-- | -->
+			                            <!-- <a class="up" href="javascript:void(0)">上移</a>|
+			                            <a class="down" href="javascript:void(0)">下移</a> -->
+			                        </span>
+			                            <ul class="addQuestion" style="margin:-3px 0 0;float:none">
+			                                <li class="ng-scope"><a class="add able" v-on:click="addPaperQuestionFn(paper.uid)" href="javascript:(0);">添加试题</a>
+			                                </li>
+			                                <li class="ng-scope"><a class="edit able" th:href="${setting.domain + 'member/questionList.html'}">管理试题</a>
+			                                </li>
+			                            </ul>
+			                        </div>
+			                    </td>
+			                </tr><!-- end ngRepeat: pp in p.routinePaper -->
+			                </tbody>
+			            </table>
+		            </div>
+		        </div>
+				</div>
+				
+		
+		        <div class="plist-f" style="text-align: center">
+		        	<div id="pagination"></div>
+		        </div>
+		        <div class="clear"></div>
+		    </div>
+		</div>
+		
+		<!-- 尾部-->
+		<div th:replace="include/memberFooter :: memberFooter"></div>
+		
+		<!-- 选择菜单 -->
+		<div id="menuLayer" style="display: none;padding:10px;">
+			<ul id="menuTree" class="ztree"></ul>
+		</div>
+		
+	</body>
+	<script type="text/javascript" th:inline="javascript">
+		var mainHttp = [[${setting.domain}]];
+	</script>
+	<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}" ></script>
+	<script th:src="${setting.domain + 'js/plugins/ztree/jquery.ztree.all.min.js'}"></script>
+	<script th:src="${setting.domain + 'js/plugins/layer/layer.js'}"></script>
+	<script th:src="${setting.domain + 'js/plugins/layui/layui.js'}"></script>
+	<script th:src="${setting.domain + 'libs/vue.min.js'}"></script>
+	<script type="text/javascript" th:src="${setting.domain + 'js/member/paperList.js'}" ></script>
+</html>

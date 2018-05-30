@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="Zh-hans" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta name="baidu-site-verification" content="5agfTbCO3Q" />
+	<meta charset="utf-8" />
+	<title>探果网 - 分享知识和经验，得到相应的回报</title>
+	<link rel="stylesheet" th:href="${setting.domain + 'css/main.css'}"></link>
+	<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
+	<link rel="stylesheet" th:href="${setting.domain + 'css/iconfont.css'}" />
+	<link rel="stylesheet" th:href="${setting.domain + 'css/index.css'}" />
+	<link rel="stylesheet" th:href="${setting.domain + 'css/footer.css'}" />
+	<link rel="stylesheet" th:href="${setting.domain + 'css/member/minilogin.css'}" />
+	<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
+
+</head>
+<body>
+	<!-- 头部-->
+	<div th:replace="include/header :: header"></div>
+	
+	<!--主体-->
+	<div class="content-wp">
+        <div class="main">
+    		<div class="main-container">
+    			<!-- 头部轮播-->
+                <div class="banner" th:if="${a.businessKey == 'indexBanner'}" th:each="a,aStat:${adList}">
+					<ul class="banner-list">
+						<li class="img-list" th:style="${ad.index == 1} ? 'opacity: 1; z-index: 9;' : 'opacity: 1; z-index: 1;'" th:each="ad,adStat:${a.ads}">
+							<a th:attr="data-href=${ad.href},data-index=${ad.index}" class="banner-link img-1" th:href="${ad.href}" target="_blank">
+								<div th:style="${'background-image:url(' + ad.bgimage + ');'}" class="banner-pic"></div>
+							</a>
+						</li>
+					</ul>
+					<ul class="play-nav">
+						<li th:attr="data-idx=${ad.index}" th:class="${ad.index == 1} ? 'cur' : ''" th:each="ad,adStat:${a.ads}">
+							<a href="javascript:void(0);" th:text="${ad.index}">1</a>
+						</li>
+					</ul>
+				</div>
+    			<!-- 头部轮播 -->
+    			
+    			<!-- 导航 -->
+    			<div class="navbar-container">
+					<ul class="navbar-list">
+						<li class="navbar-list-item" datatype="gaokao" th:each="m,mStat:${leftMenuList}" th:attr="datatype=${m.pinyin}">
+							<span th:text="${m.name}"></span><span class="navbar-list-item-icon iconfont icon-jiantouyou" th:attr="datatype=${m.pinyin}"></span>
+						</li>
+					</ul>
+					<div class="navbar-list-item-section" th:attr="datatype=${m.pinyin}" style="display: none;" th:each="m,mStat:${leftMenuList}">
+						<ul class="navbar-list-ul">
+							<li class="navbar-list-li">
+								<a th:text="${c.name}" th:each="c,cmStat:${m.childSubjects}" class="navbar-list-item-section-name log-navbar-item" th:href="${setting.domain + m.url}" target="_blank">高考</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+    			<!--导航结束-->
+    			
+    			<!-- 高考专区  -->
+    			<div class="gaokao-class-container" id="bk-gaokao">
+							  	<p class="container-title">高考专区</p>
+				<div class="title-underline">
+				</div>
+				<div class="gaokao-class-main">
+					<div class="gaokao-class-area">
+						<p class="title">章节学习<span class="detail">考点各个击破，重难点自测</span>
+						</p>
+						<div class="class-box-container">
+							<div class="class-box" th:each="c,cStat:${gaokaoCourseList}">
+								<a th:href="${setting.domain + 'chapter/'+c.subjectId+'/'+c.uid+'.html'}" target="_blank" class="class-link" data-courseid="17">
+									<div class="box-content">
+										<div style="font-size:45px;" th:class="${c.icon + ' iconfont box-icon'}"></div>
+										<p class="box-classname" course_id="17" th:text="${c.name}">文科数学</p>
+										<p class="box-classnum"><span th:text="${c.pointNum}">495</span>个考点</p>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="gaokao-alllearn-area">
+							<div class="feed-box-wrap">
+								<h3 class="feed-title">
+												大家都在学
+												<a class="feed-more-link" th:href="${setting.domain}">我也要学 &gt; </a>
+											</h3>
+								<div class="feed-list-content">
+									<ul class="feed-list" style="top: 0px;">
+										<li class="feed-list-item list-border">
+											<img th:src="${setting.domain + 'images/avatar.png'}" class="item-img">
+											<div class="feed-list-detail">
+												<p class="detail-item"><span class="item-name">Tom</span>已学完了70个知识点</p>
+												<p class="detail-item">今天学了
+													<a class="item-link" th:href="${setting.domain}" target="_blank">光的干涉</a>等<span class="course-num">16</span>个知识点</p>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+				
+						</div>
+					</div>
+				</div>
+				<div class="gaokao-test-main">
+					<p class="title">试卷资源
+						<span class="detail">一考知底，高分必刷，全面提分</span>
+						<span class="area-content">当前位置：
+						<a class="more-area-link" th:href="${setting.domain+'/paperlist/13/0-0-0-1-1.html'}" target="_blank">更多地区 &gt; </a>
+						</span>
+					</p>
+					<div class="paper-main">
+						<div class="paper-box zhenti-box homepage-zhenti-box">
+							<div class="paper-list-wrap">
+								<h3 class="paper-title">历年真题
+									<a class="list-more-link" th:href="${setting.domain+'paperlist/13/0-1-0-0-1.html'}">更多真题试卷 &gt;</a>
+								</h3>
+								<ul class="paper-list paper-list-zhenti">
+									<li class="list-item" th:each="p,pStat:${historyPaperList}">
+										<p class="list-item-name">
+											<a class="list-item-name-link" data-paperid="d08fb966f5335a8102d220a5" th:href="${setting.domain + 'paper/' + p.uid + '.html'}" th:text="${p.name}">2017年高考真题 语文 (北京卷)</a>
+										</p>
+										<p class="list-item-detail">
+											<a class="list-item-link list-item-link-jiexi" th:href="${setting.domain + 'paper/' + p.uid + '.html'}" target="_blank">解析</a><span class="item-separate">|</span>
+											<a th:href="${setting.domain + 'paper/' + p.uid + '.html'}" class=" list-item-link  list-item-link-xiazai" target="_blank ">下载</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="paper-box moni-box homepage-moni-box">
+							<div class="paper-list-wrap">
+								<h3 class="paper-title">模拟试卷
+									<a class="list-more-link" th:href="${setting.domain+'paperlist/13/0-2-0-0-1.html'}">更多模拟试卷 &gt;</a>
+								</h3>
+								<ul class="paper-list paper-list-moni">
+									<li class="list-item" th:each="p,pStat:${simulationPaperList}">
+										<p class="list-item-name">
+											<a class="list-item-name-link" th:href="${setting.domain + 'paper/' + p.uid + '.html'}" th:text="${p.name}">英语 西城区2017年高三期末考试</a>
+										</p>
+										<p class="list-item-detail">
+											<a class="list-item-link list-item-link-jiexi" th:href="${setting.domain + 'paper/' + p.uid + '.html'}" target="_blank">解析</a><span class="item-separate">|</span>
+											<a th:href="${setting.domain + 'paper/' + p.uid + '.html'}" class=" list-item-link  list-item-link-xiazai" target="_blank ">下载</a></p>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="homepage-paper-box shiti-box">
+							<div class="hotpaper-list-wrap">
+								<h3 class="hotpaper-title">热门试卷<a class="list-more-link" th:href="${setting.domain+'/paperlist/13/0-0-0-1-1.html'}">更多热门试卷 &gt; </a>
+								</h3>
+								<ul class="hotpaper-list">
+									<li class="hotpaper-list-item" th:each="p,pStat:${hotPaperList}">
+										<a class="hotpaper-name" th:href="${setting.domain + 'paper/' + p.uid + '.html'}">
+											<span th:class="${'rank-'+(pStat.index+1) + ' hotpaper-rank'}"></span><span th:text="${p.name}">2017年高考真题 语文 (北京卷)</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				
+					<div class="school-paper-main">
+						<div class="school-paper-container homepage-school-container">
+							<h3 class="school-container-title">名校精品试卷
+								<a class="school-paper-more-link" th:href="${setting.domain + 'paperlist/13/0-4-0-0-1.html'}">更多名校精品卷 &gt; </a>
+							</h3>
+							<div class="school-list">
+								<div class="school-list-item " th:each="s,sStat:${eliteSchoolPaperList}">
+									<div class="school-wrap school-wrap-bg1">
+										<a class="famous-school-link" th:href="${setting.domain + 'paperlist/13/0-4-0-0-1.html'}" data-schoolid="924cf7ec4afe04a1b071de05">
+											<div class="school-info">
+												<p class="name" th:text="${s.name}">北京大学附属中学</p>
+												<p class="info">
+													<b>
+												                        	同地区推荐 
+												                        	</b> 共
+				
+													<span class="info-num" th:text="${#lists.size(s.paperList)}">8</span>套试卷
+												</p>
+											</div>
+										</a>
+									</div>
+									<ul class="paper-wrap">
+										<li class="paper-item" th:each="p,pStat:${s.paperList}">
+											<a class="paper-item-name" th:href="${setting.domain + 'paper/' +p.uid+'.html'}" th:text="${p.name}">
+												语文 海淀区2016年高三期末试卷
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+				
+						</div>
+				
+						<div class="more-school-list">
+							<a class="more-school-name" th:each="s,sStat:${eliteSchoolList}" th:text="${s.name}" th:href="${setting.domain + 'paperlist/13/0-4-0-0-1.html'}">
+								北京市八一学校
+							</a>
+						</div>
+				        </div>
+				    </div>
+				</div>
+    			<!--高考专区结束-->
+    			
+    			<!--资格考试专区--->
+    			<div class="zige-class-container" id="bk-kaoshi">
+				  	<p class="container-title">
+					    资格考试专区
+				    </p>
+				    <div class="title-underline">
+				    </div>
+				    <div class="zige-test-main">
+				        <div class="zigetest-list">
+							<div th:class="${'zigetest-list-detail'}" th:each="m,mStat:${footerMenuList}">
+								<div class="list-title">
+									<div th:class="${'testbg li-icon iconfont ' + m.pinyin}" style="font-size:45px;"></div>
+									<div class="title-box">
+										<p class="title-name" th:text="${m.name}">财会类</p>
+										<p class="title-num" th:text="${#lists.size(m.childSubjects) + '门考试'}">5门考试</p>
+									</div>
+								</div>
+								<div class="test-list">
+										<a th:each="c,cmStat:${m.childSubjects}" class="item-link log-class-link" th:href="${setting.domain + c.url}" target="_blank" th:text="${c.name}">会计从业资格</a>
+								</div>
+							</div>
+						</div>
+				    </div>
+				</div>
+    			<!--资格考试专区结束-->
+    		</div>
+    	</div>
+    </div>
+
+	<!--尾部-->
+	<div th:replace="include/footer :: footer"></div>
+	
+	<!-- 登录 -->
+	<div th:replace="include/minilogin :: minilogin"></div>
+</body>
+<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}" ></script>
+<script type="text/javascript" th:src="${setting.domain + 'js/jquery.iDialog.js'}"></script>
+<script type="text/javascript" th:src="${setting.domain + 'js/main.js'}"></script>
+<script type="text/javascript" th:src="${setting.domain + 'js/index.js'}"></script>
+<script type="text/javascript" th:src="${setting.domain + 'js/member/minlogin.js'}"></script>
+</html>

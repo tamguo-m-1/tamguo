@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tamguo.dao.MemberMapper">
+
+	<select id="findByUsername" resultMap="resultMap">
+		SELECT
+			m.uid , m.avatar , m.`password` , m.username , m.mobile , m.email
+		FROM
+			tiku_member m
+		where m.username = #{username}
+	</select>
+	
+	<select id="findByMobile" resultMap="resultMap">
+		SELECT
+			m.uid , m.avatar , m.`password` , m.username , m.mobile , m.email
+		FROM
+			tiku_member m
+		where m.mobile = #{mobile}
+	</select>
+	
+	<select id="findByUsernameOrEmailOrMobile" resultType="com.tamguo.model.MemberEntity">
+		SELECT
+			m.uid , m.avatar , m.`password` , m.username , m.mobile , m.email
+		FROM
+			tiku_member m
+		where m.username = #{account} or m.mobile = #{account} or m.email = #{account}
+	</select>
+	
+</mapper>

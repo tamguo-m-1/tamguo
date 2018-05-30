@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="Zh-hans" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>探果-找回密码</title>
+		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/password/confirmAccount.css'}" />
+		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
+	</head>
+	<body>
+		<div id="wrapper" class="">
+			<div id="head">
+				<div class="mod-header">
+					<a th:href="${setting.domain + 'login.html'}"><img th:src="${setting.domain + 'images/logo_731bc32.png'}" alt="logo"></a>
+				</div>
+				<ul class="mod-userbar">
+					<li>
+						<a id="mod-userbar-login" th:href="${setting.domain + 'login.html'}">登录</a>
+					</li>
+					<li>|</li>
+					<li>
+						<a th:href="${setting.domain + 'register.html'}">注册</a>
+					</li>
+				</ul>
+			</div>
+			<div id="nav">
+				<div class="nav-2">
+					<div class="mod-nav clearfix">
+						<h1 class="page-type-notab">找回密码</h1>
+					</div>
+				</div>
+			</div>
+			<div id="content">
+				<div class="mod-forgot">
+					<ul class="mod-sub-nav">
+						<li class="mod-sub-list1 list1-active">确认帐号</li>
+						<li class="mod-sub-list2">安全验证</li>
+						<li class="mod-sub-list3">重置密码</li>
+					</ul>
+					<form th:action="${setting.domain + 'password/confirmAccount.html'}" method="post" id="forgotsel">
+						<div class="mod-step-detail">
+							<p class="step-email-info">请填写您需要找回的帐号
+							</p>
+							<div class="pass-input-container clearfix" id="pass-auth-select">
+								<input type="text" th:class="${code == 201 ? 'pass-input pass-input-forgot pass-input-error':'pass-input pass-input-forgot'}" name="username" th:value="${username}" id="account" placeholder="手机/邮箱/用户名">
+								<span class="fix-clear userName-clearbtn" id="userName_clearBtn"></span>
+								<span class="pass-input-msg l-h40" th:text="${code == '201' ? '用户名不存在，请重新输入' : ''}"></span>
+							</div>
+							<div class="pass-account-slect clearfix m_b15 hide" style="position: relative; display: none;">
+								<p>请协助我们确认一下您输入的内容，便于更快的定位您的信息：</p>
+								<p class="pass-radio pass-radio-list" s="username">我输入的是用户名</p>
+								<p class="pass-radio pass-radio-list pass-radion-active" s="securemobil">我输入的是手机号</p>
+							</div>
+							<div class="pass-input-container vcode-container clearfix">
+								<input type="text" th:class="${code == 202 ? 'pass-input pass-input-forgot vcode-input vcode-input-width pass-input-error' : 'pass-input pass-input-forgot vcode-input vcode-input-width'}" name="veritycode" value="" id="veritycode" placeholder="请输入验证码">
+								<img class="vcode-img vcode-img-big hide" alt="验证码图片" title="验证码图片" th:src="${setting.domain + 'captcha.jpg'}" style="display: inline;">
+								<a class="vcode-img-change p-t13">换一张</a>
+								<span class="pass-input-msg l-h40" th:text="${code == 202 ? '验证码错误，请重新输入' : ''}"></span>
+							</div>
+							<div>
+								<input type="submit" name="" value="下一步" class="pass-button-submit" id="submit">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div id="foot">
+				<div class="mod-footer">
+					<div class="copy-box">2018&nbsp;©Tamguo</div>
+				</div>
+			</div>
+		</div>
+		<!-- 底部结束-->
+	</body>
+	<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}"></script>
+	<script type="text/javascript" th:src="${setting.domain + 'js/password/confirmAccount.js'}"></script>
+		<script type="text/javascript" th:inline="javascript">
+		var mainHttp = [[${setting.domain}]];
+	</script>
+</html>

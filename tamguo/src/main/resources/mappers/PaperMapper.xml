@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tamguo.dao.PaperMapper">
+
+	<resultMap id="BaseResultMap" type="com.tamguo.model.PaperEntity" >
+	    <id column="uid" property="uid" jdbcType="VARCHAR" />
+	    <result column="course_id" property="courseId" jdbcType="VARCHAR" />
+	    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+	    <result column="subject_id" property="subjectId" jdbcType="VARCHAR" />
+	    <result column="subject_name" property="subjectName" jdbcType="VARCHAR" />
+	    <result column="school_id" property="schoolId" jdbcType="VARCHAR" />
+	    <result column="school_name" property="schoolName" jdbcType="VARCHAR" />
+	    <result column="area_id" property="areaId" jdbcType="VARCHAR" />
+	    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+	    <result column="creater_id" property="createrId" jdbcType="VARCHAR" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="question_info" property="questionInfo" jdbcType="VARCHAR" />
+	    <result column="type" property="type" jdbcType="VARCHAR" />
+	    <result column="year" property="year" jdbcType="VARCHAR" />
+	    <result column="down_hits" property="downHits" jdbcType="INTEGER" />
+	    <result column="open_hits" property="openHits" jdbcType="INTEGER" />
+	    <result column="seo_title" property="seoTitle" jdbcType="INTEGER" />
+	    <result column="seo_keywords" property="seoKeywords" jdbcType="INTEGER" />
+	    <result column="seo_description" property="seoDescription" jdbcType="INTEGER" />
+	</resultMap>
+
+	<select id="findByTypeAndAreaId" resultMap="resultMap">
+		SELECT
+			p.uid,
+			p.area_id,
+			p.course_id,
+			p.`name`,
+			p.type,
+			p.`year`,
+			p.question_info
+		FROM
+			tiku_paper p
+		where p.type = #{type} and p.area_id = #{areaId}
+	</select>	
+	
+	<select id="findByAreaId" resultMap="resultMap">
+		SELECT
+			p.uid,
+			p.area_id,
+			p.course_id,
+			p.`name`,
+			p.type,
+			p.`year`,
+			p.question_info
+		FROM
+			tiku_paper p
+		where p.area_id = #{areaId}
+		order by down_hits desc
+	</select>
+	
+	<select id="findBySchoolId" resultMap="resultMap">
+		SELECT
+			p.uid,
+			p.area_id,
+			p.course_id,
+			p.`name`,
+			p.type,
+			p.`year`,
+			p.question_info
+		FROM
+			tiku_paper p
+		where p.school_id = #{schoolId}
+	</select>
+	
+	<select id="findList" resultMap="resultMap">
+		SELECT
+			p.area_id,
+			p.course_id,
+			p.down_hits,
+			p.`name`,
+			p.open_hits,
+			p.school_id,
+			p.type,
+			p.uid,
+			p.`year`,
+			p.question_info
+		FROM
+			tiku_paper p
+		where 1 = 1
+		<if test="courseId != null and courseId != 0">
+			and p.course_id = #{courseId}
+		</if>
+		<if test="paperType != null and paperType != 0">
+			and p.type = #{paperType}
+		</if>
+		<if test="year != null and year != 0">
+			and p.year = #{year}
+		</if>
+		<if test="area != null and area != 0">
+			and p.area_id = #{area}
+		</if>
+	</select>
+	
+	<select id="findPaperByAreaId" resultMap="resultMap">
+		SELECT
+			p.uid,
+			p.course_id,
+			p.school_id,
+			p.area_id,
+			p. NAME,
+			p.question_info,
+			p.type,
+			p.`year`,
+			p.down_hits,
+			p.open_hits
+		FROM
+			tiku_paper p
+		WHERE
+			p.area_id = #{areaId}
+		<if test="type != null and type != ''">
+			AND p.type = #{type}
+		</if>
+		order by down_hits desc
+	</select>
+	
+	<select id="getPaperTotal" resultType="java.lang.Long">
+		select count(1) from tiku_paper
+	</select>
+	
+	<select id="queryPageByName" resultMap="BaseResultMap">
+		SELECT
+			p.area_id,
+			(select a.name from tiku_area a where a.uid = p.area_id) as area_name,
+			p.subject_id,
+			p.course_id,
+			(select c.name from tiku_course c where c.uid = p.course_id) as course_name,
+			p.down_hits,
+			p.`name`,
+			p.open_hits,
+			p.question_info,
+			p.school_id,
+			p.type,
+			(select s.name from tiku_school s where s.uid = p.school_id) as school_name,
+			p.type,
+			p.uid,
+			p.`year`
+		FROM
+			tiku_paper p
+		<where>
+			<if test="name != null and name != ''">
+				p.name like #{name}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findByCreaterId" resultMap="resultMap">
+		SELECT
+			p.area_id,
+			p.course_id,
+			p.down_hits,
+			p.`name`,
+			p.open_hits,
+			p.question_info,
+			p.school_id,
+			p.type,
+			p.uid,
+			p.`year`
+		FROM
+			tiku_paper p
+		<where>
+			<if test="createrId != null and createrId != ''">
+				p.creater_id = #{createrId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="queryPageByNameAndCreatorId" resultMap="resultMap">
+		SELECT
+			p.area_id,
+			p.course_id,
+			p.down_hits,
+			p.`name`,
+			p.open_hits,
+			p.question_info,
+			p.school_id,
+			p.type,
+			p.uid,
+			p.`year`
+		FROM
+			tiku_paper p
+		<where>
+			p.creater_id = #{memberId}
+			<if test="name != null and name != ''">
+				and p.name like #{name}
+			</if>
+		</where>
+	</select>
+	
+</mapper>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="Zh-hans" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>探果-科目</title>
+		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/iconfont.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/member/index.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/member/memberMain.css'}" />
+		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
+	</head>
+	<body>
+	<!-- 头部-->
+	<div th:replace="include/memberHeader :: memberHeader"></div>
+	
+	<!--主体-->	
+    <div class="cnav">
+			<div class="public cnav_b">
+				<div class="cnav_left">
+					考试五步曲
+				</div>
+				<div class="cnav_right">
+					<ul>
+						<li><span class="Cnav_t">1</span><b>新建试卷</b></li>
+						<li><span>2</span>添加试题</li>
+						<li><span>3</span>发起一场考试</li>
+						<li><span>4</span>导考生，发通知</li>
+						<li><span>5</span>查看报告</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="PCshow hide" style="display: block;">
+			<div class="examContent public">
+				<h2>
+				<img th:src="${setting.domain + 'images/member/index/face-xiao.png'}"
+					style="position: relative; top: -2px;"> &nbsp;<span
+					style="letter-spacing: 4px;"> <b id="userName"
+					style="font-weight: normal; color: #2abcb8" th:text="${session.currMember.username}">tamguo</b>，您好！欢迎来到探果网管理后台
+				</span>
+			</h2>
+				<!-- 左侧基本信息项 -->
+				<div class="newsLeft">
+					<div class="baseNews">
+						<h3><i></i> 基本信息</h3>
+						<div id="borderBox">
+						<table style="float: left;">
+							<tbody><tr>
+								<td>
+								<span class="logoV">
+								<img th:src="${setting.domain + session.currMember.avatar}">
+								</span>
+								</td>
+							</tr>
+						</tbody></table>
+							<b th:title="${session.currMember.username}" style="font-size: 16px;	margin-left: 14px;float: left;display: inline-block;font-weight: normal;max-width: 100px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${session.currMember.username}">盘诚软件</b>
+							<a style="font-size: 12px;" th:href="${setting.domain + 'member/account.html'}"><i class="iconfont icon-icon_edit"></i> 编辑</a>
+						</div>
+						<p style="clear: both;height: 0px;"></p>
+					</div>
+					<div class="well"></div>
+					<div class="userNews">
+						<h3><i></i> 账户信息</h3>
+						<ul>
+							<li style="padding-left: 21px;">积分：
+								<b style="margin-left:14px;" id="examCandsNum">1000</b>
+							</li>
+							<li style="padding-left: 24px;">余额：<b style="margin-left: 19px;">50 元</b></li>
+							<li style="padding-left: 21px;">最近登录时间：<b style="margin-left: 13px;">2018-04-27 10:32</b></li>
+						</ul>
+						<a th:href="${setting.domain}" target="_blank" id="addMoney">现在充值</a>
+					</div>
+				</div>
+				<!-- 右侧信息显示 -->
+				<div class="newsR">
+					<div class="topNews" id="numList1">
+						<ul>
+							<li>
+								<img th:src="${setting.domain + 'images/member/index/peneil.png'}" style="margin-top: 26px;position: relative;top: -4px;"><br>
+								<span><b id="datab1">0</b> 次</span><br>
+								<span>下载总数</span>
+							</li>
+							<li>
+								<img th:src="${setting.domain + 'images/member/index/paperm.png'}" style="margin-top: 26px;position: relative;top: -4px;"><br>
+								<span><b id="datab2">1</b> 套</span><br>
+								<span>试卷总数</span>
+							</li>
+							<li>
+								<img th:src="${setting.domain + 'images/member/index/peoplem.png'}" style="margin-top: 26px;position: relative;top: -4px;"><br>
+								<span><b id="datab3">0</b> 次</span><br>
+								<span>阅读总数</span>
+							</li>
+							<li>
+								<img th:src="${setting.domain + 'images/member/index/testnew.png'}" style="margin-top: 26px;position: relative;top: -6px;"><br>
+								<span><b id="datab4">19</b> 道</span><br>
+								<span>试题总数</span>
+							</li>
+						</ul>
+						<div class="newExam">
+							<div class="add-p">
+								<a th:href="${setting.domain}"><i class="iconfont icon-jia" style="font-size:130px;"></i></a>
+							</div>
+							<a th:href="${setting.domain + 'member/paper.html'}">开始新建试卷</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			
+			<!-- 尾部-->
+			<div th:replace="include/memberFooter :: memberFooter"></div>
+    
+</body>
+	
+<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}" ></script>
+<script type="text/javascript" th:src="${setting.domain + 'js/main.js'}"></script>
+</html>

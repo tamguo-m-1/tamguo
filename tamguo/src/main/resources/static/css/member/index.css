@@ -1,0 +1,393 @@
+body {
+    font-family: "Microsoft Yahei";
+    color: #333;
+    background: #f5f5f6;
+}
+body {
+    position: relative;
+    height: auto;
+    min-height: 100%;
+}
+.cnav {
+    height: 98px;
+    width: 100%;
+    background-size: cover;
+    background-color: #826a6a;
+}
+.cnav_b {
+    position: relative;
+    margin: 0 auto;
+    left: 50px;
+    height: 98px;
+}
+.public {
+    width: 1098px;
+    margin: 0px auto;
+}
+.cnav_left {
+    float: left;
+    width: 162px;
+    height: 54px;
+    margin: 22px 0 0 46px;
+    font-size: 18px;
+    color: #fff;
+    line-height: 54px;
+    background: url(../../images/member/index/top-kaos.png) no-repeat;
+    padding-left: 55px;
+}
+.cnav_right {
+    float: left;
+    width: 720px;
+    height: 5px;
+    background: url(../../images/member/index/project-cnav.png) repeat-x;
+    margin: 47px 0 0 0;
+}
+.cnav_right ul {
+    position: absolute;
+    top: 30px;
+    left: 230px;
+}
+.cnav_right ul li {
+    width: 120px;
+    height: 50px;
+    float: left;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    line-height: 12px;
+    margin-left: 32px;
+}
+.cnav_right ul li .Cnav_t {
+    background: url(../../images/member/index/project-candidate.png) no-repeat -54px 0;
+    width: 37px;
+    height: 37px;
+    line-height: 37px;
+    margin: 0 auto;
+}
+.cnav_right ul li span {
+    font-size: 12px;
+    font-weight: bold;
+    width: 27px;
+    height: 27px;
+    color: #29bdb9;
+    display: block;
+    margin: 5px auto 5px auto;
+    text-align: center;
+    line-height: 27px;
+    background: url(../../images/member/index/project-candidate.png) no-repeat -26px 0;
+}
+.examContent {
+    background: #f5f5f6;
+    padding-top: 10px;
+    overflow: hidden;
+    padding-bottom: 200px;
+}
+.examContent>h2 {
+    background: white;
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    font-weight: normal;
+    font-size: 20px;
+}
+.examContent .newsLeft, .examContent .newsR {
+    float: left;
+    padding: 10px;
+    background: white;
+    margin-top: 10px;
+}
+.examContent .newsLeft {
+    width: 31%;
+}
+.examContent .newsLeft .baseNews {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.examContent .newsLeft h3 {
+    font-size: 16px;
+    color: #555;
+    font-weight: normal;
+}
+.examContent .newsLeft h3 i {
+    width: 7px;
+    height: 10px;
+    display: inline-block;
+    background: url(../../images/member/index/icon.png) no-repeat -87px -85px;
+    margin: 0px 4px;
+    position: relative;
+    top: -2px;
+    margin-left: 0px;
+}
+.examContent .newsLeft .baseNews>div {
+    border: 1px solid white;
+    width: 320px;
+    height: 100px;
+    background: #f5f5f5;
+    text-align: center;
+    line-height: 100px;
+    margin-top: 10px;
+    padding-left: 20px;
+}
+.examContent .newsLeft .baseNews>div span {
+    width: 117px;
+    height: 60px;
+    line-height: 56px;
+    background: whitesmoke;
+    display: inline-block;
+    position: relative;
+}
+.examContent .newsLeft .baseNews>div .logoV img {
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: 55px;
+}
+.examContent .newsLeft .baseNews>div a {
+    display: none;
+    display: inline-block;
+    float: right;
+    position: relative;
+    top: 30px;
+    left: -10px;
+    color: #2abcb8;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.fa-pencil:before {
+    content: "\f040";
+}
+.examContent .newsLeft .baseNews ul {
+    overflow: hidden;
+    padding: 25px 0px;
+    padding-left: 14px;
+    padding-bottom: 14px;
+}
+.examContent .newsLeft .baseNews ul li {
+    float: left;
+    width: 25%;
+}
+.examContent .newsLeft .baseNews ul li>div.li-p {
+    background: rgb(253, 199, 125);
+    border: 1px solid rgb(253, 199, 125);
+}
+.examContent .newsLeft .baseNews ul li>div {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    border: 1px solid #52cdc8;
+    text-align: center;
+    background: #52cdc8;
+    cursor: pointer;
+    margin-bottom: 12px;
+}
+.examContent .newsLeft .baseNews ul li>span {
+    margin-left: 2px;
+}
+img, input, fieldset {
+    border: 0 none;
+    vertical-align: middle;
+}
+.well {
+    height: 10px;
+    background: #f5f5f6;
+    width: 340px;
+    position: relative;
+    left: -10px;
+}
+.examContent .newsLeft .userNews {
+    margin-top: 10px;
+}
+.examContent .newsLeft h3 {
+    font-size: 16px;
+    color: #555;
+    font-weight: normal;
+}
+.examContent .newsLeft h3 i {
+    width: 7px;
+    height: 10px;
+    display: inline-block;
+    background: url(../../images/member/index/icon.png) no-repeat -87px -85px;
+    margin: 0px 4px;
+    position: relative;
+    top: -2px;
+    margin-left: 0px;
+}
+.examContent .newsLeft .userNews ul {
+    margin-top: 10px;
+}
+.examContent .newsLeft .userNews ul li {
+    height: 60px;
+    margin-bottom: 10px;
+    background: #f5f5f6;
+    line-height: 60px;
+    font-size: 14px;
+    padding-left: 20px;
+}
+.examContent .newsLeft .userNews>a {
+    font-size: 14px;
+    display: block;
+    text-align: center;
+    padding: 10px;
+    background: #2abcb8;
+    color: white;
+}
+.examContent .newsLeft>span {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    color: #2abcb8;
+}
+.examContent .newsR {
+    width: 66.2%;
+    margin-left: 10px;
+    padding: 0px;
+}
+.examContent .newsR .topNews {
+    background: #f5f5f5;
+    overflow: hidden;
+}
+.examContent .newsR .topNews ul, .examContent .newsR .topNews .newExam {
+    float: left;
+    width: 50%;
+    overflow: hidden;
+}
+.examContent .newsR .topNews ul li:nth-child(1) {
+    background: rgb(114, 214, 212);
+}
+.examContent .newsR .topNews ul li {
+    float: left;
+    width: 47%;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    height: 140px;
+}
+.examContent .newsR .topNews ul li>span>b {
+    font-size: 22px;
+    margin-top: 4px;
+    display: inline-block;
+}
+.examContent .newsR .topNews ul li:nth-child(2) {
+    background: rgb(81, 194, 238);
+}
+.examContent .newsR .topNews ul li:nth-child(3) {
+    background: rgb(253, 199, 125);
+}
+.examContent .newsR .topNews ul li:nth-child(4) {
+    background: rgb(132, 219, 174);
+}
+.examContent .newsR .topNews .newExam {
+    background: rgb(235, 255, 254);
+    border: 2px dashed #2abcb8;
+    box-sizing: border-box;
+    text-align: center;
+    height: 288px;
+}
+.examContent .newsR .topNews ul, .examContent .newsR .topNews .newExam {
+    float: left;
+    width: 50%;
+    overflow: hidden;
+}
+.examContent .newsR .topNews .newExam div.add-p {
+    width: 145px;
+    height: 145px;
+    background: #ebfffe;
+    border-radius: 50%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 62px;
+    cursor: pointer;
+}
+.examContent .newsR .topNews .newExam>a {
+    color: #2abcb8;
+    font-size: 15px;
+    position: relative;
+    top: 80px;
+}
+.examContent .newsR .examTable {
+    padding: 10px;
+    min-height: 456px;
+}
+.examContent .newsR .examTable>h4 {
+    font-size: 16px;
+}
+.examTable h4 {
+    font-weight: normal;
+    color: #555;
+}
+.examContent .newsR .examTable>h4 i {
+    width: 7px;
+    height: 10px;
+    display: inline-block;
+    background: url(../../images/member/index/icon.png) no-repeat -87px -85px;
+    margin: 0px 4px;
+    position: relative;
+    top: -2px;
+    margin-left: 0px;
+}
+.examContent .newsR .examTable table {
+    width: 100%;
+    margin-top: 8px;
+}
+.examContent .newsR .examTable table thead {
+    background: #f5f5f5;
+}
+.examTable table tr th {
+    font-weight: normal;
+    color: #555;
+}
+.examContent .newsR .examTable .textNone {
+    text-align: center;
+    height: 289px;
+    padding-top: 80px;
+}
+
+body .footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+.footer {
+    height: 173px;
+    background: #838485;
+    margin-top: 37px;
+    color: #f3f3f5;
+}
+.public {
+    width: 1098px;
+    margin: 0px auto;
+}
+.footer-left {
+    width: 794px;
+    float: left;
+    padding-left: ;
+    padding-top: 35px;
+}
+.footer-logo {
+    float: left;
+    padding: 0px 0px 0px 0px;
+    width: 208px;
+}
+.footer-txt {
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 32px;
+}
+.footer-txt a {
+    color: #f3f3f5;
+}
+.footer-right table {
+    width: 100%;
+    line-height: 26px;
+    text-align: center;
+}

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="Zh-hans" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>题目-探果</title>
+		<link rel="stylesheet" th:href="${setting.domain + 'css/main.css'}"></link>
+		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/iconfont.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/question.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/footer.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/member/minilogin.css'}" />
+		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
+	</head>
+	<body>
+		
+	<!-- 头部-->
+	<div th:replace="include/header :: header"></div>	
+	
+	<div class="content-wp">
+	<div class="main">
+		<div class="main-inner clearfix">
+			<a class="backtotop iconfont icon-xiangshang" href="#" style="display: none;"></a>
+			<div class="main-contain">
+				<div class="single">
+					<div class="question">
+						<div class="que-title"> <span class="op">填空题</span> <span th:if="${question.score != null}" th:text="${question.score + '分'}">5</span> <span th:if="${question.year != null}" th:text="${question.year + '年'}">2016</span> </div>
+						<div class="question-box que-blank" id="undefined" data-index="NaN">
+							<div class="question-box-inner">
+								<div class="question-top">
+									<div class="que-stem">
+										<div class="questem-inner bdjson" th:utext="${question.content}">
+											<p><span>社会工作专业化是在长期社会服务实践中形成，在实践中被接受的。在专业化过程中，社会工作发展的重要特点包括(  )。</span><br><br><span>                A．专业理论的完善</span><br><span>B．专业方法的发展</span><br><span>C．目标模式的变化</span><br><span>D．工作对象的拓展</span><br><span>E．理论派别的形成</span><br></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="recommend-que">
+						<div class="kpoint-contain">
+							<h3 class="point-title">考察知识点</h3>
+							<p class="point"> <span class="point-item" th:each="p,pStat:${#strings.arraySplit(question.reviewPoint,',')}" th:text="${p}">社会工作的含义与特点</span></p>
+							<h3 class="point-title">相关例题</h3>
+							<ul class="recq-contain">
+								<li class="recq bdjson">
+									<a class="recq-link " th:href="${setting.domain}">
+										<p><span>在青少年社会工作中，社区层面的社会工作方法的运用包含一些特点，即(  )。</span><br><br><span>                A．以社区为对象，强调居民的参与</span><br><span>B．以结构导向的角度分析问题</span><br><span>C．介入的层面比较广泛</span><br><span>D．社会资源的广泛运用</span><br><span>E．以问题导向开展服务</span><br></p>
+									</a>
+								</li>
+								<li class="recq bdjson">
+									<a class="recq-link " th:href="${setting.domain}">
+										<p><span>社会工作并不是社会工作者单向地给予服务对象某种服务的过程，而是社会工作者与服务对象“一同工作”的过程，此种工作特点可称为(  )。</span><br><br><span>                A．取长补短</span><br><span>B．柔性管理</span><br><span>C．双方合作</span><br><span>D．多方协同</span><br><span>E．以人为本</span><br></p>
+									</a>
+								</li>
+								<li class="recq bdjson">
+									<a class="recq-link " th:href="${setting.domain}">
+										<p><span>艾滋病患者面临的最大困境在于社会歧视和基本生活能力欠缺。帮助他们康复或改善环境，并通过各种努力减少社会歧视，维护其正当权益，体现的社会工作价值观原则是（     ）。</span><br><br><span>                A．认可</span><br><span>B．尊重</span><br><span>C．保密</span><br><span>D．个别化</span><br></p>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="answer">
+						<div class="answer-contant">
+							<div class="exam-answer">
+								<h3 class="ic answer-ic exam-answer-title">正确答案</h3>
+								<div class="answer-item">
+									<div class="content exam-answer-content bdjson" th:utext="${question.answer}">
+										<p><span>B,C,D,E</span></p>
+									</div>
+								</div>
+							</div>
+							<div class="exam-analysis exam-info">
+								<h3 class="exam-analysis-title"><span class="ic analysis-ic">答案解析</span></h3>
+								<div class="content exam-analysis-content bdjson" th:utext="${question.analysis}">
+									<p><span>[解析] 社会工作作为一个专业是在长期的社会服务实践、对实践经验的总结和不断借用其他学科的新的研究成果等多种因素的共同影响下形成的。在其专业化过程中，专业方法的发展、目标模式的变化、工作对象的拓展、理论派别的形成成为社会工作发展的重要特点。</span></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="sidebar">
+				<div class="sidebar-simplemain">
+					<div class="hotexam">
+						<h1 class="hotexam-title">热门考试</h1>
+						<ul class="hotexam-content clearfix">
+							<li class="hotexam-item">
+								<a th:href="${setting.domain}">高考</a>
+							</li>
+							<li class="hotexam-item">
+								<a th:href="${setting.domain}">一级建造师</a>
+							</li>
+							<li class="hotexam-item">
+								<a th:href="${setting.domain}">二级建造师</a>
+							</li>
+							<li class="hotexam-item">
+								<a th:href="${setting.domain}">初级经济师</a>
+							</li>
+							<li class="hotexam-item">
+								<a th:href="${setting.domain}">中级经济师</a>
+							</li>
+							<li class="hotexam-item">
+								<a th:href="${setting.domain}">教师资格证</a>
+							</li>
+							<li class="hotexam-item">
+								<a th:href="${setting.domain}">企业法律顾问</a>
+							</li>
+							<li class="hotexam-item">
+								<a th:href="${setting.domain}">注册会计师CPA</a>
+							</li>
+							<li class="hotexam-item">
+								<a th:href="${setting.domain}">中级会计师</a>
+							</li>
+							<li class="hotexam-item">
+								<a th:href="${setting.domain}">考研</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+   
+   	<!--尾部-->
+	<div th:replace="include/footer :: footer"></div>
+	
+	<!-- 登录 -->
+	<div th:replace="include/minilogin :: minilogin"></div>
+</body>
+<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}" ></script>
+<script type="text/javascript" th:src="${setting.domain + 'js/jquery.iDialog.js'}"></script>
+<script type="text/javascript" th:src="${setting.domain + 'js/main.js'}" ></script>
+<script type="text/javascript" th:src="${setting.domain + 'js/member/minlogin.js'}"></script>
+</html>

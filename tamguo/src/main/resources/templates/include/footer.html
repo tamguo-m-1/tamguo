@@ -1,0 +1,86 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div class="footer" th:fragment="footer">
+	<div class="footer-contain clearfix">
+		<div class="intro">
+			<div class="title">探果网</div>
+			<p>
+				探果网旨在为考生提供高效的智能备考服务，全面覆盖中小学财会类、建筑工程、职业资格、医卫类、计算机类等领域。拥有优质丰富的学习资料和备考全阶段的高效服务，助您不断前行！
+			</p>
+		</div>
+		<div class="connect">
+			<div class="title">联系我们</div>
+			<p>
+				<i class="iconfont icon-yonghu"></i> 谭先生
+			</p>
+			<p>
+				<i class="iconfont icon-mail"></i> candy.tam@aliyun.com
+			</p>
+			<p>
+				<i class="iconfont icon-qq"></i> qq群：53811201
+			</p>
+		</div>
+		<div class="suggest">
+			
+		</div>
+		<div class="cooperation">
+			<div class="title">合作机构</div>
+			<span class="left iconfont icon-xiangzuo1"></span> <span
+				class="right iconfont icon-xiangyou1"></span>
+			<div class="coo-view clearfix">
+				<ul class="contain-ul dis-none" style="display: block;">
+					<li class="contain-li"><a class="contain-link"
+						th:href="${setting.domain}" target="_blank"><img
+							th:src="${setting.domain + 'images/築龙网-1496371671235.png'}"
+							alt=""></a></li>
+					<li class="contain-li"><a class="contain-link"
+						th:href="${setting.domain}" target="_blank"><img
+							th:src="${setting.domain + 'images/木豆教育-1496371669600.png'}"
+							alt=""></a></li>
+					<li class="contain-li"><a class="contain-link"
+						th:href="${setting.domain}" target="_blank"><img
+							th:src="${setting.domain + 'images/中大网校-1496371670986.png'}"
+							alt=""></a></li>
+					<li class="contain-li"><a class="contain-link"
+						th:href="${setting.domain}" target="_blank"><img
+							th:src="${setting.domain + 'images/希赛网-1496371669867.png'}"
+							alt=""></a></li>
+					<li class="contain-li"><a class="contain-link"
+						th:href="${setting.domain}" target="_blank"><img
+							th:src="${setting.domain + 'images/壹医考-1496371670503.png'}"
+							alt=""></a></li>
+					<li class="contain-li"><a class="contain-link"
+						th:href="${setting.domain}"
+						target="_blank"><img
+							th:src="${setting.domain + 'images/腰果公考-1496371670244.png'}"
+							alt=""></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<p class="bottom">
+		沪备案号 <a
+			href="javascript:(0);"
+			target="_blank">沪ICP备14022608号-1</a> Copyright © 2018 Tamguo
+	</p>
+</div>
+<script type="text/javascript" th:inline="javascript" th:fragment="footer">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?877e9c9ef462fe55b7750d478a41c981";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+  
+  var bp = document.createElement('script');
+  var curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();
+</script>
