@@ -19,7 +19,7 @@ $(function(){
 	});
 	
 	$("#TANGRAM__PSP_3__verifyCodeChange").bind("click",function(){
-		$("#TANGRAM__PSP_3__verifyCodeImg").attr("src",mainHttp + "admin/captcha.jpg?t=" + $.now());
+		$("#TANGRAM__PSP_3__verifyCodeImg").attr("src",mainHttp + "captcha.jpg?t=" + $.now());
 	});
 	
 	$("#TANGRAM__PSP_3__password").bind("focus",function(){

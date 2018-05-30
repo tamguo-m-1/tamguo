@@ -32,7 +32,7 @@ public class LoginController {
 	@Autowired
 	private Producer producer;
 
-	@RequestMapping("admin/captcha.jpg")
+	@RequestMapping("captcha.jpg")
 	public void captcha(HttpServletResponse response) throws ServletException, IOException {
 		response.setHeader("Cache-Control", "no-store, no-cache");
 		response.setContentType("image/jpeg");

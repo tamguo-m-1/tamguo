@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<title>试卷管理</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" th:href="${setting.domain + 'css/bootstrap.min.css'}">
+<link rel="stylesheet" th:href="${setting.domain + 'css/font-awesome.min.css'}">
+<link rel="stylesheet" th:href="${setting.domain + 'plugins/jqgrid/ui.jqgrid-bootstrap.css'}">
+<link rel="stylesheet" th:href="${setting.domain + 'plugins/bootstrap-select/bootstrap-select.min.css'}">
+<link rel="stylesheet" th:href="${setting.domain + 'plugins/ztree/css/metroStyle/metroStyle.css'}">
+<link rel="stylesheet" th:href="${setting.domain + 'css/main.css'}">
+<link rel="stylesheet" th:href="${setting.domain + 'plugins/layui/css/layui.css'}"  media="all">
+<script th:src="${setting.domain + 'libs/jquery.min.js'}"></script>
+<script th:src="${setting.domain + 'plugins/layui/layui.all.js'}"></script>
+<script th:src="${setting.domain + 'libs/bootstrap.min.js'}"></script>
+<script th:src="${setting.domain + 'libs/vue.min.js'}"></script>
+<script th:src="${setting.domain + 'plugins/jqgrid/grid.locale-cn.js'}"></script>
+<script th:src="${setting.domain + 'plugins/jqgrid/jquery.jqGrid.min.js'}"></script>
+<script th:src="${setting.domain + 'plugins/ztree/jquery.ztree.all.min.js'}"></script>
+<script th:src="${setting.domain + 'plugins/bootstrap-select/bootstrap-select.min.js'}"></script>
+<script type="text/javascript" th:src="${setting.domain + 'plugins/ueditor/ueditor.config.js'}"></script>
+<script type="text/javascript" th:src="${setting.domain + 'plugins/ueditor/ueditor.all.min.js'}"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script th:src="${setting.domain + 'js/common.js'}"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+	<div v-show="showList">
+	
+		<div class="grid-btn">
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" v-model="q.name" @keyup.enter="query" placeholder="用户名">
+			</div>
+			<a class="btn btn-default" @click="query">查询</a>
+			<a shiro:hasPermission="tiku:question:audit" class="btn btn-primary" @click="audit"><i class="fa fa-trash-o"></i>&nbsp;审核通过</a>
+			<a shiro:hasPermission="tiku:question:notAudit" class="btn btn-primary" @click="notAudit"><i class="fa fa-trash-o"></i>&nbsp;审核拒绝</a>
+			<a shiro:hasPermission="tiku:question:save" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			<a shiro:hasPermission="tiku:question:update" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			<a shiro:hasPermission="tiku:question:delete" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+		</div>
+	    <table id="jqGrid"></table>
+	    <div id="jqGridPager"></div>
+	</div>
+	
+	<div v-show="!showList" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">题目类型</div>
+			   	<div class="col-sm-10">
+				  <label class="radio-inline">
+				  	 <input type="radio" name="status" value="1" v-model="question.questionType"/> 单选题
+				  </label>
+				  <label class="radio-inline">
+				  	 <input type="radio" name="status" value="2" v-model="question.questionType"/> 多选题
+				  </label>
+				  <label class="radio-inline">
+				  	 <input type="radio" name="status" value="3" v-model="question.questionType"/> 判断题
+				  </label>
+				  <label class="radio-inline">
+				  	 <input type="radio" name="status" value="4" v-model="question.questionType"/> 填空题
+				  </label>
+				  <label class="radio-inline">
+				  	 <input type="radio" name="status" value="5" v-model="question.questionType"/> 简答题
+				  </label>
+			    </div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">考试</div>
+			   	<div class="col-sm-10">
+			       <select id="subjectId" data-live-search="true" v-model="question.subjectId" @change="changeSubject">
+			      	   <option value="">请选择</option>
+					   <option v-bind:value="subject.uid" v-for="subject in subjectList">{{subject.name}}</option>
+				   </select>
+			    </div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">科目</div>
+			   	<div class="col-sm-10">
+			       <!-- <input type="text" class="form-control" v-model="question.courseId" placeholder="科目"/> -->
+			       <select id="courseId" data-live-search="true" v-model="question.courseId">
+			      	   <option value="">请选择</option>
+					   <option v-bind:value="course.uid" v-for="course in courseList">{{course.name}}</option>
+				   </select>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">章节</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="question.chapterName" placeholder="章节" @click="openChapterTree" readonly="readonly" style="cursor:pointer;"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">题内容</div>
+			   	<div class="col-sm-10">
+			    <div class="ueditor" style="">
+                    <script id="tiganEditor" name="content" type="text/plain">
+					</script>
+                </div>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">答案</div>
+			   	<div class="col-sm-10">
+			      <!-- <input type="text" class="form-control" v-model="question.answer" placeholder="答案"/> -->
+			      <div class="ueditor" style="">
+                    <script id="daanEditor" name="content" type="text/plain">
+					</script>
+                  </div>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">解析</div>
+			   	<div class="col-sm-10">
+			      <!-- <input type="text" class="form-control" v-model="question.analysis" placeholder="解析"/> -->
+			      <div class="ueditor" style="">
+                    <script id="jiexiEditor" name="content" type="text/plain">
+					</script>
+                  </div>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">考察知识点</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="question.reviewPoint" placeholder="考察知识点"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">年份</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="question.year" placeholder="年份"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">分数</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="question.score" placeholder="分数"/>
+			    </div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-2 control-label"></div> 
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+			</div>
+		</form>
+	</div>
+</div>
+
+<!-- 选择菜单 -->
+<div id="menuLayer" style="display: none;padding:10px;">
+	<ul id="menuTree" class="ztree"></ul>
+</div>
+
+<script th:src="${setting.domain + 'js/tiku/question/list.js?v=6'}"></script>
+<script type="text/javascript" th:inline="javascript">
+	var mainHttp = [[${setting.domain}]];
+</script>
+</body>
+</html>

@@ -83,6 +83,6 @@ $(function(){
 	});
 	
 	$(".vcode-img-change").bind("click",function(){
-		$(".vcode-img").attr("src",mainHttp + "admin/captcha.jpg?t=" + $.now());
+		$(".vcode-img").attr("src",mainHttp + "captcha.jpg?t=" + $.now());
 	});
 })
