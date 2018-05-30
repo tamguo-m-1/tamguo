@@ -35,12 +35,4 @@ public interface IMenuService {
 	/** 获取菜单*/
 	public MenuEntity findById(String uid);
 
-	/** 保存*/
-	public void save(MenuEntity menu);
-
-	/** 修改*/
-	public void update(MenuEntity menu);
-
-	/** 删除*/
-	public void deleteBatch(String[] menuIds);
 }

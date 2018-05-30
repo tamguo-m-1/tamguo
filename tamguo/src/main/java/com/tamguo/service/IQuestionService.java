@@ -15,22 +15,10 @@ public interface IQuestionService {
 
 	public List<QuestionEntity> findPaperQuestion(String paperId);
 
-	public Page<QuestionEntity> list(String name, Integer page, Integer limit);
-
 	public QuestionEntity select(String questionId);
-
-	public void deleteBatch(String[] questionIds);
 
 	public void addQuestion(QuestionEntity question);
 
 	public Page<QuestionEntity> queryQuestionList(QuestionEntity question , Integer page , Integer limit);
 
-	public void save(QuestionEntity question);
-
-	public void update(QuestionEntity question);
-
-	public void audit(String[] questionIds);
-
-	public void notAudit(String[] questionIds);
-	
 }

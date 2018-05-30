@@ -22,18 +22,6 @@ public interface IPaperService {
 
 	Long getPaperTotal();
 
-	Page<PaperEntity> list(String name, Integer page, Integer limit);
-
-	PaperEntity select(String paperId);
-
-	void deleteByIds(String[] paperIds);
-
-	void save(PaperEntity paper);
-
-	void update(PaperEntity paper);
-	
-	// 会员部分
-	
 	List<PaperEntity> findByCreaterId(String createrId);
 
 	void updatePaperName(String paperId, String name);

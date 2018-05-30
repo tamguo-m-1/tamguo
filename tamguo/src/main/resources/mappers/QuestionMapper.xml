@@ -61,33 +61,6 @@
 			q.paper_id = #{paperId}
 	</select>
 	
-	<select id="queryPageByName" resultMap="BaseResultMap">
-		SELECT
-			q.analysis,
-			q.answer,
-			q.chapter_id,
-			(select c.name from tiku_chapter c where c.uid = q.chapter_id) as chapter_name,
-			q.content,
-			q.paper_id,
-			q.question_type,
-			q.review_point,
-			q.score,
-			q.course_id,
-			(select c.name from tiku_course c where c.uid = q.course_id) as course_name,
-			q.uid,
-			q.`year`,
-			q.subject_id,
-			(select s.name from tiku_subject s where s.uid = q.subject_id) as subject_name,
-			q.audit_status
-		FROM
-			tiku_question q
-		<where>
-			<if test="name != null and name != ''">
-				q.name like #{name}
-			</if>
-		</where>		
-	</select>
-	
 	<select id="queryQuestionList" resultMap="resultMap">
 		SELECT
 			q.analysis,

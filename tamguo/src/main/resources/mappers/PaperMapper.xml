@@ -122,32 +122,6 @@
 		select count(1) from tiku_paper
 	</select>
 	
-	<select id="queryPageByName" resultMap="BaseResultMap">
-		SELECT
-			p.area_id,
-			(select a.name from tiku_area a where a.uid = p.area_id) as area_name,
-			p.subject_id,
-			p.course_id,
-			(select c.name from tiku_course c where c.uid = p.course_id) as course_name,
-			p.down_hits,
-			p.`name`,
-			p.open_hits,
-			p.question_info,
-			p.school_id,
-			p.type,
-			(select s.name from tiku_school s where s.uid = p.school_id) as school_name,
-			p.type,
-			p.uid,
-			p.`year`
-		FROM
-			tiku_paper p
-		<where>
-			<if test="name != null and name != ''">
-				p.name like #{name}
-			</if>
-		</where>
-	</select>
-	
 	<select id="findByCreaterId" resultMap="resultMap">
 		SELECT
 			p.area_id,

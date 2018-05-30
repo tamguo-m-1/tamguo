@@ -14,6 +14,4 @@ public interface ChapterMapper extends BaseDao<ChapterEntity>{
 
 	ChapterEntity findNextPoint(@Param(value="uid")String uid , @Param(value="orders")Integer orders);
 
-	void deleteByCourseId(@Param(value="courseId")String courseId);
-
 }
