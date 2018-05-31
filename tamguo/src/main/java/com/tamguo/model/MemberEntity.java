@@ -42,6 +42,18 @@ public class MemberEntity implements Serializable {
 	@Column(name="last_login_time")
 	private Long lastLoginTime;
 	
+	@Column(name="paper_num")
+	private Integer paperNum;
+	
+	@Column(name="question_num")
+	private Integer questionNum;
+	
+	@Column(name="down_num")
+	private Integer downNum;
+	
+	@Column(name="hits_num")
+	private Integer hitsNum;
+	
 	public String getUid() {
 		return uid;
 	}
@@ -112,5 +124,37 @@ public class MemberEntity implements Serializable {
 
 	public void setLastLoginTime(Long lastLoginTime) {
 		this.lastLoginTime = lastLoginTime;
+	}
+
+	public Integer getPaperNum() {
+		return paperNum;
+	}
+
+	public void setPaperNum(Integer paperNum) {
+		this.paperNum = paperNum;
+	}
+
+	public Integer getQuestionNum() {
+		return questionNum;
+	}
+
+	public void setQuestionNum(Integer questionNum) {
+		this.questionNum = questionNum;
+	}
+
+	public Integer getHitsNum() {
+		return hitsNum;
+	}
+
+	public void setHitsNum(Integer hitsNum) {
+		this.hitsNum = hitsNum;
+	}
+
+	public Integer getDownNum() {
+		return downNum;
+	}
+
+	public void setDownNum(Integer downNum) {
+		this.downNum = downNum;
 	}
 }

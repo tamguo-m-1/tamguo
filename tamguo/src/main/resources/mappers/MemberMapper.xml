@@ -4,7 +4,8 @@
 
 	<select id="findByUsername" resultMap="resultMap">
 		SELECT
-			m.uid , m.avatar , m.`password` , m.username , m.mobile , m.email , m.point , m.amount , m.last_login_time
+			m.uid , m.avatar , m.`password` , m.username , m.mobile , m.email , m.point , m.amount , m.last_login_time , 
+			m.paper_num , m.question_num , m.down_num , m.hits_num
 		FROM
 			tiku_member m
 		where m.username = #{username}
@@ -12,7 +13,8 @@
 	
 	<select id="findByMobile" resultMap="resultMap">
 		SELECT
-			m.uid , m.avatar , m.`password` , m.username , m.mobile , m.email , m.point , m.amount , m.last_login_time
+			m.uid , m.avatar , m.`password` , m.username , m.mobile , m.email , m.point , m.amount , m.last_login_time , 
+			m.paper_num , m.question_num , m.down_num , m.hits_num
 		FROM
 			tiku_member m
 		where m.mobile = #{mobile}
@@ -20,7 +22,8 @@
 	
 	<select id="findByUsernameOrEmailOrMobile" resultType="com.tamguo.model.MemberEntity">
 		SELECT
-			m.uid , m.avatar , m.`password` , m.username , m.mobile , m.email , m.point , m.amount , m.last_login_time
+			m.uid , m.avatar , m.`password` , m.username , m.mobile , m.email , m.point , m.amount , m.last_login_time , 
+			m.paper_num , m.question_num , m.down_num , m.hits_num
 		FROM
 			tiku_member m
 		where m.username = #{account} or m.mobile = #{account} or m.email = #{account}

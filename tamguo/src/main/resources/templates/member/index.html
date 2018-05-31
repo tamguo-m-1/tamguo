@@ -99,22 +99,22 @@
 						<ul>
 							<li>
 								<img th:src="${setting.domain + 'images/member/index/peneil.png'}" style="margin-top: 26px;position: relative;top: -4px;"><br>
-								<span><b id="datab1">0</b> 次</span><br>
+								<span><b id="datab1" th:text="${member.downNum}">0</b> 次</span><br>
 								<span>下载总数</span>
 							</li>
 							<li>
 								<img th:src="${setting.domain + 'images/member/index/paperm.png'}" style="margin-top: 26px;position: relative;top: -4px;"><br>
-								<span><b id="datab2">1</b> 套</span><br>
+								<span><b id="datab2" th:text="${member.paperNum}">1</b> 套</span><br>
 								<span>试卷总数</span>
 							</li>
 							<li>
 								<img th:src="${setting.domain + 'images/member/index/peoplem.png'}" style="margin-top: 26px;position: relative;top: -4px;"><br>
-								<span><b id="datab3">0</b> 次</span><br>
+								<span><b id="datab3" th:text="${member.hitsNum}">0</b> 次</span><br>
 								<span>阅读总数</span>
 							</li>
 							<li>
 								<img th:src="${setting.domain + 'images/member/index/testnew.png'}" style="margin-top: 26px;position: relative;top: -6px;"><br>
-								<span><b id="datab4">19</b> 道</span><br>
+								<span><b id="datab4" th:text="${member.questionNum}">19</b> 道</span><br>
 								<span>试题总数</span>
 							</li>
 						</ul>
