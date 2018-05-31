@@ -62,14 +62,16 @@ $(function(){
 					$("#TANGRAM__PSP_25__password").val("");
 					$("#TANGRAM__PSP_25__verifyCode").val("");
 					$("#TANGRAM__PSP_25__verifyCodeChange").trigger("click");
-					$("#TANGRAM__PSP_25__error").html('帐号或密码错误，请重新输入或者<a href="http://passport.baidu.com/?getpassindex&amp;account=smiletocandy&amp;tpl=do&amp;u=https://tiku.baidu.com/" target="_blank">找回密码</a>');
+					$("#TANGRAM__PSP_25__error").html('帐号或密码错误，请重新输入或者<a href="'+mainHttp+'password/find.html" target="_blank">找回密码</a>');
 				}else if(data.code == 202){
 					$("#TANGRAM__PSP_25__password").addClass("pass-text-input-error").focus();
 					$("#TANGRAM__PSP_25__password").removeClass("pass-text-input-hover");
 					$("#TANGRAM__PSP_25__password").val("");
 					$("#TANGRAM__PSP_25__verifyCode").val("");
 					$("#TANGRAM__PSP_25__verifyCodeChange").trigger("click");
-					$("#TANGRAM__PSP_25__error").html('帐号或密码错误，请重新输入或者<a href="'+mainHttp+'" target="_blank">找回密码</a>');
+					$("#TANGRAM__PSP_25__error").html('帐号或密码错误，请重新输入或者<a href="'+mainHttp+'password/find.html" target="_blank">找回密码</a>');
+				} else if(data.code == 203){
+					$("#TANGRAM__PSP_25__error").html('账号被锁定两小时');
 				} else if(data.code == 204){
 					$("#TANGRAM__PSP_25__verifyCodeImgWrapper").css("display","block");
 					$("#TANGRAM__PSP_25__verifyCode").addClass("pass-text-input-error").focus();

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -25,7 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
-import com.tamguo.util.ExceptionSupport;
 import com.tamguo.util.Result;
 import com.tamguo.util.ShiroUtils;
 
@@ -65,26 +63,24 @@ public class LoginController {
 			String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
 			if (!verifyCode.equalsIgnoreCase(kaptcha)) {
 				result = Result.result(205, null, "验证码错误");
+			} else {
+				Subject subject = ShiroUtils.getSubject();
+				UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+				try {
+					subject.login(token);
+					
+					session.setAttribute("currMember", ShiroUtils.getMember());
+					response.sendRedirect("member/index.html");
+					return null;
+				} catch (UnknownAccountException e) {
+					result = Result.result(201, null, "用户名或密码有误，请重新输入或找回密码");
+				} catch (IncorrectCredentialsException e) {
+					result = Result.result(202, null, "用户名或密码有误，请重新输入或找回密码");
+				} catch (LockedAccountException e) {
+					result = Result.result(203, null, "账号被锁定");
+				} 
 			}
-		} else {
-			Subject subject = ShiroUtils.getSubject();
-			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-			try {
-				subject.login(token);
-				
-				session.setAttribute("currMember", ShiroUtils.getMember());
-				response.sendRedirect("member/index.html");
-				return null;
-			} catch (UnknownAccountException e) {
-				result = ExceptionSupport.resolverResult("找不到账户", this.getClass(), e);
-			} catch (IncorrectCredentialsException e) {
-				result = ExceptionSupport.resolverResult("账户验证失败", this.getClass(), e);
-			} catch (LockedAccountException e) {
-				result = ExceptionSupport.resolverResult("账户验证失败", this.getClass(), e);
-			} catch (AuthenticationException e) {
-				result = ExceptionSupport.resolverResult("账户验证失败", this.getClass(), e);
-			}
-		}
+		} 
 		model.setViewName("login");	
 		model.addObject("code", result.getCode());
 		model.addObject("msg" , result.getMessage());
@@ -110,14 +106,12 @@ public class LoginController {
 					session.setAttribute("currMember", ShiroUtils.getMember());
 					result = Result.successResult(ShiroUtils.getMember());
 				} catch (UnknownAccountException e) {
-					result = Result.result(201, null, "找不到账户");
+					result = Result.result(201, null, "用户名或密码有误，请重新输入或找回密码");
 				} catch (IncorrectCredentialsException e) {
-					result = Result.result(202, null, "账户验证失败");
+					result = Result.result(202, null, "用户名或密码有误，请重新输入或找回密码");
 				} catch (LockedAccountException e) {
 					result = Result.result(203, null, "账号被锁定");
-				} catch (AuthenticationException e) {
-					result = Result.result(202, null, "账户验证失败");
-				}
+				} 
 			}
 		}
 		return result;

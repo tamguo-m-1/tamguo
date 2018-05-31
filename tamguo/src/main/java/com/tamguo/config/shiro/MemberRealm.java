@@ -6,6 +6,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -52,7 +53,10 @@ public class MemberRealm extends AuthorizingRealm {
         if(member == null) {
         	throw new UnknownAccountException("用户名或密码有误，请重新输入或找回密码");
         }
-        Integer loginFailureCount = iMemberService.getLoginFailureCount(member);		
+        Integer loginFailureCount = iMemberService.getLoginFailureCount(member);
+        if(loginFailureCount > 10) {
+        	throw new LockedAccountException("账号被锁定");
+        }
 		
 		if(!new Sha256Hash(password).toHex().equals(member.getPassword())){
 			loginFailureCount++;
