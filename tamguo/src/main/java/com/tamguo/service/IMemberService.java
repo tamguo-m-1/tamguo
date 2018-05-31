@@ -5,7 +5,7 @@ import com.tamguo.util.Result;
 
 public interface IMemberService {
 
-	public Result login(String username , String password , String captcha);
+	public Result login(String username , String password);
 	
 	public Result checkUsername(String username);
 
@@ -26,4 +26,8 @@ public interface IMemberService {
 	public void updateMember(MemberEntity member);
 	
 	public MemberEntity findByUid(String uid);
+	
+	public MemberEntity findByUsername(String username);
+	
+	public void updateLoginFailureCount(MemberEntity member , Integer loginFailureCount);
 }

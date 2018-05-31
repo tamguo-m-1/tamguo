@@ -9,6 +9,13 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,16 +25,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
-import com.tamguo.model.MemberEntity;
-import com.tamguo.service.IMemberService;
+import com.tamguo.util.ExceptionSupport;
 import com.tamguo.util.Result;
 import com.tamguo.util.ShiroUtils;
 
 @Controller
 public class LoginController {
-	
-	@Autowired
-	private IMemberService iMemberService;
 	
 	@Autowired
 	private Producer producer;
@@ -55,28 +58,67 @@ public class LoginController {
 	
 	@RequestMapping(value = "/submitLogin", method = RequestMethod.POST)
 	public ModelAndView submitLogin(String  username , String password , String verifyCode , ModelAndView model , HttpSession session , HttpServletResponse response) throws IOException{
-		Result result = iMemberService.login(username, password , verifyCode);
-		if(result.getCode() == 200){
-			session.setAttribute("currMember", result.getResult());
-			response.sendRedirect("member/index.html");
-			return null;
-		}else{
-			model.setViewName("login");	
-			model.addObject("code", result.getCode());
-			model.addObject("msg" , result.getMessage());
-			model.addObject("isVerifyCode" , iMemberService.getLoginFailureCount((MemberEntity)result.getResult()) >=3 ? "1" : "0");
-			model.addObject("username", username);
+		Result result = Result.successResult(null);
+		if(StringUtils.isEmpty(verifyCode)) {
+			result = Result.result(202, null, "请输入验证码");
+		} else if(StringUtils.isNotEmpty(verifyCode)){
+			String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+			if (!verifyCode.equalsIgnoreCase(kaptcha)) {
+				result = Result.result(205, null, "验证码错误");
+			}
+		} else {
+			Subject subject = ShiroUtils.getSubject();
+			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+			try {
+				subject.login(token);
+				
+				session.setAttribute("currMember", ShiroUtils.getMember());
+				response.sendRedirect("member/index.html");
+				return null;
+			} catch (UnknownAccountException e) {
+				result = ExceptionSupport.resolverResult("找不到账户", this.getClass(), e);
+			} catch (IncorrectCredentialsException e) {
+				result = ExceptionSupport.resolverResult("账户验证失败", this.getClass(), e);
+			} catch (LockedAccountException e) {
+				result = ExceptionSupport.resolverResult("账户验证失败", this.getClass(), e);
+			} catch (AuthenticationException e) {
+				result = ExceptionSupport.resolverResult("账户验证失败", this.getClass(), e);
+			}
 		}
-		
+		model.setViewName("login");	
+		model.addObject("code", result.getCode());
+		model.addObject("msg" , result.getMessage());
+		model.addObject("username", username);
 		return model;
 	}
 	
 	@RequestMapping(value = "/miniLogin", method = RequestMethod.GET)
 	@ResponseBody
     public Result miniLogin(String username , String password , String captcha, ModelAndView model , HttpSession session) {
-		Result result = iMemberService.login(username, password , captcha);
-		if(result.getCode() == 200){
-			session.setAttribute("currMember", result.getResult());
+		Result result = null;
+		if(StringUtils.isEmpty(captcha)) {
+			result = Result.result(204, null, "请输入验证码");
+		} else if(StringUtils.isNotEmpty(captcha)){
+			String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+			if (!captcha.equalsIgnoreCase(kaptcha)) {
+				result = Result.result(205, null, "验证码错误");
+			}else {
+				Subject subject = ShiroUtils.getSubject();
+				UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+				try {
+					subject.login(token);
+					session.setAttribute("currMember", ShiroUtils.getMember());
+					result = Result.successResult(ShiroUtils.getMember());
+				} catch (UnknownAccountException e) {
+					result = Result.result(201, null, "找不到账户");
+				} catch (IncorrectCredentialsException e) {
+					result = Result.result(202, null, "账户验证失败");
+				} catch (LockedAccountException e) {
+					result = Result.result(203, null, "账号被锁定");
+				} catch (AuthenticationException e) {
+					result = Result.result(202, null, "账户验证失败");
+				}
+			}
 		}
 		return result;
     }

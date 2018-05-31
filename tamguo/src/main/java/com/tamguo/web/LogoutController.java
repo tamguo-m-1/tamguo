@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tamguo.util.ShiroUtils;
+
 @Controller
 public class LogoutController {
 
@@ -18,6 +20,7 @@ public class LogoutController {
 	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		if (session.getAttribute("currMember") != null) {
 			session.removeAttribute("currMember");
+			ShiroUtils.logout();
 		}
 		return "redirect:/";
 	}

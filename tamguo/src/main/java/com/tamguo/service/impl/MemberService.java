@@ -25,28 +25,12 @@ public class MemberService implements IMemberService{
 	private CacheService cacheService;
 
 	@Override
-	public Result login(String username, String password , String captcha) {
+	public Result login(String username, String password) {
 		MemberEntity member = memberMapper.findByUsername(username);
 		if(member == null){
 			return Result.result(201, member, "用户名或密码有误，请重新输入或找回密码");
 		}
 		Integer loginFailureCount = this.getLoginFailureCount(member);		
-		if(loginFailureCount == 3 && !new Sha256Hash(password).toHex().equals(member.getPassword())){
-			loginFailureCount++;
-			this.updateLoginFailureCount(member , loginFailureCount);
-			return Result.result(203, member, "用户名或密码有误，错误次数超过三次，启用验证码！");
-		}
-		if(loginFailureCount > 3 && StringUtils.isEmpty(captcha)){
-			loginFailureCount++;
-			this.updateLoginFailureCount(member , loginFailureCount);
-			return Result.result(204, member, "请输入验证码！");
-		}
-		if(loginFailureCount > 3){
-			String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
-			if (!captcha.equalsIgnoreCase(kaptcha)) {
-				return Result.result(205, member, "验证码错误");
-			}
-		}
 		if(!new Sha256Hash(password).toHex().equals(member.getPassword())){
 			loginFailureCount++;
 			this.updateLoginFailureCount(member , loginFailureCount);
@@ -56,7 +40,7 @@ public class MemberService implements IMemberService{
 		return Result.result(200, member, "登录成功");
 	}
 	
-	private void updateLoginFailureCount(MemberEntity member , Integer loginFailureCount){
+	public void updateLoginFailureCount(MemberEntity member , Integer loginFailureCount){
 		cacheService.setObject(TamguoConstant.LOGIN_FAILURE_COUNT + member.getUid(),  loginFailureCount , 2 * 60 * 60);
 	}
 	
@@ -195,6 +179,12 @@ public class MemberService implements IMemberService{
 	@Override
 	public MemberEntity findByUid(String uid) {
 		return memberMapper.select(uid);
+	}
+
+	@Transactional(readOnly=true)
+	@Override
+	public MemberEntity findByUsername(String username) {
+		return memberMapper.findByUsername(username);
 	}
 	
 }
