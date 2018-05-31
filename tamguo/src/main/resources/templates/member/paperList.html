@@ -12,8 +12,29 @@
 		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
 	</head>
 	<body  style="position: relative;height: auto;min-height: 100%;">
-		<!-- 头部-->
-		<div th:replace="include/memberHeader :: memberHeader"></div>
+	
+		<div class="head" th:fragment="memberHeader">
+			<div class="head-bar public">
+				<div class="logo">
+					<a target="_blank" th:href="${setting.domain}">
+						<img th:src="${setting.domain + 'images/logo_731bc32.png'}">
+					</a>
+					<p><span>考试中心</span></p>
+				</div>
+				<ul class="nav">
+					<li><a th:href="${setting.domain + 'member/index.html'}">首页</a></li>
+					<li class="active"><a th:href="${setting.domain + 'member/paper.html'}">试卷</a></li>
+					<li><a th:href="${setting.domain + 'member/account.html'}">帐号</a></li>
+					<li><a th:href="${setting.domain + 'member/questionList.html'}">题库</a></li>
+				</ul>
+				<div class="mguser">
+					<div class="mguser-box">
+						<span th:text="${session.currMember.username}">tamguo</span>
+						<a th:href="${setting.domain + 'logout.html'}">退出</a>
+					</div>
+				</div>
+			</div>
+		</div>
 		
 		<div class="cnav">
 			<div class="public cnav_b">

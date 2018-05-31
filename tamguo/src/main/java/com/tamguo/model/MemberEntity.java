@@ -1,6 +1,8 @@
 package com.tamguo.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import javax.persistence.*;
 
 /**
@@ -30,6 +32,15 @@ public class MemberEntity implements Serializable {
 	
 	@Column(name="email")
 	private String email;
+	
+	@Column(name="point")
+	private Integer point;
+	
+	@Column(name="amount")
+	private BigDecimal amount;
+	
+	@Column(name="last_login_time")
+	private Long lastLoginTime;
 	
 	public String getUid() {
 		return uid;
@@ -79,5 +90,27 @@ public class MemberEntity implements Serializable {
 		this.email = email;
 	}
 
+	public Integer getPoint() {
+		return point;
+	}
 
+	public void setPoint(Integer point) {
+		this.point = point;
+	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+
+	public Long getLastLoginTime() {
+		return lastLoginTime;
+	}
+
+	public void setLastLoginTime(Long lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
 }

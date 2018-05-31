@@ -63,6 +63,9 @@ public class MemberRealm extends AuthorizingRealm {
 			iMemberService.updateLoginFailureCount(member , loginFailureCount);
 			throw new IncorrectCredentialsException("用户名或密码有误，请重新输入或找回密码");
 		}
+		// 更新登录时间
+		iMemberService.updateLastLoginTime(member.getUid().toString());
+		
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(member, password, getName());
         return info;
 	}

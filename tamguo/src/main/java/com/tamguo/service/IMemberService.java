@@ -30,4 +30,6 @@ public interface IMemberService {
 	public MemberEntity findByUsername(String username);
 	
 	public void updateLoginFailureCount(MemberEntity member , Integer loginFailureCount);
+
+	public void updateLastLoginTime(String string);
 }

@@ -12,6 +12,7 @@ import com.tamguo.dao.MemberMapper;
 import com.tamguo.dao.redis.CacheService;
 import com.tamguo.model.MemberEntity;
 import com.tamguo.service.IMemberService;
+import com.tamguo.util.DateUtil;
 import com.tamguo.util.Result;
 import com.tamguo.util.ShiroUtils;
 import com.tamguo.util.TamguoConstant;
@@ -185,6 +186,14 @@ public class MemberService implements IMemberService{
 	@Override
 	public MemberEntity findByUsername(String username) {
 		return memberMapper.findByUsername(username);
+	}
+
+	@Transactional(readOnly=false)
+	@Override
+	public void updateLastLoginTime(String uid) {
+		MemberEntity member = memberMapper.select(uid);
+		member.setLastLoginTime(DateUtil.getTime());
+		memberMapper.update(member);
 	}
 	
 }
