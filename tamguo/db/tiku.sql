@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50173
 File Encoding         : 65001
 
-Date: 2018-05-31 19:24:14
+Date: 2018-06-01 17:29:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -287,6 +287,7 @@ DROP TABLE IF EXISTS `tiku_member`;
 CREATE TABLE `tiku_member` (
   `uid` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `username` varchar(100) NOT NULL DEFAULT '' COMMENT '用户名',
+  `nick_name` varchar(100) NOT NULL DEFAULT '' COMMENT '昵称',
   `password` varchar(64) NOT NULL DEFAULT '' COMMENT '密码',
   `avatar` varchar(255) NOT NULL DEFAULT '' COMMENT '头像',
   `mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '移动手机号',
@@ -304,7 +305,7 @@ CREATE TABLE `tiku_member` (
 -- ----------------------------
 -- Records of tiku_member
 -- ----------------------------
-INSERT INTO `tiku_member` VALUES ('12', 'tamguo', 'd51a70df396d0d6c0aca3cd4e08883fc2b586e2121ca3e65128180961ae092d7', 'images/avatar.png', '15618910786', 'candy.tam@aliyun.com', '1000', '21.00', '1527764950', '0', '0', '0', '0');
+INSERT INTO `tiku_member` VALUES ('12', 'tamguo', 'tamguo', 'd51a70df396d0d6c0aca3cd4e08883fc2b586e2121ca3e65128180961ae092d7', 'images/avatar.png', '15618910786', 'candy.tam@aliyun.com', '1000', '21.00', '1527833589', '0', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for tiku_menu
