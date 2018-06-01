@@ -86,24 +86,31 @@
 							 </div>
 						</dl>
 	              </div>
-					<div class="info-right newsRight" id="">
+					<div class="info-right newsRight">
 						<div class="info-rBox" style="padding-bottom: 20px;">
 								<div class=" user_list clearfix">
 									<table class="info-table" border="0" cellspacing="0" cellpadding="0">
 										<tbody>
 										<tr>
 											<td><label class="info-label" style="left: 30px;"><span></span>头像：</label></td>
-											<td><div class="clearfix" style="width: ; margin-bottom: 15px">
+											<td id="app">
+												<my-upload url="uploadFile.html"
+														field="file"
+														key="0"
+														lang-type="zh"
+														:value.sync="show2"
+														:params="otherParams"></my-upload>
+												
+												<div class="clearfix" style="width: ; margin-bottom: 15px">
 												<div class="clearfix" id="upPhoto">
-													<img class="acphoto" th:src="${setting.domain + member.avatar}">
+													<img class="acphoto" id="acphoto" th:src="${setting.domain + member.avatar}">
+													<input type="hidden" name="avatar" th:value="${setting.domain + member.avatar}"></input>
 													<div class="mybtn">
 														<span>支持jpg、jpeg和png格式，最大2M</span><br>
-														<input type="button" id="up_photo" class="up_photo" value="上传头像">
-														<input type="button" id="def_photo" class="up_photo" value="默认头像" style="background: #fff;color: #29bdb9;">
+														<input type="button" id="up_photo" @click="toggleShow2" class="up_photo" value="上传头像">
+														<input type="button" id="def_photo" onclick="defaultAvatar()" class="up_photo" value="默认头像" style="background: #fff;color: #29bdb9;">
 													</div>
-													<form id="fileForm" name="fileForm" action="/b/.action" method="post" enctype="multipart/form-data">
-														<input type="file" style="display: none;" id="f" name="fileInput"><table class="wwFormTable">
-																										</table></form>
+									
 														<input type="text" id="contactPhoto" name="contactPhoto" hidden="" class="cvcadd-text input" placeholder="请输入姓名/昵称" value="/images/defphoto/peopleSix.png">
 												</div>
 	
@@ -114,10 +121,10 @@
 											</td>
 										</tr>
 										<tr>
-											<td><label class="info-label" style="left: 30px;"><span>*</span>姓名：</label></td>
+											<td><label class="info-label" style="left: 30px;"><span>*</span>昵称：</label></td>
 											<td><div class="clearfix" style="width: ; margin-bottom: 15px">
 												<div class="clearfix">
-													<input type="text" name="username" class="cvcadd-text input" placeholder="请输入姓名/昵称" th:value="${member.username}">
+													<input type="text" name="nickName" class="cvcadd-text input" placeholder="请输入姓名/昵称" th:value="${member.nickName}">
 												</div>
 											</div></td>
 										</tr>
@@ -141,9 +148,11 @@
 										</tr>
 										</tbody>
 									</table>
+									
+									
 								</div>
 								<p class="saveBtn">
-									<a @click="updateMember" class="btn_ok" rel="cxdialog" rev="btn_ok" id="confirm_btn" style="position: relative;left: 103px;padding: 5px 60px;top: 10px;">保存</a>
+									<a onClick="updateMember()" class="btn_ok" rel="cxdialog" rev="btn_ok" id="confirm_btn" style="position: relative;left: 103px;padding: 5px 60px;top: 10px;">保存</a>
 								</p>
 						</div>
 					</div>
@@ -163,5 +172,34 @@
 		<script type="text/javascript" th:src="${setting.domain + 'libs/vue.min.js'}"></script>
 		<script th:src="${setting.domain + 'js/plugins/layer/layer.js'}"></script>
 		<script type="text/javascript" th:src="${setting.domain + 'js/member/account.js'}"></script>
+		<script type="text/javascript" th:src="${setting.domain + 'js/plugins/vue-image-crop-upload/demo-src.js'}"></script>
+		<script type="text/javascript">
+			function updateMember(){
+				var member = {};
+				member.nickName = $("input[name='nickName']").val();
+				member.email = $("input[name='email']").val();
+				member.mobile = $("input[name='mobile']").val();
+				member.avatar = $("input[name='avatar']").val();
+				$.ajax({
+					type: "POST",
+				    url: mainHttp + "member/account/update.html",
+				    data: member,
+				    dataType:"json",
+				    success: function(r){
+				    	if(r.code === 0){
+				    		layer.alert('操作成功', function(index){
+				    			window.location.reload();
+							});
+						}else{
+							layer.alert(r.message);
+						}
+					}
+				});
+			}
+			function defaultAvatar(){
+				$("input[name='avatar']").val("images/avatar.png");
+				$("#acphoto").attr("src",mainHttp + "images/avatar.png");
+			}
+		</script>
 	</body>
 </html>

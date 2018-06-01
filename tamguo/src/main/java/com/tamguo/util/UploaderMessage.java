@@ -9,6 +9,7 @@ public class UploaderMessage {
     private ArrayList<Integer> errorKys;
     private String error = "";
     private String filePath = "";
+    private String fileDomain = "";
 
     public Status getStatus() {
         return status;
@@ -48,6 +49,14 @@ public class UploaderMessage {
 
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+
+	public String getFileDomain() {
+		return fileDomain;
+	}
+
+	public void setFileDomain(String fileDomain) {
+		this.fileDomain = fileDomain;
 	}
     
     

@@ -96,6 +96,7 @@ public class MemberService implements IMemberService{
 		member.setMobile(mobile);
 		member.setPassword(new Sha256Hash(password).toHex());
 		member.setUsername(username);
+		member.setNickName(username);
 		memberMapper.insert(member);
 		return Result.result(200, member, "注册成功");
 	}
@@ -172,6 +173,7 @@ public class MemberService implements IMemberService{
 		entity.setAvatar(member.getAvatar());
 		entity.setEmail(member.getEmail());
 		entity.setMobile(member.getMobile());
+		entity.setNickName(member.getNickName());
 		
 		memberMapper.update(entity);
 	}

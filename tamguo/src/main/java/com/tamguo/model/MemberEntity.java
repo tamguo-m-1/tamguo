@@ -21,6 +21,9 @@ public class MemberEntity implements Serializable {
 	@Column(name="username")
 	private String username;
 	
+	@Column(name="nick_name")
+	private String nickName;
+	
 	@Column(name="password")
 	private String password;
 	
@@ -156,5 +159,13 @@ public class MemberEntity implements Serializable {
 
 	public void setDownNum(Integer downNum) {
 		this.downNum = downNum;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 }
