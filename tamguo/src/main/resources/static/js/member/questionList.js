@@ -14,9 +14,10 @@ var vm = new Vue({
 		currPage:1,
 		questionTypes:[{id:'1',name:'单选题'},{id:'2',name:'多选项'},{id:'3',name:'判断题'},{id:'4',name:'填空题'},{id:'5',name:'简答题'}],
 		q:{
+			uid:null,
 			questionType:null,
 			reviewPoint:null,
-			uid:null
+			paperId:null
 		},
 		questionList:null
 	},

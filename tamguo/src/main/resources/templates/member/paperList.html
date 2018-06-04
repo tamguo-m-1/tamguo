@@ -25,7 +25,6 @@
 					<li><a th:href="${setting.domain + 'member/index.html'}">首页</a></li>
 					<li class="active"><a th:href="${setting.domain + 'member/paper.html'}">试卷</a></li>
 					<li><a th:href="${setting.domain + 'member/account.html'}">帐号</a></li>
-					<li><a th:href="${setting.domain + 'member/questionList.html'}">题库</a></li>
 				</ul>
 				<div class="mguser">
 					<div class="mguser-box">
@@ -86,7 +85,7 @@
 				<div id="paperListDiv">
 		        <div class="plist-table positionList ng-scope" style="" v-for="paper in paperList">
 		            <div class="selectImg"></div>
-		            <table class="plist-ctab" data-positiontitle="赛码样卷（示例）" data-aftertitle="Demo体验使用" data-timetype="0" data-opentype="" data-opentime="0" data-papercode="">
+		            <table class="plist-ctab">
 		                <tbody>
 		                <tr align="center" valign="middle" style="height:66px">
 		                    <td width="300" class="plist-bt">
@@ -135,19 +134,17 @@
 			                        <div>
 			                        <span style="margin-left:0;">
 			                            <a href="javascript:void(0)" class="update_paper2" v-on:click="updatePaperQuestionInfoFn(paper.uid,qInfo.name,qInfo.type,qInfo.title,qInfo.uid)">编辑</a>|
-			                            <a href="javascript:void(0)" class="del" v-on:click="deletePaperQuestionInfoFn(paper.uid , qInfo.uid)">删除</a><!-- | -->
-			                            <!-- <a class="up" href="javascript:void(0)">上移</a>|
-			                            <a class="down" href="javascript:void(0)">下移</a> -->
+			                            <a href="javascript:void(0)" class="del" v-on:click="deletePaperQuestionInfoFn(paper.uid , qInfo.uid)">删除</a>
 			                        </span>
 			                            <ul class="addQuestion" style="margin:-3px 0 0;float:none">
 			                                <li class="ng-scope"><a class="add able" v-on:click="addPaperQuestionFn(paper.uid)" href="javascript:(0);">添加试题</a>
 			                                </li>
-			                                <li class="ng-scope"><a class="edit able" th:href="${setting.domain + 'member/questionList.html'}">管理试题</a>
+			                                <li class="ng-scope"><a class="edit able" :href="'questionList.html?paperId=' + paper.uid">管理试题</a>
 			                                </li>
 			                            </ul>
 			                        </div>
 			                    </td>
-			                </tr><!-- end ngRepeat: pp in p.routinePaper -->
+			                </tr>
 			                </tbody>
 			            </table>
 		            </div>

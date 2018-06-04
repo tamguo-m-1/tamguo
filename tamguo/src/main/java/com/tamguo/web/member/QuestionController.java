@@ -43,7 +43,8 @@ public class QuestionController {
 	}
 	
 	@RequestMapping(value = "/member/questionList", method = RequestMethod.GET)
-	public ModelAndView questionList(ModelAndView model){
+	public ModelAndView questionList(String paperId , ModelAndView model){
+		model.addObject("paper", iPaperService.find(paperId));
 		model.setViewName("member/questionList");
 		return model;
 	}
