@@ -63,23 +63,23 @@
 		    <div class="addQues_btn">
 		        <span><a th:href="${setting.domain + 'member/addQuestion.html?paperId=' + paper.uid}">+ 添加试题</a></span>
 		    </div>
-		    <div class="apa_ri" id="container">
+		    <div class="apa_ri" id="container" v-cloak>
 		        <div class="apa_ri-tab">
-		            <div class="apa_ri-t" style="height:">
+		            <div class="apa_ri-t">
 		                <table class="quesQueryBox">
 		                    <tbody><tr>
 		                        <td>题目类型：</td>
 		                        <td>
 		                            <select style="height:33px;border: 1px solid #dcdfe3;width:140px;" v-model="q.questionType">
-										<option>请选择</option> 
-										<option :value="type.uid" v-for="type in questionTypes">{{type.name}}</option>                         	
+										<option value="">请选择</option> 
+										<option :value="type.id" v-for="type in questionTypes">{{type.name}}</option>                         	
 		                            </select>
 		                        <td>试题编号：</td>
 		                        <td><input v-model="q.uid" class="idno ng-pristine ng-untouched ng-valid" type="text" style="left: 71px;"></td>
 		                        <td>题干关键词：</td>
 		                        <td>
 		                        	<input v-model="q.reviewPoint" class="quesTitle ng-pristine ng-untouched ng-valid" type="text" style="width: 230px;">
-		                        	<input v-model="q.paperId" type="text" th:value="${paper.uid}">
+		                        	<input id="paperId" name="paperId" type="hidden" th:value="${paper.uid}">
 		                        </td>
 		                    </tr>
 		                    <tr><td colspan="6"><div class="apa_ri-t5"><p v-on:click="queryQuestionList()">搜索试题</p></div></td></tr>
@@ -88,30 +88,28 @@
 		        </div>
         <div class="apa_ri-two">
             <div class="apa_ri-qx">
-                <span style="float:left;"><input type="checkbox">全选</span>
-                <span class="mOperation-btn" style="float:left;">
-                            <a href="javascript:void(0)" class="active btn delQues delect" style="margin-top: 0px;padding: 0px 10px;">移除</a>
-                        </span>
-                <div class="guidebar quesBar" style="width:100px;float: right; position: relative;top: -6px; right: -5px;">
-                    <select style="height:33px;border: 1px solid #dcdfe3;width:85px;">
-						<option>请选择</option>                            	
-                    </select>
-                </div>
                 <span style="position: relative;top: 3px;">共 <em class="ng-binding">6</em> 项查询结果</span>
             </div>
             <div class="quesesBox quesManBox">
-				<div class="paperQuesList ng-scope" v-for="question in questionList">
+				<div class="paperQuesList ng-scope" v-for="(question,index) in questionList">
                     <div class="chouTiBoxNo">
                         <div class="qtBox">
                             <div class="qtList ng-scope">
                                 <div class="ng-scope">
                                    		<div class="apa_ri-cen ng-scope"><em></em>
                                         <div class="apa_ri-cenbt">
-                                            <span class="quesNo ng-binding" style="display: inline-block;width:20px;left:0px; font-weight: bolder; ">1、</span>
-                                            <span style="display: inline-block;width: 50px;left: 0px;color: #2abcb8;font-weight: bolder" class="ng-scope">填空题</span>
-                                            <span style="display: inline-block;width:initial;left:0px;">|</span><pre class="titlePre"><div class="quesTitle ng-binding" v-html="question.content">
+                                            <span class="quesNo ng-binding" style="display: inline-block;width:20px;left:0px; font-weight: bolder; ">{{index+1}}、</span>
+                                            <span style="display: inline-block;width: 50px;left: 0px;color: #2abcb8;font-weight: bolder" class="ng-scope" v-if="question.questionType=='1'">单选题</span>
+                                            <span style="display: inline-block;width: 50px;left: 0px;color: #2abcb8;font-weight: bolder" class="ng-scope" v-if="question.questionType=='2'">多选题</span>
+                                            <span style="display: inline-block;width: 50px;left: 0px;color: #2abcb8;font-weight: bolder" class="ng-scope" v-if="question.questionType=='3'">判断题</span>
+                                            <span style="display: inline-block;width: 50px;left: 0px;color: #2abcb8;font-weight: bolder" class="ng-scope" v-if="question.questionType=='4'">填空题</span>
+                                            <span style="display: inline-block;width: 50px;left: 0px;color: #2abcb8;font-weight: bolder" class="ng-scope" v-if="question.questionType=='4'">解答题</span>
+                                            <span style="display: inline-block;width:initial;left:0px;">|</span>
+                                            <pre class="titlePre">
+                                            <div class="quesTitle ng-binding" v-html="question.content">
                                             
-                                            </div></pre>
+                                            </div>
+                                            </pre>
                                         </div>
                                         <div class="clear"></div>
                                         <ul class="apa_ri-cenul">
@@ -127,10 +125,6 @@
                                             <strong style="font-weight: normal;" class="ng-binding ng-scope">试题分值：{{question.score}}<em>|</em></strong>
                                         <span>
                                             <span class="fl ng-scope">
-                                            <span style="cursor: pointer;font-weight: bolder;color: #2abcb8;float: left">上移</span>
-                                            <span style="font-weight: bolder;color: #dadada;float: left;margin: 0 4px; ">|</span>
-                                            <span style="font-weight: bolder;color: #2abcb8;float: left;margin-right: 10px;cursor: pointer;" ng-click="movedown(qt)">下移</span>
-                                            </span>
                                             <a href="/ques#/edit/5acadc5767f496103153022f">编辑</a>
                                             <a class="ng-scope" href="javascript:void(0)">移除</a>
                                         </span>

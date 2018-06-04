@@ -23,10 +23,11 @@ var vm = new Vue({
 	},
 	methods: {
 		queryQuestionList:function(){
+			vm.q.paperId = $("#paperId").val();
 			$.ajax({
 				type: "POST",
 			    url: mainHttp + "member/queryQuestionList.html",
-			    data: {questionType:vm.q.questionType,reviewPoint:vm.q.reviewPoint,uid:vm.q.reviewPoint,
+			    data: {paperId:vm.q.paperId,questionType:vm.q.questionType,reviewPoint:vm.q.reviewPoint,uid:vm.q.reviewPoint,
 			    	page:vm.currPage,limit:2},
 			    dataType:"json",
 			    success: function(r){
@@ -34,7 +35,6 @@ var vm = new Vue({
 			    	vm.totalCount = r.totalCount;
 				}
 			});
-		}
+		},
 	}
 });
-vm.queryQuestionList();

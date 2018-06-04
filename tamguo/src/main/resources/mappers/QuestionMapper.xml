@@ -79,14 +79,18 @@
 		FROM
 			tiku_question q
 		<where>
+			1=1 
 			<if test="uid != null and uid != ''">
-				q.uid = #{uid}
+				and q.uid = #{uid}
 			</if>
 			<if test="reviewPoint != null and reviewPoint != ''">
-				q.review_point like #{reviewPoint}
+				and q.review_point like #{reviewPoint}
 			</if>
 			<if test="questionType != null and questionType != ''">
-				q.question_type = #{questionType}
+				and q.question_type = #{questionType}
+			</if>
+			<if test="paperId != null and paperId != ''">
+				and q.paper_id = #{paperId}
 			</if>
 		</where>
 	</select>

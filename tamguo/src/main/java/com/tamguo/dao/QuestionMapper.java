@@ -1,7 +1,6 @@
 package com.tamguo.dao;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 import com.github.pagehelper.Page;
@@ -14,7 +13,7 @@ public interface QuestionMapper extends BaseDao<QuestionEntity>{
 
 	List<QuestionEntity> findByPaperId(@Param(value="paperId")String paperId);
 
-	Page<QuestionEntity> queryQuestionList(@Param(value="questionType")String questionType , @Param(value="uid")String uid , @Param(value="reviewPoint")String reviewPoint);
+	Page<QuestionEntity> queryQuestionList(@Param(value="questionType")String questionType , @Param(value="uid")String uid , @Param(value="reviewPoint")String reviewPoint , @Param(value="paperId")String paperId);
 
 	QuestionEntity selectByUid(@Param(value="uid")String uid);
 

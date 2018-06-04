@@ -1,7 +1,6 @@
 package com.tamguo.web.member;
 
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,8 +50,9 @@ public class QuestionController {
 	
 	@RequestMapping(value = "/member/queryQuestionList" , method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> queryQuestionList(QuestionEntity question , Integer page , Integer limit){
-		Page<QuestionEntity> list = iQuestionService.queryQuestionList(question , page , limit);
+	public Map<String, Object> queryQuestionList(String questionType , String uid , String reviewPoint , String paperId ,
+			Integer page , Integer limit){
+		Page<QuestionEntity> list = iQuestionService.queryQuestionList(questionType , uid , reviewPoint , paperId , page , limit);
 		return Result.jqGridResult(list.getResult(), list.getTotal(), limit, page, list.getPages());
 	}
 	

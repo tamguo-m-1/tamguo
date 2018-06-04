@@ -53,13 +53,15 @@ public class QuestionService implements IQuestionService{
 		questionMapper.insert(question);
 	}
 
+	@Transactional(readOnly=true)
 	@Override
-	public Page<QuestionEntity> queryQuestionList(QuestionEntity question , Integer page , Integer limit) {
+	public Page<QuestionEntity> queryQuestionList(String questionType , String uid , String reviewPoint , String paperId ,
+			Integer page , Integer limit) {
 		PageHelper.startPage(page, limit);
-		if(!StringUtils.isEmpty(question.getReviewPoint())){
-			question.setReviewPoint("%" + question.getReviewPoint() + "%");
+		if(!StringUtils.isEmpty(reviewPoint)){
+			reviewPoint = "%" + reviewPoint + "%";
 		}
-		return questionMapper.queryQuestionList(question.getQuestionType(),question.getUid() ,question.getReviewPoint());
+		return questionMapper.queryQuestionList(questionType,  uid , reviewPoint , paperId);
 	}
 
 }

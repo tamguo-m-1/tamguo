@@ -41,6 +41,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageHelper;
 import com.tamguo.mybatis.MySqlSessionFactoryBean;
+import com.tamguo.mybatis.ShowSQLInterceptor;
 
 @Configuration
 @ConditionalOnClass({ SqlSessionFactory.class, SqlSessionFactoryBean.class })
@@ -88,7 +89,7 @@ public class MybatisAutoConfiguration implements EnvironmentAware{
 		sqlSessionFactoryBean.setModelSuffix("Entity");
 		List<Interceptor> plugins = new ArrayList<Interceptor>();
 		// 显示SQL语句，可以打开，但不要提交
-		//plugins.add(new ShowSQLInterceptor());
+		plugins.add(new ShowSQLInterceptor());
 		PageHelper pageHelper = new PageHelper();
 		Properties properties = new Properties();
 		properties.put("dialect", "mysql");

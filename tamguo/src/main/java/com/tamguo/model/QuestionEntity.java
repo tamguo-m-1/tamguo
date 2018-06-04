@@ -22,7 +22,7 @@ public class QuestionEntity implements Serializable {
 	private String analysis;
 	
 	@Column(name="paper_id")
-	private BigInteger paperId;
+	private String paperId;
 
 	@Column(name="answer")
 	private String answer;
@@ -135,11 +135,11 @@ public class QuestionEntity implements Serializable {
 		this.score = score;
 	}
 
-	public BigInteger getPaperId() {
+	public String getPaperId() {
 		return paperId;
 	}
 
-	public void setPaperId(BigInteger paperId) {
+	public void setPaperId(String paperId) {
 		this.paperId = paperId;
 	}
 

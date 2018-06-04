@@ -19,6 +19,7 @@ public interface IQuestionService {
 
 	public void addQuestion(QuestionEntity question);
 
-	public Page<QuestionEntity> queryQuestionList(QuestionEntity question , Integer page , Integer limit);
+	public Page<QuestionEntity> queryQuestionList(String questionType , String uid , String reviewPoint , String paperId ,
+			Integer page , Integer limit);
 
 }
