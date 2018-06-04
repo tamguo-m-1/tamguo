@@ -7,7 +7,7 @@
 			<div class="contain-login">
                 <div class="login-container">
                     <i th:if="${session.currMember == null}" class="login-icon iconfont icon-yonghu"></i><span th:if="${session.currMember == null}">登录</span>
-                    <img th:if="${session.currMember != null}" class="user-photo" th:src="${setting.domain + session.currMember.avatar}" alt="用户头像">
+                    <img style="border-radius:55px;" th:if="${session.currMember != null}" class="user-photo" th:src="${setting.domain + session.currMember.avatar}" alt="用户头像">
                     <i th:if="${session.currMember != null}" class="photo-icon iconfont icon-down" style="transform: rotate(0deg);"></i>
                 </div>
                 <ul th:class="${currMember == null} ? 'login-option dis-none' : 'login-option'" id="loginOptionUl">
