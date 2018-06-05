@@ -1,12 +1,3 @@
-layui.use(['laypage', 'layer'], function(){
-	  var laypage = layui.laypage,layer = layui.layer;
-	  laypage.render({elem: 'pagination',count: vm.totalCount , limit: 2 , layout: ['count', 'prev', 'page', 'next', 'skip'],
-		  jump: function(obj){
-			  vm.currPage = obj.curr;
-			  vm.queryQuestionList();
-		  }
-	  });
-});
 var vm = new Vue({
 	el:'#container',
 	data:{
@@ -22,13 +13,13 @@ var vm = new Vue({
 		questionList:null
 	},
 	methods: {
-		queryQuestionList:function(){
+		queryQuestionList:function(currPage){
 			vm.q.paperId = $("#paperId").val();
 			$.ajax({
 				type: "POST",
 			    url: mainHttp + "member/queryQuestionList.html",
 			    data: {paperId:vm.q.paperId,questionType:vm.q.questionType,reviewPoint:vm.q.reviewPoint,uid:vm.q.reviewPoint,
-			    	page:vm.currPage,limit:2},
+			    	page:currPage,limit:2},
 			    dataType:"json",
 			    success: function(r){
 			    	vm.questionList = r.list;
@@ -36,5 +27,9 @@ var vm = new Vue({
 				}
 			});
 		},
+		handleCurrentChange:function(val){
+			vm.queryQuestionList(val);
+		}
 	}
 });
+vm.queryQuestionList(1);

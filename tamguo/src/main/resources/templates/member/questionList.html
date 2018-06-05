@@ -5,9 +5,10 @@
 		<title>探果-管理试题</title>
 		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css' }" />
 		<link rel="stylesheet" th:href="${setting.domain + 'css/member/questionList.css' }" />
-		<link rel="stylesheet" th:href="${setting.domain + 'js/plugins/layui/css/layui.css'}">
 		<link rel="stylesheet" th:href="${setting.domain + 'css/member/memberMain.css'}" />
 		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 	</head>
 	<body>
 		<!-- 头部-->
@@ -52,7 +53,7 @@
 	        </div>
 	    </div>
 	    
-	    <div class="plist test_public  prof_t ng-scope">
+	    <div id="container" class="plist test_public  prof_t ng-scope" v-cloak>
     		<div class="pronext" style="margin-right: 16px;"><a th:href="${setting.domain + 'member/paper.html'}" class="backM">返回试卷列表页</a></div>
 		    <div class="topbt topbt-2">
 		        <h3>管理试题</h3>
@@ -63,7 +64,7 @@
 		    <div class="addQues_btn">
 		        <span><a th:href="${setting.domain + 'member/addQuestion.html?paperId=' + paper.uid}">+ 添加试题</a></span>
 		    </div>
-		    <div class="apa_ri" id="container" v-cloak>
+		    <div class="apa_ri">
 		        <div class="apa_ri-tab">
 		            <div class="apa_ri-t">
 		                <table class="quesQueryBox">
@@ -82,7 +83,7 @@
 		                        	<input id="paperId" name="paperId" type="hidden" th:value="${paper.uid}">
 		                        </td>
 		                    </tr>
-		                    <tr><td colspan="6"><div class="apa_ri-t5"><p v-on:click="queryQuestionList()">搜索试题</p></div></td></tr>
+		                    <tr><td colspan="6"><div class="apa_ri-t5"><p v-on:click="queryQuestionList(1)">搜索试题</p></div></td></tr>
 		                </tbody></table>
 		            </div>
 		        </div>
@@ -137,11 +138,13 @@
                     </div>
                 </div>
             </div>
-            <div style="text-align: center">
-		        <div class="plist-f" style="text-align: center">
-		        	<div id="pagination"></div>
-		        </div>
-            </div>
+            <el-pagination
+					  background
+					  layout="prev, pager, next"
+					  @current-change="handleCurrentChange"
+					  page-size="2"
+					  :total="totalCount">
+					</el-pagination>
         </div>
     </div>
 </div>
@@ -150,8 +153,9 @@
 	</body>
 	<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}" ></script>
 	<script th:src="${setting.domain + 'js/plugins/layer/layer.js'}"></script>
-	<script th:src="${setting.domain + 'js/plugins/layui/layui.js'}"></script>
 	<script th:src="${setting.domain + 'libs/vue.min.js'}"></script>
+	<!-- 引入组件库 -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 	<script type="text/javascript" th:inline="javascript">
 		var mainHttp = [[${setting.domain}]];
 	</script>
