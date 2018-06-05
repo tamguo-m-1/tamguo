@@ -56,4 +56,24 @@ public class QuestionController {
 		return Result.jqGridResult(list.getResult(), list.getTotal(), limit, page, list.getPages());
 	}
 	
+	@RequestMapping(value = "/member/editQuestion", method = RequestMethod.GET)
+	public ModelAndView editQuestion(String paperId , String questionId , ModelAndView model){
+		model.setViewName("member/editQuestion");
+		model.addObject("paper", iPaperService.find(paperId));
+		model.addObject("questionId" , questionId);
+		return model;
+	}
+	
+	@RequestMapping(value = "/member/getQuestion", method = RequestMethod.GET)
+	@ResponseBody
+	public Result getQuestion(String questionId) {
+		return Result.successResult(iQuestionService.select(questionId));
+	}
+	
+	@RequestMapping(value = "/member/updateQuestion", method = RequestMethod.POST)
+	@ResponseBody
+	public Result updateQuestion(QuestionEntity question) {
+		iQuestionService.updateQuestion(question);
+		return Result.successResult(null);
+	}
 }

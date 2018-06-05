@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="Zh-hans" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>会员中心-修改试题</title>
+		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/member/addQuestion.css'}">
+		<link rel="stylesheet" th:href="${setting.domain + 'css/member/memberMain.css'}" />
+		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
+	</head>
+	<body>
+		<!-- 头部-->
+		<div class="head" th:fragment="memberHeader">
+			<div class="head-bar public">
+				<div class="logo">
+					<a target="_blank" th:href="${setting.domain}">
+						<img th:src="${setting.domain + 'images/logo_731bc32.png'}">
+					</a>
+					<p><span>考试中心</span></p>
+				</div>
+				<ul class="nav">
+					<li><a th:href="${setting.domain + 'member/index.html'}">首页</a></li>
+					<li class="active"><a th:href="${setting.domain + 'member/paper.html'}">试卷</a></li>
+					<li><a th:href="${setting.domain + 'member/account.html'}">帐号</a></li>
+				</ul>
+				<div class="mguser">
+					<div class="mguser-box">
+						<span th:text="${session.currMember.username}">tamguo</span>
+						<a th:href="${setting.domain + 'logout.html'}">退出</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="banner_list">
+	        <div class="cnav">
+	            <div class="public cnav_b">
+	                <div class="cnav_left">
+	                    	考试五步曲
+	                </div>
+	                <div class="cnav_right">
+	                    <ul>
+	                        <li><span>1</span>新建试卷</li>
+	                        <li><span>2</span>添加试题</li>
+	                        <li><span>3</span>发起一场考试</li>
+	                        <li><span>4</span>导考生，发通知</li>
+	                        <li><span>5</span>查看报告</li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    
+	    <div id="container" class="container" style="">
+	    	<input type="hidden" name="questionId" id="questionId" th:value="${questionId}"></input>
+			<div class="plist test_public  prof_t ng-scope" style="">
+				<div class="topbt topbt-2">
+			        <h3>添加试题</h3>
+			        <div class="pronext"><a href="javascript:history.go(-1)">返回</a></div>
+			    </div>
+				
+				<div class="sp_Tcen" style="">
+			        <div class="sp_Tcb1 addpap_t9 questype">
+			            <span>题型：</span>
+			            <ul>
+			                <li v-bind:class="{'A_N_P_Ali': type.id == question.questionType }" v-on:click="vue.changeQuestionType(type.id)" id="{{type.id}}" v-for="type in questionTypes">{{type.name}}<em></em></li>
+			            </ul>
+			        </div>
+			        <div style="position:relative;">
+			        </div>
+			
+			        <div class="apa_ri-t3" style="margin:20px 0 0 45px;padding-left: 15px;">
+			            <ul>
+			                <li style="margin-left: 16px;">标签：<input type="text" placeholder="请填写标签（可不填）" v-model="question.reviewPoint" style="margin-left: 8px;" maxlength="100" class="ng-pristine ng-untouched ng-valid ng-valid-maxlength"></li>
+			            </ul>
+			        </div>
+			        <div class="apa_ri-t3" style="margin:20px 0 0 45px;padding-left: 15px;">
+			            <ul>
+			                <li style="margin-left: 16px;">
+			                	年份：<input type="text" placeholder="年份" style="margin-left: 8px;width:40px;" v-model="question.year" maxlength="100" class="ng-pristine ng-untouched ng-valid ng-valid-maxlength"> 年
+			                	<span style="margin-left:40px;"></span>
+			                	分数：<input type="text" placeholder="分数" style="margin-left: 8px;width:40px;" v-model="question.score" maxlength="100" class="ng-pristine ng-untouched ng-valid ng-valid-maxlength"> 分
+			                	
+			                	<input type="hidden" id="paperId" th:value="${paper.uid}">
+			                </li>
+			            </ul>
+			        </div>
+			
+			        <!--<div class="sp_Tcb">录入题目</div>-->
+			        <div class="line" style="height: 1px;background: #ccc;margin: 10px 0px;margin-top: 20px;"></div>
+			        <!---------------------------------------------------------------------------->
+			        <div class="noOnline" style="display: block">
+			            <div class="sp_Tcb-ti" style="padding-left: 79px; overflow: hidden; height: inherit;">
+			                <span>题干：</span>
+			                <div class="ueditor" style="">
+		                        <script id="tigan" name="content" type="text/plain">
+							    </script>
+			                </div>
+			            </div>
+			            <div class="clear" style="height:0px;"></div>
+			        </div>
+			    </div>
+			    
+			    <div class="clear" style="height:0px"></div>
+			    
+			    <div class="sp_Tcen" style="margin-bottom: 30px;">
+			        <div class="sp_Tcb-ti parse" style="margin: 0px; height: 70px;">
+			            <span style="float: left;font-size: 14px;margin-right: 13px;position: relative;left: 6px;overflow-y:auto;">题目答案：</span>
+			            <div class="ueditor" style="">
+	                        <script id="daan" type="text/plain">
+							</script>
+		                </div>
+			        </div>
+			    </div>
+			    <div class="clear" style="height: 0px;"></div>
+			    <div class="sp_Tcen" style="margin-bottom: 30px;margin-top:20px;">
+			        <div class="sp_Tcb-ti parse" style="margin: 0px; height: 70px;">
+			            <span style="float: left;font-size: 14px;margin-right: 13px;position: relative;left: 6px;overflow-y:auto;">题目解析：</span>
+			            <div class="ueditor" style="">
+	                        <script id="daanjiexi" type="text/plain">
+							    </script>
+		                </div>
+			        </div>
+			        <div class="clear"></div>
+			        <div class="submitBtns">
+			            <a href="javascript:void(0)" v-on:click="submitQuestion()">提交</a>
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<!-- 尾部-->
+		<div th:replace="include/memberFooter :: memberFooter"></div>
+		
+		<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}" ></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script type="text/javascript" th:src="${setting.domain + 'js/plugins/ueditor/ueditor.config.js'}"></script>
+		<script type="text/javascript" th:src="${setting.domain + 'js/plugins/ueditor/ueditor.all.min.js'}"></script>
+		<script type="text/javascript" th:inline="javascript">
+			var mainHttp = [[${setting.domain}]];
+		</script>
+		<script type="text/javascript" th:src="${setting.domain + 'libs/vue.min.js'}"></script>
+		<script th:src="${setting.domain + 'js/plugins/layer/layer.js'}"></script>
+		<script type="text/javascript" th:src="${setting.domain + 'js/member/editQuestion.js'}"></script>
+		<script type="text/javascript">
+			$(function(){
+			    window.tiganUE =  UE.getEditor('tigan',{
+                    //这里可以选择自己需要的工具按钮名称,此处仅选择如下五个
+                    toolbars: [
+                        [ 'source','undo', 'redo','fontfamily', 'fontsize','|', 'forecolor', 'backcolor','pasteplain', '|',
+                            'bold', 'italic', 'underline', 'fontborder','|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify','|', 'strikethrough', 'superscript', 'subscript', 'removeformat','|', 'insertorderedlist', 'insertunorderedlist','lineheight', '|',
+                            'link', 'unlink','|',
+                            'simpleupload','imagefloat', 'emotion', 'insertvideo', 'insertaudio', 'attachment','insertframe',
+                            'horizontal', '|',
+                            'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol','|','insertcode',]
+                    ],
+                    //关闭字数统计
+                    wordCount:false,
+                    autoFloatEnabled:false,
+                    //关闭elementPath
+                    elementPathEnabled:false,
+                    //默认的编辑区域高度
+                    initialFrameHeight:120,
+
+               });
+			    
+			    window.daanUE =  UE.getEditor('daan',{
+	                //这里可以选择自己需要的工具按钮名称,此处仅选择如下五个
+	                toolbars: [
+	                    ['fontfamily', 'fontsize','|', 'forecolor', 'backcolor','pasteplain', '|',  'bold', 'italic', 'underline', 'fontborder','|', 'link', 'unlink','|', 'simpleupload','imagefloat', 'insertcode',]
+	                ],
+	                //focus时自动清空初始化时的内容
+	                autoClearinitialContent:true,
+	                //关闭字数统计
+	                wordCount:false,
+	                //关闭elementPath
+	                elementPathEnabled:false,
+	                autoFloatEnabled:false,
+	                //默认的编辑区域高度
+	                initialFrameHeight:80,
+	
+	            })
+               
+				window.daanjiexiUE =  UE.getEditor('daanjiexi',{
+	                //这里可以选择自己需要的工具按钮名称,此处仅选择如下五个
+	                toolbars: [
+	                    ['fontfamily', 'fontsize','|', 'forecolor', 'backcolor','pasteplain', '|',  'bold', 'italic', 'underline', 'fontborder','|', 'link', 'unlink','|', 'simpleupload','imagefloat', 'insertcode',]
+	                ],
+	                //focus时自动清空初始化时的内容
+	                autoClearinitialContent:true,
+	                //关闭字数统计
+	                wordCount:false,
+	                //关闭elementPath
+	                elementPathEnabled:false,
+	                autoFloatEnabled:false,
+	                //默认的编辑区域高度
+	                initialFrameHeight:80,
+	
+	            	})
+			});
+		</script>
+	</body>
+
+</html>

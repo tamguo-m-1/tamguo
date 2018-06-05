@@ -22,4 +22,6 @@ public interface IQuestionService {
 	public Page<QuestionEntity> queryQuestionList(String questionType , String uid , String reviewPoint , String paperId ,
 			Integer page , Integer limit);
 
+	public void updateQuestion(QuestionEntity question);
+
 }

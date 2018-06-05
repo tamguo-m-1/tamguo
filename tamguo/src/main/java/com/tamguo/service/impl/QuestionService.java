@@ -64,4 +64,10 @@ public class QuestionService implements IQuestionService{
 		return questionMapper.queryQuestionList(questionType,  uid , reviewPoint , paperId);
 	}
 
+	@Transactional(readOnly=false)
+	@Override
+	public void updateQuestion(QuestionEntity question) {
+		questionMapper.update(question);
+	}
+
 }

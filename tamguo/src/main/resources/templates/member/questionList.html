@@ -126,7 +126,7 @@
                                             <strong style="font-weight: normal;" class="ng-binding ng-scope">试题分值：{{question.score}}<em>|</em></strong>
                                         <span>
                                             <span class="fl ng-scope">
-                                            <a href="/ques#/edit/5acadc5767f496103153022f">编辑</a>
+                                            <a :href="'editQuestion.html?paperId='+question.paperId+'&questionId='+question.uid">编辑</a>
                                             <a class="ng-scope" href="javascript:void(0)">移除</a>
                                         </span>
                                 </span>
