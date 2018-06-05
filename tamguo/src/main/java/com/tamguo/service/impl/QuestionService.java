@@ -70,4 +70,10 @@ public class QuestionService implements IQuestionService{
 		questionMapper.update(question);
 	}
 
+	@Transactional(readOnly=false)
+	@Override
+	public void delete(String uid) {
+		questionMapper.delete(uid);
+	}
+
 }

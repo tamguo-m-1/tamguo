@@ -76,4 +76,12 @@ public class QuestionController {
 		iQuestionService.updateQuestion(question);
 		return Result.successResult(null);
 	}
+	
+	
+	@RequestMapping(value = "/member/deleteQuestion", method = RequestMethod.POST)
+	@ResponseBody
+	public Result deleteQuestion(String uid) {
+		iQuestionService.delete(uid);
+		return Result.successResult(null);
+	}
 }

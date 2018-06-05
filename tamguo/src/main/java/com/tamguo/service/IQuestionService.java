@@ -24,4 +24,6 @@ public interface IQuestionService {
 
 	public void updateQuestion(QuestionEntity question);
 
+	public void delete(String uid);
+
 }

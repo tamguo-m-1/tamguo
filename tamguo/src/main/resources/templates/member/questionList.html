@@ -89,7 +89,7 @@
 		        </div>
         <div class="apa_ri-two">
             <div class="apa_ri-qx">
-                <span style="position: relative;top: 3px;">共 <em class="ng-binding">6</em> 项查询结果</span>
+                <span style="position: relative;top: 3px;">共 <em class="ng-binding">{{totalCount}}</em> 项查询结果</span>
             </div>
             <div class="quesesBox quesManBox">
 				<div class="paperQuesList ng-scope" v-for="(question,index) in questionList">
@@ -127,7 +127,7 @@
                                         <span>
                                             <span class="fl ng-scope">
                                             <a :href="'editQuestion.html?paperId='+question.paperId+'&questionId='+question.uid">编辑</a>
-                                            <a class="ng-scope" href="javascript:void(0)">移除</a>
+                                            <a class="ng-scope" v-on:click="deleteQuestion(question.uid)">移除</a>
                                         </span>
                                 </span>
                                         </div>

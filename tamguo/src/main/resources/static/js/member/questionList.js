@@ -29,6 +29,22 @@ var vm = new Vue({
 		},
 		handleCurrentChange:function(val){
 			vm.queryQuestionList(val);
+		},
+		deleteQuestion:function(uid){
+			$.ajax({
+				type: "POST",
+			    url: mainHttp + "member/deleteQuestion",
+			    data: {"uid":uid},
+			    success: function(r){
+			    	if(r.code === 0){
+			    		layer.alert('操作成功', function(index){
+			    			window.location.href = mainHttp + "member/questionList.html?paperId=" + question.paperId;
+						});
+					}else{
+						layer.alert(r.msg);
+					}
+				}
+			});
 		}
 	}
 });
