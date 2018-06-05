@@ -6,10 +6,11 @@
 		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
 		<link rel="stylesheet" th:href="${setting.domain + 'css/iconfont.css'}" />
 		<link rel="stylesheet" th:href="${setting.domain + 'css/member/paperList.css'}" />
-		<link rel="stylesheet" th:href="${setting.domain + 'js/plugins/layui/css/layui.css'}">
 		<link rel="stylesheet" th:href="${setting.domain + 'css/member/memberMain.css'}" />
 		<link rel="stylesheet" th:href="${setting.domain + 'js/plugins/ztree/css/metroStyle/metroStyle.css'}">
 		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 	</head>
 	<body  style="position: relative;height: auto;min-height: 100%;">
 	
@@ -153,7 +154,13 @@
 				
 		
 		        <div class="plist-f" style="text-align: center">
-		        	<div id="pagination"></div>
+		            <el-pagination
+							  background
+							  layout="prev, pager, next"
+							  @current-change="handleCurrentChange"
+							  page-size="2"
+							  :total="totalCount">
+							</el-pagination>
 		        </div>
 		        <div class="clear"></div>
 		    </div>
@@ -174,7 +181,7 @@
 	<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}" ></script>
 	<script th:src="${setting.domain + 'js/plugins/ztree/jquery.ztree.all.min.js'}"></script>
 	<script th:src="${setting.domain + 'js/plugins/layer/layer.js'}"></script>
-	<script th:src="${setting.domain + 'js/plugins/layui/layui.js'}"></script>
 	<script th:src="${setting.domain + 'libs/vue.min.js'}"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 	<script type="text/javascript" th:src="${setting.domain + 'js/member/paperList.js'}" ></script>
 </html>

@@ -1,4 +1,4 @@
-layui.use(['laypage', 'layer'], function(){
+/*layui.use(['laypage', 'layer'], function(){
 	  var laypage = layui.laypage,layer = layui.layer;
 	  laypage.render({elem: 'pagination',count: vue.totalCount , limit: 2 , layout: ['count', 'prev', 'page', 'next', 'skip'],
 		  jump: function(obj){
@@ -6,7 +6,7 @@ layui.use(['laypage', 'layer'], function(){
 			  vue.reload();
 		  }
 	  });
-});
+});*/
 // Vue
 var vue = new Vue({
 	el:'.myPositionList',
@@ -320,11 +320,11 @@ var vue = new Vue({
 				});
 			});
 		},
-		reload: function (event) {
+		reload: function (currPage) {
 			$.ajax({
 				type : "get", 
 				url : mainHttp + "/member/paper/list.html",
-				data:{name:$("input[name='keySearch']").val(),page:vue.currPage,limit:2},
+				data:{name:$("input[name='keySearch']").val(),page:currPage,limit:2},
 				async : true,
 				dataType : "json",
 				success : function(data) {
@@ -347,11 +347,14 @@ var vue = new Vue({
 		// 添加試題
 		addPaperQuestionFn:function(paperId){
 			window.location.href= mainHttp +'member/addQuestion.html?paperId='+paperId; 
+		},
+		handleCurrentChange:function(val){
+			vm.reload(val);
 		}
 	}
 });
 
-vue.reload();
+vue.reload(1);
 
 function saveUpdatePaper(){
 	var paperId = $("input[name='updatePaperUid']").val();
@@ -365,7 +368,7 @@ function saveUpdatePaper(){
 		success : function(data) {// 返回数据根据结果进行相应的处理,无论请求成功还是失败，都会走这个方法的
 			if(data.code === 0){
 				layer.alert('操作成功', function(index){
-					vue.reload();
+					vue.reload(1);
 					layer.closeAll()
 				});
 			}else{
@@ -390,7 +393,7 @@ function saveAddPaper(){
 		success : function(data) {// 返回数据根据结果进行相应的处理,无论请求成功还是失败，都会走这个方法的
 			if(data.code === 0){
 				layer.alert('操作成功', function(index){
-					vue.reload();
+					vue.reload(1);
 					layer.closeAll()
 				});
 			}else{
@@ -416,7 +419,7 @@ function updatePaperQuestionInfo(){
 		success : function(data) {// 返回数据根据结果进行相应的处理,无论请求成功还是失败，都会走这个方法的
 			if(data.code === 0){
 				layer.alert('操作成功', function(index){
-					vue.reload();
+					vue.reload(1);
 					layer.closeAll()
 				});
 			}else{
@@ -451,7 +454,7 @@ function saveMainPaper(){
 		success : function(data) {// 返回数据根据结果进行相应的处理,无论请求成功还是失败，都会走这个方法的
 			if(data.code === 0){
 				layer.alert('操作成功', function(index){
-					vue.reload();
+					vue.reload(1);
 					layer.closeAll()
 				});
 			}else{
