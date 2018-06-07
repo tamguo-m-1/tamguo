@@ -8,10 +8,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.Page;
 import com.tamguo.admin.model.QuestionEntity;
+import com.tamguo.admin.service.IChapterService;
 import com.tamguo.admin.service.IQuestionService;
 import com.tamguo.admin.util.CException;
 import com.tamguo.admin.util.ExceptionSupport;
@@ -22,6 +24,8 @@ public class TikuQuestionController {
 
 	@Autowired
 	private IQuestionService iQuestionService;
+	@Autowired
+	private IChapterService iChapterService;
 	
 	@RequestMapping("question/list")
 	@RequiresPermissions("tiku:question:list")
@@ -97,6 +101,12 @@ public class TikuQuestionController {
 		} catch (Exception e) {
 			return ExceptionSupport.resolverResult("审核题目", this.getClass(), e);
 		}
+	}
+	
+	@RequestMapping(value = {"/chapter/findChapterTreeByCourseId.html"}, method = RequestMethod.GET)
+	@ResponseBody
+	public Result findChapterTreeByCourseId(String courseId){
+		return Result.successResult(iChapterService.getChapterTree(courseId));
 	}
 	
 	private void verifyForm(QuestionEntity question) {
