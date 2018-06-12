@@ -16,6 +16,7 @@ $(function(){
 		$(".question-box").removeClass("selected-quescontainer");
 		$(this).addClass("selected-quescontainer");
 		$(".queanalyse-wrap").show(800);
+		$(".queanalyse-wrap").css("left", (document.body.clientWidth - 1200) / 2 + $('.question-box').width()+ 20);
 		var dataIndex = $(this).attr("data-index");
 		$.ajax({
 			type : "get", 
@@ -36,5 +37,13 @@ $(function(){
 		$(".quelist-wrap").css("left","");
 		$(".question-box").removeClass("selected-quescontainer");
 	});
+	
+	$(window).scroll(function() {
+		if($(window).scrollTop() > 0){
+			$('.queanalyse-wrap').css("top", 0);
+		}else{
+			$('.queanalyse-wrap').css("top", 162);
+		}
+    });
 	
 })
