@@ -2,7 +2,9 @@
 <html lang="Zh-hans" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title th:text="${'探果网 - ' + course.seoTitle}">探果网-试卷</title>
+	<title th:text="${course.seoTitle + '_探果题库'}">试卷_探果题库</title>
+	<meta name="author" content="Tamguo Team" />
+	<meta name="copyright" content="Tamguo" />	
 	<meta name="author" content="Tamguo Team" />
 	<meta name="copyright" content="Tamguo" />
 	<meta name="keywords" th:content="${course.seoKeywords}" />
