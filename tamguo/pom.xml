@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.tamguo</groupId>
 	<artifactId>tamguo</artifactId>
-	<version>V1.1</version>
+	<version>V1.0.1</version>
 	<name>探果网</name>
 
 	<parent>
@@ -168,6 +168,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>tamguo</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
