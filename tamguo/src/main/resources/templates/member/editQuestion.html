@@ -197,6 +197,16 @@
 	
 	            	})
 			});
+			
+			UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+	        UE.Editor.prototype.getActionUrl = function(action) {
+	            if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+	                return mainHttp + 'imgUpload.html';
+	                //'http://localhost:8080/imgUpload';为方法imgUpload的访问地址
+	            } else {
+	                return this._bkGetActionUrl.call(this, action);
+	            }
+	        }
 		</script>
 	</body>
 

@@ -144,12 +144,31 @@
 			    window.tiganUE =  UE.getEditor('tigan',{
                     //这里可以选择自己需要的工具按钮名称,此处仅选择如下五个
                     toolbars: [
-                        [ 'source','undo', 'redo','fontfamily', 'fontsize','|', 'forecolor', 'backcolor','pasteplain', '|',
-                            'bold', 'italic', 'underline', 'fontborder','|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify','|', 'strikethrough', 'superscript', 'subscript', 'removeformat','|', 'insertorderedlist', 'insertunorderedlist','lineheight', '|',
-                            'link', 'unlink','|',
-                            'simpleupload','imagefloat', 'emotion', 'insertvideo', 'insertaudio', 'attachment','insertframe',
-                            'horizontal', '|',
-                            'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol','|','insertcode',]
+                        [
+                            'undo', //撤销
+                            'bold', //加粗
+                            'italic', //斜体
+                            'underline', //下划线
+                            'strikethrough', //删除线
+                            'formatmatch', //格式刷
+                            'selectall', //全选
+                            'print', //打印
+                            'link', //超链接
+                            'unlink', //取消链接
+                            'fontfamily', //字体
+                            'fontsize', //字号
+                            'simpleupload', //单图上传
+                            'insertimage', //多图上传
+                            'help', //帮助
+                            'justifyleft', //居左对齐
+                            'justifyright', //居右对齐
+                            'justifycenter', //居中对齐
+                            'justifyjustify', //两端对齐
+                            'forecolor', //字体颜色
+                            'backcolor', //背景色
+                            'touppercase', //字母大写
+                            'tolowercase', //字母小写
+                        ]
                     ],
                     //关闭字数统计
                     wordCount:false,
@@ -195,6 +214,16 @@
 	
 	            	})
 			});
+			
+			UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+	        UE.Editor.prototype.getActionUrl = function(action) {
+	            if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+	                return mainHttp + 'imgUpload.html';
+	                //'http://localhost:8080/imgUpload';为方法imgUpload的访问地址
+	            } else {
+	                return this._bkGetActionUrl.call(this, action);
+	            }
+	        }
 		</script>
 	</body>
 
