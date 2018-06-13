@@ -106,8 +106,10 @@ public class QuestionService implements IQuestionService{
 			
 			// 章节题目数添加
 			ChapterEntity chapter = chapterMapper.select(question.getChapterId().toString());
-			chapter.setQuestionNum(chapter == null ? 0 : chapter.getQuestionNum().intValue() + 1);
-			chapterMapper.update(chapter);
+			if(chapter != null) {
+				chapter.setQuestionNum(chapter == null ? 0 : chapter.getQuestionNum().intValue() + 1);
+				chapterMapper.update(chapter);
+			}
 		}
 	}
 
@@ -125,8 +127,10 @@ public class QuestionService implements IQuestionService{
 			
 			// 章节题目数添加
 			ChapterEntity chapter = chapterMapper.select(question.getChapterId().toString());
-			chapter.setQuestionNum(chapter == null ? 0 : chapter.getQuestionNum().intValue() - 1);
-			chapterMapper.update(chapter);
+			if(chapter != null) {
+				chapter.setQuestionNum(chapter == null ? 0 : chapter.getQuestionNum().intValue() - 1);
+				chapterMapper.update(chapter);
+			}
 		}
 	}
 
