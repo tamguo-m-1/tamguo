@@ -349,7 +349,7 @@ var vue = new Vue({
 			window.location.href= mainHttp +'member/addQuestion.html?paperId='+paperId; 
 		},
 		handleCurrentChange:function(val){
-			vm.reload(val);
+			vue.reload(val);
 		}
 	}
 });

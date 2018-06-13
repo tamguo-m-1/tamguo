@@ -54,10 +54,15 @@ var vue = new Vue({
 			    console.log(response); // 请求正确时执行的代码  
 			    vue.question = response.data.result;
 			    
-			    daanUE.setContent(vue.question.answer); 
-			    tiganUE.setContent(vue.question.content);
-			    daanjiexiUE.setContent(vue.question.analysis);
-				
+			    daanUE.ready(function(){
+			    	daanUE.setContent(vue.question.answer);
+			    });
+			    tiganUE.ready(function(){
+			    	tiganUE.setContent(vue.question.content);
+			    });
+			    daanjiexiUE.ready(function(){
+			    	daanjiexiUE.setContent(vue.question.analysis);
+			    });
 			}).catch(function (response){  
 			    console.log(response); // 发生错误时执行的代码  
 			});
@@ -86,6 +91,8 @@ var vue = new Vue({
 				}
 			});
 		}
+	},
+	mounted(){
+		this.getQuestion();
 	}
 });
-vue.getQuestion();
