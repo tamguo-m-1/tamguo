@@ -2,13 +2,13 @@
 <html lang="Zh-hans" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title th:text="${course.seoTitle + '_探果题库'}">试卷_探果题库</title>
+	<title th:text="${course.seoTitle + '_探果题库'}">章节_探果题库</title>
+	<meta name="keywords" th:content="${course.seoKeywords}" />
+	<meta name="description" th:content="${course.seoDescription}" />
 	<meta name="author" content="Tamguo Team" />
 	<meta name="copyright" content="Tamguo" />	
 	<meta name="author" content="Tamguo Team" />
 	<meta name="copyright" content="Tamguo" />
-	<meta name="keywords" th:content="${course.seoKeywords}" />
-	<meta name="description" th:content="${course.seoDescription}" />
 	<link rel="stylesheet" th:href="${setting.domain + 'css/main.css'}"></link>
 	<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
 	<link rel="stylesheet" th:href="${setting.domain + 'css/iconfont.css'}" />

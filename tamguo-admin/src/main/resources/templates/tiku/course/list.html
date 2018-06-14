@@ -48,7 +48,25 @@
 			    </div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-2 control-label">考试ID</div>
+			   	<div class="col-sm-2 control-label">SEO标题</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="course.seoTitle" placeholder="SEO标题"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">SEO关键字</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="course.seoKeywords" placeholder="SEO关键字"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">SEO描述</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="course.seoDescription" placeholder="SEO描述"/>
+			    </div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">考试</div>
 			   	<div class="col-sm-10">
 			       <select id="subjectId" data-live-search="true" v-model="course.subjectId">
 			      	   <option value="">请选择</option>
