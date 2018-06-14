@@ -3,7 +3,7 @@ $(function () {
         url: mainHttp + 'menu/list.html',
         datatype: "json",
         colModel: [			
-			{ label: '菜单ID', name: 'uid', width: 40, key: true },
+			{ label: '菜单ID', name: 'uid', width: 40, key: true , hidden:true},
 			{ label: '菜单名称', name: 'name', width: 60 },
 			{ label: '上级菜单', name: 'parentId', width: 60 },
 			{ label: '是否显示', name: 'isShow', width: 60 },

@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.admin.dao.ChapterMapper;
 import com.tamguo.admin.dao.CourseMapper;
 import com.tamguo.admin.dao.redis.CacheService;
@@ -47,27 +46,26 @@ public class CourseService implements ICourseService{
 
 	@Override
 	public CourseEntity find(String uid) {
-		return courseMapper.select(uid);
+		return courseMapper.selectById(uid);
 	}
 
 	@Override
-	public Page<CourseEntity> list(String name, Integer page, Integer limit) {
-		PageHelper.startPage(page, limit);
+	public Page<CourseEntity> list(String name, Page<CourseEntity> page) {
 		if(!StringUtils.isEmpty(name)) {
 			name = "%" + name + "%";
 		}
-		return courseMapper.queryPageByName(name);
+		return page.setRecords(courseMapper.queryPageByName(name , page));
 	}
 
 	@Override
 	public CourseEntity select(String courseId) {
-		return courseMapper.select(courseId);
+		return courseMapper.selectById(courseId);
 	}
 
 	@Transactional(readOnly=false)
 	@Override
 	public void deleteByIds(String[] courseIds) {
-		courseMapper.deleteByIds(Arrays.asList(courseIds));
+		courseMapper.deleteBatchIds(Arrays.asList(courseIds));
 		
 		for(int i=0 ; i<courseIds.length ; i++){
 			// 删除之前的章节
@@ -112,7 +110,7 @@ public class CourseService implements ICourseService{
 	@Transactional(readOnly=false)
 	@Override
 	public void update(CourseEntity course) {
-		courseMapper.update(course);
+		courseMapper.updateById(course);
 		
 		// 更新章节
 		List<ChapterEntity> chapterList = course.getChapterList();
@@ -139,9 +137,9 @@ public class CourseService implements ICourseService{
 					}
 				}
 			} else {
-				ChapterEntity entity = chapterMapper.select(chapter.getUid());
+				ChapterEntity entity = chapterMapper.selectById(chapter.getUid());
 				entity.setName(chapter.getName());
-				chapterMapper.update(entity);
+				chapterMapper.updateById(entity);
 			}
 			
 		}

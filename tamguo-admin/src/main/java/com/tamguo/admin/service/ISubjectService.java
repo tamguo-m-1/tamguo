@@ -3,7 +3,7 @@ package com.tamguo.admin.service;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONArray;
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.admin.model.SubjectEntity;
 
 public interface ISubjectService {

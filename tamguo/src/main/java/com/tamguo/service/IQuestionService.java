@@ -1,14 +1,13 @@
 package com.tamguo.service;
 
 import java.util.List;
-
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.model.QuestionEntity;
 
 public interface IQuestionService {
 
 	/** 根据章节获取问题 */
-	public Page<QuestionEntity> findByChapterId(String chapterId ,  Integer offset ,  Integer limit);
+	public Page<QuestionEntity> findByChapterId(String chapterId ,  Page<QuestionEntity> page);
 	
 	/** 获取审核通过的题目 */
 	public QuestionEntity findNormalQuestion(String uid);
@@ -20,7 +19,7 @@ public interface IQuestionService {
 	public void addQuestion(QuestionEntity question);
 
 	public Page<QuestionEntity> queryQuestionList(String questionType , String uid , String reviewPoint , String paperId ,
-			Integer page , Integer limit);
+			Page<QuestionEntity> page);
 
 	public void updateQuestion(QuestionEntity question);
 

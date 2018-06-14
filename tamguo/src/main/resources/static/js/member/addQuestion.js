@@ -63,7 +63,7 @@ var vue = new Vue({
 			    success: function(r){
 			    	if(r.code === 0){
 			    		layer.alert('操作成功', function(index){
-			    			window.location.href = mainHttp + "member/questionList.html";
+			    			window.location.href = mainHttp + "member/questionList.html?paperId="+$("#paperId").val();
 						});
 					}else{
 						layer.alert(r.msg);

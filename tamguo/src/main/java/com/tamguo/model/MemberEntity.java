@@ -3,67 +3,42 @@ package com.tamguo.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.persistence.*;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.tamguo.config.dao.SuperEntity;
 
 /**
  * The persistent class for the tiku_ad database table.
  * 
  */
-@Entity
-@Table(name="tiku_member")
-@NamedQuery(name="MemberEntity.findAll", query="SELECT m FROM MemberEntity m")
-public class MemberEntity implements Serializable {
+@TableName(value="tiku_member")
+public class MemberEntity extends SuperEntity<MemberEntity> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	private String uid;
-	
-	@Column(name="username")
 	private String username;
 	
-	@Column(name="nick_name")
 	private String nickName;
-	
-	@Column(name="password")
+
 	private String password;
 	
-	@Column(name="avatar")
 	private String avatar;
 	
-	@Column(name="mobile")
 	private String mobile;
 	
-	@Column(name="email")
 	private String email;
 	
-	@Column(name="point")
 	private Integer point;
 	
-	@Column(name="amount")
 	private BigDecimal amount;
 	
-	@Column(name="last_login_time")
 	private Long lastLoginTime;
 	
-	@Column(name="paper_num")
 	private Integer paperNum;
 	
-	@Column(name="question_num")
 	private Integer questionNum;
 	
-	@Column(name="down_num")
 	private Integer downNum;
 	
-	@Column(name="hits_num")
 	private Integer hitsNum;
-	
-	public String getUid() {
-		return uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
 
 	public String getUsername() {
 		return username;

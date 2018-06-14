@@ -71,7 +71,7 @@ public class ChapterService implements IChapterService{
 
 	@Override
 	public ChapterEntity findById(String uid) {
-		return chapterMapper.select(uid);
+		return chapterMapper.selectById(uid);
 	}
 
 	@Override

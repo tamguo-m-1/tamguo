@@ -16,7 +16,7 @@
 	    <result column="subject_name" property="subjectName" jdbcType="VARCHAR" />
 	</resultMap>
 
-	<select id="findBySubjectId" resultMap="resultMap">
+	<select id="findBySubjectId" resultType="CourseEntity">
 		SELECT
 			c.uid,
 			c.`name`,
@@ -32,7 +32,7 @@
 		ORDER BY orders ASC
 	</select>
 	
-	<select id="queryPageByName" resultMap="BaseResultMap">
+	<select id="queryPageByName" resultType="CourseEntity">
 		SELECT
 			c.icon,
 			c.`name`,

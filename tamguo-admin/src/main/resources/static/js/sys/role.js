@@ -1,12 +1,11 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../sysRole/list',
+        url: '../sysRole/queryPage.html',
         datatype: "json",
         colModel: [			
-			{ label: '角色ID', name: 'roleId', width: 45, key: true },
-			{ label: '角色名称', name: 'roleName', width: 75 },
-			{ label: '备注', name: 'remark', width: 100 },
-			{ label: '创建时间', name: 'createTime', width: 80,formatter:'date',formatoptions: { srcformat: 'u', newformat: 'Y-m-d H:i:s' }}                   
+			{ label: '角色ID', name: 'uid', width: 45, key: true , hidden:true},
+			{ label: '角色名称', name: 'name', width: 75 },
+			{ label: '权限', name: 'perms', width: 100 },
         ],
 		viewrecords: true,
         height: 385,
@@ -24,8 +23,8 @@ $(function () {
             records: "totalCount"
         },
         prmNames : {
-            page:"page", 
-            rows:"limit", 
+            page:"current", 
+            rows:"size", 
             order: "order"
         },
         gridComplete:function(){
@@ -39,7 +38,7 @@ var setting = {
 	data: {
 		simpleData: {
 			enable: true,
-			idKey: "menuId",
+			idKey: "uid",
 			pIdKey: "parentId",
 			rootPId: -1
 		},
@@ -114,7 +113,7 @@ var vm = new Vue({
                 //勾选角色所拥有的菜单
     			var menuIds = vm.role.menuIdList;
     			for(var i=0; i<menuIds.length; i++) {
-    				var node = ztree.getNodeByParam("menuId", menuIds[i]);
+    				var node = ztree.getNodeByParam("uid", menuIds[i]);
     				ztree.checkNode(node, true, false);
     			}
     		});
@@ -124,11 +123,11 @@ var vm = new Vue({
 			var nodes = ztree.getCheckedNodes(true);
 			var menuIdList = new Array();
 			for(var i=0; i<nodes.length; i++) {
-				menuIdList.push(nodes[i].menuId);
+				menuIdList.push(nodes[i].uid);
 			}
 			vm.role.menuIdList = menuIdList;
 			
-			var url = vm.role.roleId == null ? "../sysRole/save" : "../sysRole/update";
+			var url = vm.role.uid == null ? "../sysRole/save.html" : "../sysRole/update.html";
 			$.ajax({
 				type: "POST",
 			    url: url,
@@ -160,7 +159,7 @@ var vm = new Vue({
 	    	vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
-                postData:{'roleName': vm.q.roleName},
+                postData:{'name': vm.q.name},
                 page:page
             }).trigger("reloadGrid");
 		}

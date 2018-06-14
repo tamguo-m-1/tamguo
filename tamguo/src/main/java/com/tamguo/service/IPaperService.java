@@ -2,7 +2,7 @@ package com.tamguo.service;
 
 import java.util.List;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.model.PaperEntity;
 
 public interface IPaperService {
@@ -36,7 +36,7 @@ public interface IPaperService {
 
 	void deletePaperQuestionInfoBtn(String paperId, String cuid);
 
-	Page<PaperEntity> memberPaperList(String name, String memberId , Integer page, Integer limit);
+	Page<PaperEntity> memberPaperList(String name, String memberId , Page<PaperEntity> page);
 
 	void addPaper(PaperEntity paper);
 

@@ -1,7 +1,8 @@
 package com.tamguo.admin.service;
 
 import java.util.List;
-import com.github.pagehelper.Page;
+
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.admin.model.CourseEntity;
 
 public interface ICourseService {
@@ -16,7 +17,7 @@ public interface ICourseService {
 	CourseEntity find(String uid);
 
 	/** 获取科目*/
-	Page<CourseEntity> list(String name, Integer page, Integer limit);
+	Page<CourseEntity> list(String name, Page<CourseEntity> page);
 
 	/** 获取科目*/
 	CourseEntity select(String courseId);

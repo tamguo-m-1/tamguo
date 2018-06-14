@@ -1,12 +1,14 @@
 package com.tamguo.admin.dao;
 
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import com.github.pagehelper.Page;
+
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
+import com.tamguo.admin.config.dao.SuperMapper;
 import com.tamguo.admin.model.SubjectEntity;
-import com.tamguo.admin.mybatis.dao.BaseDao;
 
-public interface SubjectMapper extends BaseDao<SubjectEntity>{
+public interface SubjectMapper extends SuperMapper<SubjectEntity>{
 
-	Page<SubjectEntity> queryPage(@Param(value="name")String name);
+	List<SubjectEntity> queryPage(@Param(value="name")String name , Pagination page);
 
 }

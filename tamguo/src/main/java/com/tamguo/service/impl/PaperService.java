@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.tamguo.dao.PaperMapper;
 import com.tamguo.dao.redis.CacheService;
 import com.tamguo.model.PaperEntity;
@@ -17,7 +17,7 @@ import com.tamguo.service.IPaperService;
 import com.tamguo.util.TamguoConstant;
 
 @Service
-public class PaperService implements IPaperService{
+public class PaperService extends ServiceImpl<PaperMapper, PaperEntity> implements IPaperService{
 	
 	@Autowired
 	private PaperMapper paperMapper;
@@ -27,10 +27,10 @@ public class PaperService implements IPaperService{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<PaperEntity> findHistoryPaper() {
-		PageHelper.startPage(1, 6);
 		List<PaperEntity> paperList = (List<PaperEntity>) cacheService.getObject(TamguoConstant.HISTORY_PAPER);
 		if(paperList == null || paperList.isEmpty()){
-			paperList = paperMapper.findByTypeAndAreaId(TamguoConstant.ZHENGTI_PAPER_ID , TamguoConstant.BEIJING_AREA_ID);
+			Page<PaperEntity> page = new Page<>(1 , 6);
+			paperList = paperMapper.findByTypeAndAreaId(TamguoConstant.ZHENGTI_PAPER_ID , TamguoConstant.BEIJING_AREA_ID , page);
 			cacheService.setObject(TamguoConstant.ZHENGTI_PAPER_ID, paperList , 2 * 60 * 60);
 		}
 		return paperList;
@@ -39,10 +39,10 @@ public class PaperService implements IPaperService{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<PaperEntity> findSimulationPaper() {
-		PageHelper.startPage(1, 6);
 		List<PaperEntity> paperList = (List<PaperEntity>) cacheService.getObject(TamguoConstant.SIMULATION_PAPER);
 		if(paperList == null || paperList.isEmpty()){
-			paperList = paperMapper.findByTypeAndAreaId(TamguoConstant.SIMULATION_PAPER_ID , TamguoConstant.BEIJING_AREA_ID);
+			Page<PaperEntity> page = new Page<>(1 , 6);
+			paperList = paperMapper.findByTypeAndAreaId(TamguoConstant.SIMULATION_PAPER_ID , TamguoConstant.BEIJING_AREA_ID , page);
 			cacheService.setObject(TamguoConstant.SIMULATION_PAPER, paperList , 2 * 60 * 60);
 		}
 		return paperList;
@@ -51,11 +51,11 @@ public class PaperService implements IPaperService{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<PaperEntity> findHotPaper(String areaId) {
-		PageHelper.startPage(1, 10);
 		List<PaperEntity> paperList = (List<PaperEntity>) cacheService.getObject(TamguoConstant.HOT_PAPER);
 		paperList = null;
 		if(paperList == null || paperList.isEmpty()){
-			paperList = paperMapper.findByAreaId(areaId);
+			Page<PaperEntity> page = new Page<>(1 , 10);
+			paperList = paperMapper.findByAreaId(areaId ,page);
 			cacheService.setObject(TamguoConstant.HOT_PAPER, paperList , 2 * 60 * 60);
 		}
 		return paperList;
@@ -64,13 +64,13 @@ public class PaperService implements IPaperService{
 	@Override
 	public Page<PaperEntity> findList(String courseId,
 			String paperType, String year, String area , Integer pageNum) {
-		PageHelper.startPage(pageNum, TamguoConstant.DEFAULT_PAGE_SIZE);
-		return paperMapper.findList(courseId , paperType , year , area);
+		Page<PaperEntity> page = new Page<>(pageNum , TamguoConstant.DEFAULT_PAGE_SIZE);
+		return page.setRecords(paperMapper.findList(courseId , paperType , year , area , page));
 	}
 
 	@Override
 	public PaperEntity find(String paperId) {
-		return paperMapper.select(paperId);
+		return paperMapper.selectById(paperId);
 	}
 
 	@Override
@@ -78,8 +78,8 @@ public class PaperService implements IPaperService{
 		if("n".equals(type)){
 			return this.findHotPaper(areaId);
 		}
-		PageHelper.startPage(1, 8);
-		return paperMapper.findPaperByAreaId(areaId , type);
+		Page<PaperEntity> page = new Page<>(1 , 8);
+		return paperMapper.findPaperByAreaId(areaId , type , page);
 	}
 
 	@Override
@@ -95,21 +95,21 @@ public class PaperService implements IPaperService{
 	@Transactional(readOnly=false)
 	@Override
 	public void updatePaperName(String paperId, String name) {
-		PaperEntity paper = paperMapper.select(paperId);
+		PaperEntity paper = paperMapper.selectById(paperId);
 		paper.setName(name);
-		paperMapper.update(paper);
+		paperMapper.updateById(paper);
 	}
 
 	@Override
 	public void deletePaper(String paperId) {
-		paperMapper.delete(paperId);
+		paperMapper.deleteById(paperId);
 	}
 
 	@Transactional(readOnly=false)
 	@Override
 	public void addPaperQuestionInfo(String paperId, String title,
 			String name, String type) {
-		PaperEntity paper = paperMapper.select(paperId);
+		PaperEntity paper = paperMapper.selectById(paperId);
 		String questionInfo = paper.getQuestionInfo();
 		
 		JSONArray qList = JSONArray.parseArray(questionInfo);
@@ -126,14 +126,14 @@ public class PaperService implements IPaperService{
 		}
 		
 		paper.setQuestionInfo(qList.toString());
-		paperMapper.update(paper);
+		paperMapper.updateById(paper);
 	}
 
 	@Transactional(readOnly=false)
 	@Override
 	public void updatePaperQuestionInfo(String paperId, String title,
 			String name, String type, String cuid) {
-		PaperEntity paper = paperMapper.select(paperId);
+		PaperEntity paper = paperMapper.selectById(paperId);
 		String questionInfo = paper.getQuestionInfo();
 		JSONArray qList = JSONArray.parseArray(questionInfo);
 		for(int i =0 ; i<qList.size() ; i++){
@@ -146,12 +146,12 @@ public class PaperService implements IPaperService{
 		}
 		
 		paper.setQuestionInfo(qList.toString());
-		paperMapper.update(paper);
+		paperMapper.updateById(paper);
 	}
 
 	@Override
 	public void deletePaperQuestionInfoBtn(String paperId, String cuid) {
-		PaperEntity paper = paperMapper.select(paperId);
+		PaperEntity paper = paperMapper.selectById(paperId);
 		String questionInfo = paper.getQuestionInfo();
 		JSONArray qList = JSONArray.parseArray(questionInfo);
 		for(int i =0 ; i<qList.size() ; i++){
@@ -168,18 +168,16 @@ public class PaperService implements IPaperService{
 		}
 				
 		paper.setQuestionInfo(qList.toString());
-		paperMapper.update(paper);
+		paperMapper.updateById(paper);
 	}
 
 
 	@Override
-	public Page<PaperEntity> memberPaperList(String name , String memberId , Integer page,
-			Integer limit) {
-		PageHelper.startPage(page, limit);
+	public Page<PaperEntity> memberPaperList(String name , String memberId , Page<PaperEntity> page) {
 		if(!StringUtils.isEmpty(name)){
 			name = "%" + name + "%";
 		}
-		return paperMapper.queryPageByNameAndCreatorId(name , memberId);
+		return page.setRecords(paperMapper.queryPageByNameAndCreatorId(name , memberId , page));
 	}
 
 	@Transactional(readOnly=false)

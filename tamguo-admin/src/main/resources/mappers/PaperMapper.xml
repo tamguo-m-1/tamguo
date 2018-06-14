@@ -24,7 +24,7 @@
 	    <result column="seo_description" property="seoDescription" jdbcType="INTEGER" />
 	</resultMap>
 
-	<select id="findByTypeAndAreaId" resultMap="resultMap">
+	<select id="findByTypeAndAreaId" resultType="PaperEntity">
 		SELECT
 			p.uid,
 			p.area_id,
@@ -38,7 +38,7 @@
 		where p.type = #{type} and p.area_id = #{areaId}
 	</select>	
 	
-	<select id="findByAreaId" resultMap="resultMap">
+	<select id="findByAreaId" resultType="PaperEntity">
 		SELECT
 			p.uid,
 			p.area_id,
@@ -53,7 +53,7 @@
 		order by down_hits desc
 	</select>
 	
-	<select id="findBySchoolId" resultMap="resultMap">
+	<select id="findBySchoolId" resultType="PaperEntity">
 		SELECT
 			p.uid,
 			p.area_id,
@@ -67,7 +67,7 @@
 		where p.school_id = #{schoolId}
 	</select>
 	
-	<select id="findList" resultMap="resultMap">
+	<select id="findList" resultType="PaperEntity">
 		SELECT
 			p.area_id,
 			p.course_id,
@@ -96,7 +96,7 @@
 		</if>
 	</select>
 	
-	<select id="findPaperByAreaId" resultMap="resultMap">
+	<select id="findPaperByAreaId" resultType="PaperEntity">
 		SELECT
 			p.uid,
 			p.course_id,
@@ -148,7 +148,7 @@
 		</where>
 	</select>
 	
-	<select id="findByCreaterId" resultMap="resultMap">
+	<select id="findByCreaterId" resultType="PaperEntity">
 		SELECT
 			p.area_id,
 			p.course_id,
@@ -169,7 +169,7 @@
 		</where>
 	</select>
 	
-	<select id="queryPageByNameAndCreatorId" resultMap="resultMap">
+	<select id="queryPageByNameAndCreatorId" resultType="PaperEntity">
 		SELECT
 			p.area_id,
 			p.course_id,

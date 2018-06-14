@@ -1,19 +1,19 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../sysUser/list',
+        url: '../sysUser/queryPage.html',
+        type:"post",
         datatype: "json",
         colModel: [			
-			{ label: '用户ID', name: 'userId', width: 45, key: true },
-			{ label: '用户名', name: 'username', width: 75 },
+			{ label: '用户ID', name: 'uid', width: 45, key: true , hidden:true},
+			{ label: '用户名', name: 'userName', width: 75 },
+			{ label: '昵称', name: 'nickName', width: 75 },
 			{ label: '邮箱', name: 'email', width: 90 },
 			{ label: '手机号', name: 'mobile', width: 100 },
 			{ label: '状态', name: 'status', width: 80, formatter: function(value, options, row){
-				return value === 0 ? 
+				return value === "locked" ? 
 					'<span class="label label-danger">禁用</span>' : 
 					'<span class="label label-success">正常</span>';
-			}},
-			{ label: '创建时间', name: 'createTime', width: 80,formatter:'date',formatoptions: { srcformat: 'u', newformat: 'Y-m-d H:i:s' }},
-			{ label: '最后登录时间', name: 'lastLoginTime', width: 80,formatter:'date',formatoptions: { srcformat: 'u', newformat: 'Y-m-d H:i:s' }} 
+			}} 
         ],
 		viewrecords: true,
         height: 385,
@@ -31,8 +31,8 @@ $(function () {
             records: "totalCount"
         },
         prmNames : {
-            page:"page", 
-            rows:"limit", 
+            page:"current", 
+            rows:"size", 
             order: "order"
         },
         gridComplete:function(){
@@ -46,13 +46,13 @@ var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		q:{
-			username: null
+			userName: null
 		},
 		showList: true,
 		title:null,
 		roleList:{},
 		user:{
-			status:1,
+			status:"normal",
 			roleIdList:[]
 		}
 	},
@@ -64,10 +64,11 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.roleList = {};
-			vm.user = {status:1,roleIdList:[]};
+			vm.user = {status:'normal',roleIdList:[]};
 			
-			//获取角色信息
-			this.getRoleList();
+			axios.all([this.getRoleList()]).then(axios.spread(function (rResponse) {
+				vm.roleList = rResponse.data.result;
+            }));
 		},
 		update: function () {
 			var userId = getSelectedRow();
@@ -77,10 +78,13 @@ var vm = new Vue({
 			
 			vm.showList = false;
             vm.title = "修改";
-			
-			vm.getUser(userId);
-			//获取角色信息
-			this.getRoleList();
+            vm.roleList = {};
+            
+            axios.all([this.getUser(userId),this.getRoleList()]).then(axios.spread(function (uResponse , rResponse) {
+            	vm.user = uResponse.data.result;
+            	vm.roleList = rResponse.data.result;
+            }));
+            
 		},
 		del: function () {
 			var userIds = getSelectedRows();
@@ -106,7 +110,7 @@ var vm = new Vue({
 			});
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.user.userId == null ? "../sysUser/save" : "../sysUser/update";
+			var url = vm.user.uid == null ? "../sysUser/save" : "../sysUser/update";
 			$.ajax({
 				type: "POST",
 			    url: url,
@@ -123,20 +127,19 @@ var vm = new Vue({
 			});
 		},
 		getUser: function(userId){
-			$.get("../sysUser/info/"+userId, function(r){
-				vm.user = r.result;
-			});
+			return axios.get("../sysUser/info/"+userId);
 		},
 		getRoleList: function(){
-			$.get("../sysRole/select", function(r){
-				vm.roleList = r.result;
-			});
+			return axios.get("../sysRole/all");
+		},
+		getCompanyList:function(){
+			return axios.get("../sysCompany/findAll.html");
 		},
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
-                postData:{'username': vm.q.username},
+                postData:{'userName':vm.q.userName},
                 page:page
             }).trigger("reloadGrid");
 		}

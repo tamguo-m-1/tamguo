@@ -1,7 +1,9 @@
 package com.tamguo.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.tamguo.config.dao.SuperEntity;
 
 import java.util.List;
 
@@ -10,45 +12,26 @@ import java.util.List;
  * The persistent class for the tiku_chapter database table.
  * 
  */
-@Entity
-@Table(name="tiku_chapter")
-@NamedQuery(name="ChapterEntity.findAll", query="SELECT c FROM ChapterEntity c")
-public class ChapterEntity implements Serializable {
+@TableName(value="tiku_chapter")
+public class ChapterEntity extends SuperEntity<ChapterEntity> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
-	private String uid;
-
-	@Column(name="course_id")
 	private String courseId;
 
-	@Column(name="name")
 	private String name;
 
-	@Column(name="parent_id")
 	private String parentId;
 	
-	@Column(name="question_num")
 	private Integer questionNum;
 	
-	@Column(name="point_num")
 	private Integer pointNum;
 	
-	@Column(name="orders")
 	private Integer orders;
 	
+	@TableField(exist=false)
 	private List<ChapterEntity> childChapterList;
 
 	public ChapterEntity() {
-	}
-
-	public String getUid() {
-		return this.uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
 	}
 
 	public String getCourseId() {

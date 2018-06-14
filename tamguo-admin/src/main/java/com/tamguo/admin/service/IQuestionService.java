@@ -1,7 +1,8 @@
 package com.tamguo.admin.service;
 
 import java.util.List;
-import com.github.pagehelper.Page;
+
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.admin.model.QuestionEntity;
 
 public interface IQuestionService {

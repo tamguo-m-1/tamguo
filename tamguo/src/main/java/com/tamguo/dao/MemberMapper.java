@@ -2,10 +2,10 @@ package com.tamguo.dao;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.tamguo.config.dao.SuperMapper;
 import com.tamguo.model.MemberEntity;
-import com.tamguo.mybatis.dao.BaseDao;
 
-public interface MemberMapper extends BaseDao<MemberEntity>{
+public interface MemberMapper extends SuperMapper<MemberEntity>{
 
 	MemberEntity findByUsername(String username);
 

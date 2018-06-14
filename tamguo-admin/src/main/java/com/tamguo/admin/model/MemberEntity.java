@@ -1,44 +1,27 @@
 package com.tamguo.admin.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.tamguo.admin.config.dao.SuperEntity;
 
 /**
  * The persistent class for the tiku_ad database table.
  * 
  */
-@Entity
-@Table(name="tiku_member")
-@NamedQuery(name="MemberEntity.findAll", query="SELECT m FROM MemberEntity m")
-public class MemberEntity implements Serializable {
+@TableName(value="tiku_member")
+public class MemberEntity extends SuperEntity<MemberEntity> implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	private String uid;
 	
-	@Column(name="username")
 	private String username;
 	
-	@Column(name="password")
 	private String password;
 	
-	@Column(name="avatar")
 	private String avatar;
 	
-	@Column(name="mobile")
 	private String mobile;
 	
-	@Column(name="email")
 	private String email;
 	
-	public String getUid() {
-		return uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-
 	public String getUsername() {
 		return username;
 	}

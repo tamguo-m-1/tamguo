@@ -3,10 +3,10 @@ package com.tamguo.admin.dao;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
+import com.tamguo.admin.config.dao.SuperMapper;
 import com.tamguo.admin.model.ChapterEntity;
-import com.tamguo.admin.mybatis.dao.BaseDao;
 
-public interface ChapterMapper extends BaseDao<ChapterEntity>{
+public interface ChapterMapper extends SuperMapper<ChapterEntity>{
 
 	List<ChapterEntity> findByCourseId(@Param(value="courseId") String courseId);
 	

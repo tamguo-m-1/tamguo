@@ -3,7 +3,7 @@ package com.tamguo.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.plugins.Page;
 
 public class PageUtils {
     
@@ -30,27 +30,27 @@ public class PageUtils {
 	
 	public static PageUtils getPage(Page<?> page){
 		PageUtils pg = new PageUtils();
-		if(page.getStartRow() > 0){
+		if(page.getCurrent() > 1){
 			pg.setIsShowPreBtn(true);
 		}
-		if(page.getEndRow() < page.getTotal()){
+		if(page.getCurrent() < page.getPages()){
 			pg.setIsShowNextBtn(true);
 		}
 		List<String> pgNums = new ArrayList<>();
-		if((page.getStartRow() + 1) > page.getPageSize()){
+		if(page.getPages() > 1){
 			if(page.getPages() > 10){
 				pgNums.add("1");
 				pgNums.add("2");
 				pgNums.add("3");
 				pgNums.add("...");
-				if(page.getEndRow() == page.getTotal()){
-					pgNums.add(((Integer)(page.getPageNum() - 2)).toString());
-					pgNums.add(((Integer)(page.getPageNum() - 1)).toString());
-					pgNums.add(((Integer)page.getPageNum()).toString());
+				if(page.getCurrent() == page.getPages()){
+					pgNums.add(((Integer)(page.getCurrent() - 2)).toString());
+					pgNums.add(((Integer)(page.getCurrent() - 1)).toString());
+					pgNums.add(((Integer)page.getCurrent()).toString());
 				}else{
-					pgNums.add(((Integer)(page.getPageNum() - 1)).toString());
-					pgNums.add(((Integer)page.getPageNum()).toString());
-					pgNums.add(((Integer)(page.getPageNum() + 1)).toString());
+					pgNums.add(((Integer)(page.getCurrent() - 1)).toString());
+					pgNums.add(((Integer)page.getCurrent()).toString());
+					pgNums.add(((Integer)(page.getCurrent() + 1)).toString());
 				}
 			}else{
 				Integer n = 1;
@@ -77,9 +77,9 @@ public class PageUtils {
 			}
 		}
 		pg.setPageNums(pgNums);
-		pg.setList(page.getResult());
-		pg.setCurrPageNum(((Integer)page.getPageNum()).toString());
-		pg.setTotal(((Long)page.getTotal()).toString());
+		pg.setList(page.getRecords());
+		pg.setCurrPageNum(((Integer)page.getCurrent()).toString());
+		pg.setTotal(((Integer)page.getTotal()).toString());
 		pg.setTotalPage(((Integer)page.getPages()).toString());
 		return pg;
 	}

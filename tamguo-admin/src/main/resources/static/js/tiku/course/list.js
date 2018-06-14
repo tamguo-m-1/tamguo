@@ -3,7 +3,7 @@ $(function () {
         url: mainHttp + 'course/list.html',
         datatype: "json",
         colModel: [			
-			{ label: '科目ID', name: 'uid', width: 40, key: true },
+			{ label: '科目ID', name: 'uid', width: 40, key: true , hidden:true},
 			{ label: '考试名称', name: 'subjectName', width: 60 },
 			{ label: '科目名称', name: 'name', width: 60 },
 			{ label: '排序', name: 'orders', width: 60 },

@@ -4,7 +4,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.admin.dao.PaperMapper;
 import com.tamguo.admin.dao.SchoolMapper;
 import com.tamguo.admin.dao.redis.CacheService;
@@ -30,11 +31,11 @@ public class SchoolService implements ISchoolService {
 		schoolList = null;
 		// 获取名校试卷
 		if(schoolList == null || schoolList.isEmpty()){
-			PageHelper.startPage(1, 3);
-			schoolList = schoolMapper.findByAreaId(shcoolId);
+			Page<SchoolEntity> page = new Page<>(1 , 3);
+			schoolList = schoolMapper.findByAreaId(shcoolId , page);
 			for(SchoolEntity school : schoolList){
-				PageHelper.startPage(1, 3);
-				List<PaperEntity> paperList = paperMapper.findBySchoolId(school.getUid());
+				Page<PaperEntity> p = new Page<>(1 , 3);
+				List<PaperEntity> paperList = paperMapper.findBySchoolId(school.getUid() , p);
 				school.setPaperList(paperList);
 			}
 			cacheService.setObject(TamguoConstant.ELITE_SCHOOL_PAPER, schoolList , 2 * 60 * 60);
@@ -47,8 +48,7 @@ public class SchoolService implements ISchoolService {
 	public List<SchoolEntity> findEliteSchool() {
 		List<SchoolEntity> schoolList = (List<SchoolEntity>) cacheService.getObject(TamguoConstant.ELITE_PAPER);
 		if(schoolList == null || schoolList.isEmpty()){
-			PageHelper.startPage(1, 6);
-			schoolList = schoolMapper.selectAll();
+			schoolList = schoolMapper.selectList(Condition.EMPTY);
 			cacheService.setObject(TamguoConstant.ELITE_PAPER, schoolList , 2 * 60 * 60);
 		}
 		return schoolList;

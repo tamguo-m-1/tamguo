@@ -4,17 +4,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.tamguo.dao.MenuMapper;
 import com.tamguo.dao.redis.CacheService;
 import com.tamguo.model.MenuEntity;
-import com.tamguo.model.SubjectEntity;
 import com.tamguo.service.IMenuService;
 import com.tamguo.util.TamguoConstant;
 
 @Service
-public class MenuService implements IMenuService{
+public class MenuService extends ServiceImpl<MenuMapper, MenuEntity> implements IMenuService{
 	
 	@Autowired
 	private MenuMapper menuMapper;
@@ -85,20 +84,15 @@ public class MenuService implements IMenuService{
 		return footerMenuList;
 	}
 
-	@Override
-	public Page<SubjectEntity> list(String name, Integer page, Integer limit) {
-		PageHelper.startPage(page, limit);
-		return menuMapper.findByName(name);
-	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MenuEntity> getMenuTree() {
-		return menuMapper.selectAll();
+		return menuMapper.selectList(Condition.EMPTY);
 	}
 
 	@Override
 	public MenuEntity findById(String uid) {
-		return menuMapper.select(uid);
+		return menuMapper.selectById(uid);
 	}
 
 }

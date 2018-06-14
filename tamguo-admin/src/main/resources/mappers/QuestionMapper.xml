@@ -20,7 +20,7 @@
 	    <result column="audit_status" property="auditStatus" jdbcType="VARCHAR"/>
 	</resultMap>
 
-	<select id="findByChapterId" resultMap="resultMap">
+	<select id="findByChapterId" resultType="QuestionEntity">
 		SELECT
 			q.uid,
 			q.analysis,
@@ -40,7 +40,7 @@
 			q.chapter_id = #{chapterId}
 	</select>
 	
-	<select id="findByPaperId" resultMap="resultMap">
+	<select id="findByPaperId" resultType="QuestionEntity">
 		SELECT
 			q.analysis,
 			q.answer,
@@ -61,7 +61,7 @@
 			q.paper_id = #{paperId}
 	</select>
 	
-	<select id="queryPageByName" resultMap="BaseResultMap">
+	<select id="queryPageByName" resultType="QuestionEntity">
 		SELECT
 			q.analysis,
 			q.answer,
@@ -88,7 +88,7 @@
 		</where>		
 	</select>
 	
-	<select id="queryQuestionList" resultMap="resultMap">
+	<select id="queryQuestionList" resultType="QuestionEntity">
 		SELECT
 			q.analysis,
 			q.answer,
@@ -118,7 +118,7 @@
 		</where>
 	</select>
 	
-	<select id="selectByUid" resultMap="BaseResultMap">
+	<select id="selectByUid" resultType="QuestionEntity">
 		SELECT
 			q.uid,
 			q.analysis,
@@ -139,7 +139,7 @@
 			q.uid = #{uid}
 	</select>
 	
-	<select id="findNormalQuestion" resultMap="BaseResultMap">
+	<select id="findNormalQuestion" resultType="QuestionEntity">
 		SELECT
 			q.uid,
 			q.analysis,

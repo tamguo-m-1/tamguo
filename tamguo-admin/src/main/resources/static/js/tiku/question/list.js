@@ -3,7 +3,7 @@ $(function () {
         url: mainHttp + 'question/list.html',
         datatype: "json",
         colModel: [			
-            { label: 'ID', name: 'uid', width: 25, key: true },
+            { label: 'ID', name: 'uid', width: 25, key: true , hidden:true},
 			{ label: '题目类型', name: 'questionType', width: 25,formatter: function(value, options, row){
 				if(value === "1"){
 					return '<span>单选题</span>';
@@ -329,6 +329,15 @@ var vm = new Vue({
             initialFrameHeight:80,
             initialFrameWidth:900
          });
+        
+         UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+         UE.Editor.prototype.getActionUrl = function(action) {
+            if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+                return mainHttp + 'imgUpload.html';
+            } else {
+                return this._bkGetActionUrl.call(this, action);
+            }
+         }
 	},
 	watch:{
 		  // 数据修改时触发

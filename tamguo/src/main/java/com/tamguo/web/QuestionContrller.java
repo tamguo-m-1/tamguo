@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.model.ChapterEntity;
 import com.tamguo.model.QuestionEntity;
 import com.tamguo.service.IChapterService;
@@ -31,7 +31,11 @@ public class QuestionContrller {
 		ChapterEntity chapter = iChapterService.findById(chapterId);
 		ChapterEntity parentChapter = iChapterService.findById(parentChapterId);
 		ChapterEntity nextChapter = iChapterService.findNextPoint(chapter.getParentId() , chapter.getOrders());
-		Page<QuestionEntity> questionList = iQuestionService.findByChapterId(chapterId , offset , limit);
+		
+		Page<QuestionEntity> page = new Page<>();
+		page.setCurrent(offset);
+		page.setSize(limit);
+		Page<QuestionEntity> questionList = iQuestionService.findByChapterId(chapterId , page);
 		model.addObject("chapter", chapter);
 		model.addObject("parentChapter" , parentChapter);
 		model.addObject("nextChapter" , nextChapter);

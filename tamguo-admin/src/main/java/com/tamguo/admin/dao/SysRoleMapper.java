@@ -1,10 +1,12 @@
 package com.tamguo.admin.dao;
 
+import java.util.List;
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
+import com.tamguo.admin.config.dao.SuperMapper;
 import com.tamguo.admin.model.SysRoleEntity;
-import com.tamguo.admin.mybatis.dao.BaseDao;
 
-public interface SysRoleMapper extends BaseDao<SysRoleEntity> {
-	
-	void save(SysRoleEntity sysRoleEntity);
+public interface SysRoleMapper extends SuperMapper<SysRoleEntity>{
+
+	List<SysRoleEntity> selectPageByName(SysRoleEntity sysRoleEntity, Pagination page);
 
 }

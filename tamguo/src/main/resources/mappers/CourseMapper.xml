@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tamguo.dao.CourseMapper">
 
-	<select id="findBySubjectId" resultMap="resultMap">
+	<select id="findBySubjectId" resultType="CourseEntity">
 		SELECT
 			c.uid,
 			c.`name`,

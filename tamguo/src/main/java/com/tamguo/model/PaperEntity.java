@@ -1,74 +1,60 @@
 package com.tamguo.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
 import org.apache.commons.lang3.StringUtils;
 
 import com.alibaba.fastjson.JSONArray;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.tamguo.config.dao.SuperEntity;
 
 
 /**
  * The persistent class for the tiku_chapter database table.
  * 
  */
-@Entity
-@Table(name="tiku_paper")
-@NamedQuery(name="PaperEntity.findAll", query="SELECT c FROM PaperEntity c")
-public class PaperEntity implements Serializable {
+@TableName(value="tiku_paper")
+public class PaperEntity extends SuperEntity<PaperEntity> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	private String uid;
-
-	@Column(name="subject_id")
 	private String subjectId;
 	
-	@Column(name="course_id")
 	private String courseId;
 	
-	@Column(name="school_id")
 	private String schoolId;
 	
-	@Column(name="area_id")
 	private String areaId;
 	
-	@Column(name="creater_id")
 	private String createrId;
 	
-	@Column(name="name")
 	private String name;
 	
-	@Column(name="question_info")
 	private String questionInfo;
 	
-	@Column(name="type")
 	private String type;
 	
-	@Column(name="year")
 	private String year;
 	
-	@Column(name="down_hits")
 	private Integer downHits;
 	
-	@Column(name="open_hits")
 	private Integer openHits;
 	
-	@Column(name="seo_title")
 	private String seoTitle;
 	
-	@Column(name="seo_keywords")
 	private String seoKeywords;
 	
-	@Column(name="seo_description")
 	private String seoDescription;
 	
+	@TableField(exist=false)
 	private String subjectName;
 	
+	@TableField(exist=false)
 	private String courseName;
 	
+	@TableField(exist=false)
 	private String areaName;
 	
+	@TableField(exist=false)
 	private String schoolName;
 	
 	public JSONArray getQueInfo(){
@@ -76,14 +62,6 @@ public class PaperEntity implements Serializable {
 			return null;
 		}
 		return JSONArray.parseArray(getQuestionInfo());
-	}
-
-	public String getUid() {
-		return uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
 	}
 
 	public String getCourseId() {

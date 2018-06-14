@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
+import com.tamguo.admin.model.SysMenuEntity;
+import com.tamguo.admin.service.ISysMenuService;
 import com.tamguo.admin.util.ExceptionSupport;
 import com.tamguo.admin.util.Result;
 import com.tamguo.admin.util.ShiroUtils;
-import com.tamguo.admin.model.SysMenuEntity;
-import com.tamguo.admin.service.ISysMenuService;
 
 /**
  * 登录
@@ -42,7 +42,7 @@ public class LoginController {
 	@Autowired
 	private Producer producer;
 	@Autowired
-	private ISysMenuService sysMenuService;
+	private ISysMenuService iSysMenuService;
 
 	@RequestMapping("captcha.jpg")
 	public void captcha(HttpServletResponse response) throws ServletException, IOException {
@@ -93,8 +93,10 @@ public class LoginController {
 		} catch (AuthenticationException e) {
 			return ExceptionSupport.resolverResult("账户验证失败", this.getClass(), e);
 		}
-		List<SysMenuEntity> userMenuList = sysMenuService.getUserMenuList(ShiroUtils.getUserId());
-		request.getSession().setAttribute("userMenuList", userMenuList);
+		List<SysMenuEntity> menuList = iSysMenuService.getUserMenuList(ShiroUtils.getUid());
+		menuList = iSysMenuService.getUserMenuTree(menuList);
+		request.getSession().setAttribute("userMenuList", menuList);
+		request.getSession().setAttribute("currAdmin", ShiroUtils.getUser());
 		return Result.successResult(username);
 	}
 

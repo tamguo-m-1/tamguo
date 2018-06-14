@@ -1,8 +1,9 @@
 package com.tamguo.model;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.tamguo.config.dao.SuperEntity;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -12,56 +13,35 @@ import java.util.List;
  * The persistent class for the tiku_course database table.
  * 
  */
-@Entity
-@Table(name="tiku_course")
-@NamedQuery(name="CourseEntity.findAll", query="SELECT c FROM CourseEntity c")
-public class CourseEntity implements Serializable {
+@TableName(value="tiku_course")
+public class CourseEntity extends SuperEntity<CourseEntity> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
-	private String uid;
-
-	@Column(name="name")
 	private String name;
 
-	@Column(name="subject_id")
 	private BigInteger subjectId;
 	
-	@Column(name="point_num")
 	private BigInteger pointNum;
 	
-	@Column(name="question_num")
 	private BigInteger questionNum;
-	
-	@Column(name="icon")
+
 	private String icon;
 	
-	@Column(name="orders")
 	private Integer orders;
 	
-	@Column(name="seo_title")
 	private String seoTitle;
 	
-	@Column(name="seo_keywords")
 	private String seoKeywords;
 	
-	@Column(name="seo_description")
 	private String seoDescription;
 	
+	@TableField(exist=false)
 	private String subjectName;
 	
+	@TableField(exist=false)
 	private List<ChapterEntity> chapterList;
 
 	public CourseEntity() {
-	}
-
-	public String getUid() {
-		return this.uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
 	}
 
 	public String getName() {

@@ -1,23 +1,21 @@
 package com.tamguo.admin.service;
 
-
-import com.github.pagehelper.Page;
+import java.util.List;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.admin.model.SysRoleEntity;
 
-
-/**
- * 角色
- *
- */
 public interface ISysRoleService {
+
+	public List<SysRoleEntity> findAll();
+
+	public Page<SysRoleEntity> queryList(SysRoleEntity role, Page<SysRoleEntity> page);
 	
-	SysRoleEntity queryObject(Long roleId);
+	public SysRoleEntity select(String uid);
+
+	public void save(SysRoleEntity role);
+
+	public void update(SysRoleEntity role);
+
+	public void deleteBatch(String[] roleIds);
 	
-	Page<SysRoleEntity> queryList(SysRoleEntity sysRoleEntity,int pageNum,int pageSize);
-	
-	void save(SysRoleEntity role);
-	
-	void update(SysRoleEntity role);
-	
-	void deleteBatch(String[] roleIds);
 }

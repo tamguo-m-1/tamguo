@@ -1,25 +1,22 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../sysMenu/list',
+        url: '../sysMenu/queryPage.html',
         datatype: "json",
         colModel: [			
-			{ label: '菜单ID', name: 'menuId', width: 40, key: true },
+			{ label: '菜单ID', name: 'uid', width: 40, key: true , hidden:true},
 			{ label: '菜单名称', name: 'name', width: 60 },
 			{ label: '上级菜单', name: 'parentName', width: 60 },
-			{ label: '菜单图标', name: 'icon', width: 50, formatter: function(value, options, row){
-				return value == null ? '' : '<i class="'+value+' fa-lg"></i>';
-			}},
 			{ label: '菜单URL', name: 'url', width: 100 },
 			{ label: '授权标识', name: 'perms', width: 100 },
 			{ label: '类型', name: 'type', width: 50, formatter: function(value, options, row){
-				if(value === 0){
+				if(value === "0"){
 					return '<span class="label label-primary">目录</span>';
 				}
-				if(value === 1){
+				if(value === "1"){
 					return '<span class="label label-success">菜单</span>';
 				}
-				if(value === 2){
-					return '<span class="label label-warning">按钮</span>';
+				if(value === "2"){
+					return '<span class="label label-success">按钮</span>';
 				}
 			}},
 			{ label: '排序号', name: 'orderNum', width: 50}                   
@@ -40,8 +37,8 @@ $(function () {
             records: "totalCount"
         },
         prmNames : {
-            page:"page", 
-            rows:"limit", 
+            page:"current", 
+            rows:"size", 
             order: "order"
         },
         gridComplete:function(){
@@ -55,7 +52,7 @@ var setting = {
 	data: {
 		simpleData: {
 			enable: true,
-			idKey: "menuId",
+			idKey: "uid",
 			pIdKey: "parentId",
 			rootPId: -1
 		},
@@ -80,10 +77,10 @@ var vm = new Vue({
 	methods: {
 		getMenu: function(menuId){
 			//加载菜单树
-			$.get("../sysMenu/select", function(r){
+			$.get({url:"../sysMenu/select.html",datatype:"json"}, function(r){
 				
 				ztree = $.fn.zTree.init($("#menuTree"), setting, r.result);
-				var node = ztree.getNodeByParam("menuId", vm.menu.parentId);
+				var node = ztree.getNodeByParam("uid", vm.menu.parentId);
 				ztree.selectNode(node);
 				vm.menu.parentName = node.name;
 			})
@@ -100,7 +97,7 @@ var vm = new Vue({
 				return ;
 			}
 			
-			$.get("../sysMenu/info/"+menuId, function(r){
+			$.get("../sysMenu/info/"+menuId+".html", function(r){
 				vm.showList = false;
                 vm.title = "修改";
                 vm.menu = r.result;
@@ -117,7 +114,7 @@ var vm = new Vue({
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: "../sysMenu/delete",
+				    url: "../sysMenu/delete.html",
 				    data: JSON.stringify(menuIds),
 				    success: function(r){
 				    	if(r.code === 0){
@@ -132,7 +129,7 @@ var vm = new Vue({
 			});
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.menu.menuId == null ? "../sysMenu/save" : "../sysMenu/update";
+			var url = vm.menu.uid == null ? "../sysMenu/save" : "../sysMenu/update";
 			$.ajax({
 				type: "POST",
 			    url: url,
@@ -162,7 +159,7 @@ var vm = new Vue({
 				btn1: function (index) {
 					var node = ztree.getSelectedNodes();
 					//选择上级菜单
-					vm.menu.parentId = node[0].menuId;
+					vm.menu.parentId = node[0].uid;
 					vm.menu.parentName = node[0].name;
 					
 					layer.close(index);

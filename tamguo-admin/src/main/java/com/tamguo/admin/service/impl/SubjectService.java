@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.admin.dao.CourseMapper;
 import com.tamguo.admin.dao.SubjectMapper;
 import com.tamguo.admin.model.CourseEntity;
@@ -27,7 +27,7 @@ public class SubjectService implements ISubjectService{
 
 	@Override
 	public SubjectEntity find(String uid) {
-		SubjectEntity subject = subjectMapper.select(uid);
+		SubjectEntity subject = subjectMapper.selectById(uid);
 		List<CourseEntity> courseList = courseMapper.findBySubjectId(uid);
 		subject.setCourseList(courseList);
 		return subject;
@@ -35,29 +35,29 @@ public class SubjectService implements ISubjectService{
 
 	@Override
 	public Page<SubjectEntity> list(String name , Integer pageNum , Integer pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
+		Page<SubjectEntity> page = new Page<>(pageNum , pageSize);
 		if(!StringUtils.isEmpty(name)){
 			name = "%"+name+"%";
 		}
-		return subjectMapper.queryPage(name);
+		return page.setRecords(subjectMapper.queryPage(name , page));
 	}
 
 	@Override
 	public void update(SubjectEntity subject) {
-		SubjectEntity entity = subjectMapper.select(subject.getUid());
+		SubjectEntity entity = subjectMapper.selectById(subject.getUid());
 		entity.setName(subject.getName());
 		if(!StringUtils.isEmpty(subject.getCourseId())){
-			CourseEntity course = courseMapper.select(subject.getCourseId());
+			CourseEntity course = courseMapper.selectById(subject.getCourseId());
 			entity.setCourseId(course.getUid());
 			entity.setCourseName(course.getName());
 		}
-		subjectMapper.update(entity);
+		subjectMapper.updateById(entity);
 	}
 
 	@Override
 	public void save(SubjectEntity subject) {
 		if(!StringUtils.isEmpty(subject.getCourseId())){
-			CourseEntity course = courseMapper.select(subject.getCourseId());
+			CourseEntity course = courseMapper.selectById(subject.getCourseId());
 			subject.setCourseId(course.getUid());
 			subject.setCourseName(course.getName());
 		}
@@ -66,19 +66,21 @@ public class SubjectService implements ISubjectService{
 
 	@Override
 	public void deleteBatch(String[] subjectIds) {
-		subjectMapper.deleteByIds(Arrays.asList(subjectIds));
+		subjectMapper.deleteBatchIds(Arrays.asList(subjectIds));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<SubjectEntity> getSubjectTree() {
-		return subjectMapper.selectAll();
+		return subjectMapper.selectList(Condition.EMPTY);
 	}
 
 	@Override
 	public JSONArray getCourseTree() {
 		JSONArray courseTree = new JSONArray();
 		
-		List<SubjectEntity> subjectList = subjectMapper.selectAll();
+		@SuppressWarnings("unchecked")
+		List<SubjectEntity> subjectList = subjectMapper.selectList(Condition.EMPTY);
 		for(int i=0 ; i<subjectList.size() ; i++){
 			SubjectEntity subject = subjectList.get(i);
 			JSONObject node = new JSONObject();

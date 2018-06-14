@@ -1,14 +1,13 @@
 package com.tamguo.service.impl;
 
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.tamguo.dao.PaperMapper;
 import com.tamguo.dao.QuestionMapper;
 import com.tamguo.model.PaperEntity;
@@ -16,7 +15,7 @@ import com.tamguo.model.QuestionEntity;
 import com.tamguo.service.IQuestionService;
 
 @Service
-public class QuestionService implements IQuestionService{
+public class QuestionService extends ServiceImpl<QuestionMapper, QuestionEntity> implements IQuestionService{
 	
 	@Autowired
 	private QuestionMapper questionMapper;
@@ -24,9 +23,8 @@ public class QuestionService implements IQuestionService{
 	private PaperMapper paperMapper;
 
 	@Override
-	public Page<QuestionEntity> findByChapterId(String chapterId  , Integer offset ,  Integer limit) {
-		PageHelper.offsetPage(offset, limit);
-		return questionMapper.findByChapterId(chapterId);
+	public Page<QuestionEntity> findByChapterId(String chapterId  , Page<QuestionEntity> page) {
+		return page.setRecords(questionMapper.findByChapterId(chapterId , page));
 	}
 
 	@Transactional(readOnly=true)
@@ -48,7 +46,7 @@ public class QuestionService implements IQuestionService{
 	@Transactional(readOnly=false)
 	@Override
 	public void addQuestion(QuestionEntity question) {
-		PaperEntity paper = paperMapper.select(question.getPaperId().toString());
+		PaperEntity paper = paperMapper.selectById(question.getPaperId().toString());
 		question.setCourseId(paper.getCourseId());
 		questionMapper.insert(question);
 	}
@@ -56,24 +54,23 @@ public class QuestionService implements IQuestionService{
 	@Transactional(readOnly=true)
 	@Override
 	public Page<QuestionEntity> queryQuestionList(String questionType , String uid , String reviewPoint , String paperId ,
-			Integer page , Integer limit) {
-		PageHelper.startPage(page, limit);
+			Page<QuestionEntity> page) {
 		if(!StringUtils.isEmpty(reviewPoint)){
 			reviewPoint = "%" + reviewPoint + "%";
 		}
-		return questionMapper.queryQuestionList(questionType,  uid , reviewPoint , paperId);
+		return page.setRecords(questionMapper.queryQuestionList(questionType,  uid , reviewPoint , paperId , page));
 	}
 
 	@Transactional(readOnly=false)
 	@Override
 	public void updateQuestion(QuestionEntity question) {
-		questionMapper.update(question);
+		questionMapper.updateById(question);
 	}
 
 	@Transactional(readOnly=false)
 	@Override
 	public void delete(String uid) {
-		questionMapper.delete(uid);
+		questionMapper.deleteById(uid);
 	}
 
 }

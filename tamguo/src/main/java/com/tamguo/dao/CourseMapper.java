@@ -2,10 +2,10 @@ package com.tamguo.dao;
 
 import java.util.List;
 
+import com.tamguo.config.dao.SuperMapper;
 import com.tamguo.model.CourseEntity;
-import com.tamguo.mybatis.dao.BaseDao;
 
-public interface CourseMapper extends BaseDao<CourseEntity>{
+public interface CourseMapper extends SuperMapper<CourseEntity>{
 
 	List<CourseEntity> findBySubjectId(String uid);
 

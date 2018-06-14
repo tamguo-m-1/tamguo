@@ -7,10 +7,9 @@ var menuItem = Vue.extend({
 	          '<a v-if="item.type === 0" href="javascript:;">',
 	          '<i v-if="item.icon != null" :class="item.icon"></i>',
 	          '<span>{{item.name}}</span>',
-	          '<i class="fa fa-angle-left pull-right"></i>',
 	          '</a>',
 	          '<ul v-if="item.type === 0" class="treeview-menu">',
-	          '<menu-item :item="item" v-for="item in item.list"></menu-item>',
+	          '<menu-item :item="item" v-for="item in item.menuList"></menu-item>',
 	          '</ul>',
 	          '<a v-if="item.type === 1" :href="\'#\'+item.url"><i v-if="item.icon != null" :class="item.icon"></i><i v-else class="fa fa-circle-o"></i> {{item.name}}</a>',
 	          '</li>'
@@ -99,7 +98,7 @@ function routerList(router, menuList){
 	for(var key in menuList){
 		var menu = menuList[key];
 		if(menu.type == 0){
-			routerList(router, menu.list);
+			routerList(router, menu.menuList);
 		}else if(menu.type == 1){
 			router.add('#'+menu.url, function() {
 				var url = window.location.hash;

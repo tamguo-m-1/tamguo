@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.tamguo.dao.CourseMapper;
 import com.tamguo.dao.SubjectMapper;
 import com.tamguo.model.CourseEntity;
@@ -13,7 +15,7 @@ import com.tamguo.model.SubjectEntity;
 import com.tamguo.service.ISubjectService;
 
 @Service
-public class SubjectService implements ISubjectService{
+public class SubjectService extends ServiceImpl<SubjectMapper, SubjectEntity> implements ISubjectService{
 
 	@Autowired
 	private SubjectMapper subjectMapper;
@@ -22,7 +24,7 @@ public class SubjectService implements ISubjectService{
 
 	@Override
 	public SubjectEntity find(String uid) {
-		SubjectEntity subject = subjectMapper.select(uid);
+		SubjectEntity subject = subjectMapper.selectById(uid);
 		List<CourseEntity> courseList = courseMapper.findBySubjectId(uid);
 		subject.setCourseList(courseList);
 		return subject;
@@ -32,7 +34,8 @@ public class SubjectService implements ISubjectService{
 	public JSONArray getCourseTree() {
 		JSONArray courseTree = new JSONArray();
 		
-		List<SubjectEntity> subjectList = subjectMapper.selectAll();
+		@SuppressWarnings("unchecked")
+		List<SubjectEntity> subjectList = subjectMapper.selectList(Condition.EMPTY);
 		for(int i=0 ; i<subjectList.size() ; i++){
 			SubjectEntity subject = subjectList.get(i);
 			JSONObject node = new JSONObject();

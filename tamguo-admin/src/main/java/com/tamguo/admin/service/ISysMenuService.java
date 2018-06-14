@@ -3,43 +3,63 @@ package com.tamguo.admin.service;
 import java.util.List;
 import java.util.Map;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.admin.model.SysMenuEntity;
 
 public interface ISysMenuService {
-    
-	Page<SysMenuEntity> queryList(Map<String, Object> map,int pageNum,int pageSize);
-    
-    List<SysMenuEntity> queryListParentId(Long parentId, List<Long> menuIdList);
-    
-    List<SysMenuEntity> getUserMenuList(Long userId);
-    
-    SysMenuEntity getMenuByUrl(String url);
-    
-    /**
-	 * 获取不包含按钮的菜单列表
+
+	/**
+	 * 获取用户菜单权限
+	 * @param userId
+	 * @return
+	 */
+	List<SysMenuEntity> getUserMenuList(String userId);
+	
+	/**
+	 * 获取菜单树
+	 * @param menus
+	 * @return
+	 */
+	List<SysMenuEntity> getUserMenuTree(List<SysMenuEntity> menus);
+
+	/**
+	 * 菜单列表
+	 * @param hashMap
+	 * @param page
+	 * @param limit
+	 * @return
+	 */
+	Page<SysMenuEntity> queryList(Map<String, Object> hashMap, Page<SysMenuEntity> page);
+
+	/**
+	 * 查询不是按钮的菜单
+	 * @return
 	 */
 	List<SysMenuEntity> queryNotButtonList();
-	
-	
+
 	/**
-	 * 查询菜单
+	 * 根据父菜单查询菜单
+	 * @param parentId
+	 * @return
 	 */
-	SysMenuEntity queryObject(Long menuId);
-	
+	SysMenuEntity select(String parentId);
+
 	/**
-	 * 保存菜单
+	 * 保存数据
+	 * @param menu
 	 */
 	void save(SysMenuEntity menu);
-	
+
 	/**
 	 * 修改
+	 * @param menu
 	 */
 	void update(SysMenuEntity menu);
-	
+
 	/**
 	 * 删除
+	 * @param menuIds
 	 */
 	void deleteBatch(String[] menuIds);
-	
+
 }

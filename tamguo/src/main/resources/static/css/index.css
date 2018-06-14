@@ -562,7 +562,12 @@
 .hotpaper-list-wrap .hotpaper-list .hotpaper-name .rank-8 {
     background-position: 477px 811px;
 }
-
+.hotpaper-list-wrap .hotpaper-list .hotpaper-name .rank-9 {
+    background-position: 441px 811px;
+}
+.hotpaper-list-wrap .hotpaper-list .hotpaper-name .rank-10 {
+    background-position: 405px 811px;
+}
 
 .zige-class-container {
     width: 1182px;

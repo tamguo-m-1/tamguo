@@ -1,8 +1,9 @@
 package com.tamguo.model;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.tamguo.config.dao.SuperEntity;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -12,45 +13,27 @@ import java.util.List;
  * The persistent class for the tiku_subject database table.
  * 
  */
-@Entity
-@Table(name="tiku_menu")
-@NamedQuery(name="MenuEntity.findAll", query="SELECT s FROM MenuEntity s")
-public class MenuEntity implements Serializable {
+@TableName(value="tiku_menu")
+public class MenuEntity extends SuperEntity<MenuEntity> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	private String uid;
-
-	@Column(name="name")
 	private String name;
 	
-	@Column(name="pinyin")
 	private String pinyin;
 
-	@Column(name="parent_id")
 	private BigInteger parentId;
 	
-	@Column(name="is_show")
 	private String isShow;
 	
-	@Column(name="orders")
 	private Integer orders;
 
-	@Column(name="url")
 	private String url;
 	
 	// 子类型
+	@TableField(exist=false)
 	private List<MenuEntity> childSubjects;
 
 	public MenuEntity() {
-	}
-
-	public String getUid() {
-		return this.uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
 	}
 
 	public String getName() {

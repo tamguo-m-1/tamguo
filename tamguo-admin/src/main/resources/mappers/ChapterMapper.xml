@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tamguo.admin.dao.ChapterMapper">
 
-	<select id="findByCourseId" resultMap="resultMap">
+	<select id="findByCourseId" resultType="ChapterEntity">
 		SELECT
 			c.uid,c.course_id , c.parent_id , c.`name` , c.question_num , c.point_num , c.orders
 		FROM
@@ -12,7 +12,7 @@
 	</select>
 	
 	
-	<select id="findByParentId" resultMap="resultMap">
+	<select id="findByParentId" resultType="ChapterEntity">
 		SELECT
 			c.uid,
 			c.course_id,
@@ -28,7 +28,7 @@
 		ORDER BY c.orders asc
 	</select>
 	
-	<select id="findNextPoint" resultMap="resultMap">
+	<select id="findNextPoint" resultType="ChapterEntity">
 		SELECT
 			c.uid,
 			c.course_id,

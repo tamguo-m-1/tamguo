@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.model.MemberEntity;
 import com.tamguo.model.PaperEntity;
 import com.tamguo.service.IPaperService;
@@ -35,8 +35,11 @@ public class MemberPaperController {
 	@ResponseBody
 	public Map<String, Object> paperList(String name , Integer page , Integer limit , HttpSession session){
 		MemberEntity member = ((MemberEntity)session.getAttribute("currMember"));
-		Page<PaperEntity> list = iPaperService.memberPaperList(name, member.getUid() , page, limit);
-		return Result.jqGridResult(list.getResult(), list.getTotal(), limit, page, list.getPages());
+		Page<PaperEntity> p = new Page<>();
+		p.setCurrent(page);
+		p.setSize(limit);
+		Page<PaperEntity> list = iPaperService.memberPaperList(name, member.getUid() , p);
+		return Result.jqGridResult(list.getRecords(), list.getTotal(), limit, page, list.getPages());
 	}
 	
 	@RequestMapping("member/paperList/updatePaperName.html")

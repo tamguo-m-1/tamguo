@@ -3,32 +3,27 @@ package com.tamguo.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.*;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.tamguo.config.dao.SuperEntity;
 
 
 /**
  * The persistent class for the tiku_chapter database table.
  * 
  */
-@Entity
-@Table(name="tiku_school")
-@NamedQuery(name="SchoolEntity.findAll", query="SELECT c FROM SchoolEntity c")
-public class SchoolEntity implements Serializable {
+@TableName(value="tiku_school")
+public class SchoolEntity extends SuperEntity<SchoolEntity> implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	private String uid;
 	
-	@Column(name="area_id")
 	private String areaId;
 	
-	@Column(name="name")
 	private String name;
 	
-	@Column(name="image")
 	private String image;
 	
 	// 试卷
+	@TableField(exist=false)
 	private List<PaperEntity> paperList;
 
 	public SchoolEntity() {
@@ -52,14 +47,6 @@ public class SchoolEntity implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public String getUid() {
-		return this.uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
 	}
 
 	public String getAreaId() {

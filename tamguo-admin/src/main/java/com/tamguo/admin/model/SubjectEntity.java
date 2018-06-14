@@ -3,40 +3,23 @@ package com.tamguo.admin.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.tamguo.admin.config.dao.SuperEntity;
 
-@Entity
-@Table(name="tiku_subject")
-@NamedQuery(name="SubjectEntity.findAll", query="SELECT c FROM SubjectEntity c")
-public class SubjectEntity implements Serializable {
+@TableName(value="tiku_subject")
+public class SubjectEntity extends SuperEntity<SubjectEntity> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	private String uid;
-
-	@Column(name="name")
 	private String name;
 	
-	@Column(name="course_id")
 	private String courseId;
 	
-	@Column(name="course_name")
 	private String courseName;
 	
+	@TableField(exist=false)
 	private List<CourseEntity> courseList;
-
-	public String getUid() {
-		return uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
 
 	public String getName() {
 		return name;

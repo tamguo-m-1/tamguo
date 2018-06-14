@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.admin.dao.ChapterMapper;
 import com.tamguo.admin.dao.PaperMapper;
 import com.tamguo.admin.dao.QuestionMapper;
@@ -31,8 +30,8 @@ public class QuestionService implements IQuestionService{
 
 	@Override
 	public Page<QuestionEntity> findByChapterId(String chapterId  , Integer offset ,  Integer limit) {
-		PageHelper.offsetPage(offset, limit);
-		return questionMapper.findByChapterId(chapterId);
+		Page<QuestionEntity> p = new Page<>(offset , limit);
+		return p.setRecords(questionMapper.findByChapterId(chapterId , p));
 	}
 
 	@Transactional(readOnly=true)
@@ -48,7 +47,8 @@ public class QuestionService implements IQuestionService{
 
 	@Override
 	public Page<QuestionEntity> list(String name, Integer page, Integer limit) {
-		return questionMapper.queryPageByName(name);
+		Page<QuestionEntity> p = new Page<>(page , limit);
+		return p.setRecords(questionMapper.queryPageByName(name , p));
 	}
 
 	@Override
@@ -58,24 +58,24 @@ public class QuestionService implements IQuestionService{
 
 	@Override
 	public void deleteBatch(String[] questionIds) {
-		questionMapper.deleteByIds(Arrays.asList(questionIds));
+		questionMapper.deleteBatchIds(Arrays.asList(questionIds));
 	}
 
 	@Transactional(readOnly=false)
 	@Override
 	public void addQuestion(QuestionEntity question) {
-		PaperEntity paper = paperMapper.select(question.getPaperId().toString());
+		PaperEntity paper = paperMapper.selectById(question.getPaperId().toString());
 		question.setCourseId(paper.getCourseId());
 		questionMapper.insert(question);
 	}
 
 	@Override
 	public Page<QuestionEntity> queryQuestionList(QuestionEntity question , Integer page , Integer limit) {
-		PageHelper.startPage(page, limit);
+		Page<QuestionEntity> p = new Page<>(page , limit);
 		if(!StringUtils.isEmpty(question.getReviewPoint())){
 			question.setReviewPoint("%" + question.getReviewPoint() + "%");
 		}
-		return questionMapper.queryQuestionList(question.getQuestionType(),question.getUid() ,question.getReviewPoint());
+		return p.setRecords(questionMapper.queryQuestionList(question.getQuestionType(),question.getUid() ,question.getReviewPoint() , p));
 	}
 
 	@Transactional(readOnly=false)
@@ -89,26 +89,26 @@ public class QuestionService implements IQuestionService{
 	@Override
 	public void update(QuestionEntity question) {
 		question.setAuditStatus(TamguoConstant.QUESTION_NOTHING_AUDIT_STATUS);
-		questionMapper.update(question);
+		questionMapper.updateById(question);
 	}
 
 	@Transactional(readOnly=false)
 	@Override
 	public void audit(String[] questionIds) {
-		List<QuestionEntity> questions = questionMapper.selectByIds(Arrays.asList(questionIds));
+		List<QuestionEntity> questions = questionMapper.selectBatchIds(Arrays.asList(questionIds));
 		for(int i=0 ; i<questions.size() ; i++) {
 			QuestionEntity question = questions.get(i);
 			if(TamguoConstant.QUESTION_SUCCESS_AUDIT_STATUS.equals(question.getAuditStatus())) {
 				continue;
 			}
 			question.setAuditStatus(TamguoConstant.QUESTION_SUCCESS_AUDIT_STATUS);
-			questionMapper.update(question);
+			questionMapper.updateById(question);
 			
 			// 章节题目数添加
-			ChapterEntity chapter = chapterMapper.select(question.getChapterId().toString());
+			ChapterEntity chapter = chapterMapper.selectById(question.getChapterId().toString());
 			if(chapter != null) {
 				chapter.setQuestionNum(chapter == null ? 0 : chapter.getQuestionNum().intValue() + 1);
-				chapterMapper.update(chapter);
+				chapterMapper.updateById(chapter);
 			}
 		}
 	}
@@ -116,20 +116,20 @@ public class QuestionService implements IQuestionService{
 	@Transactional(readOnly=false)
 	@Override
 	public void notAudit(String[] questionIds) {
-		List<QuestionEntity> questions = questionMapper.selectByIds(Arrays.asList(questionIds));
+		List<QuestionEntity> questions = questionMapper.selectBatchIds(Arrays.asList(questionIds));
 		for(int i=0 ; i<questions.size() ; i++) {
 			QuestionEntity question = questions.get(i);
 			if(TamguoConstant.QUESTION_FAILED_AUDIT_STATUS.equals(question.getAuditStatus())) {
 				continue;
 			}
 			question.setAuditStatus(TamguoConstant.QUESTION_FAILED_AUDIT_STATUS);
-			questionMapper.update(question);
+			questionMapper.updateById(question);
 			
 			// 章节题目数添加
-			ChapterEntity chapter = chapterMapper.select(question.getChapterId().toString());
+			ChapterEntity chapter = chapterMapper.selectById(question.getChapterId().toString());
 			if(chapter != null) {
 				chapter.setQuestionNum(chapter == null ? 0 : chapter.getQuestionNum().intValue() - 1);
-				chapterMapper.update(chapter);
+				chapterMapper.updateById(chapter);
 			}
 		}
 	}

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tamguo.dao.MenuMapper">
 	
-	<select id="findFatherMenus" resultMap="resultMap">
+	<select id="findFatherMenus" resultType="MenuEntity">
 		SELECT
 			uid,name,parent_id,pinyin,is_show,orders,url
 		FROM
@@ -11,7 +11,7 @@
 		order by orders desc
 	</select>
 	
-	<select id="findMenuByParentId" resultMap="resultMap">
+	<select id="findMenuByParentId" resultType="MenuEntity">
 		SELECT
 			uid,name,parent_id,pinyin,is_show,orders,url
 		FROM
@@ -20,7 +20,7 @@
 		order by orders desc
 	</select>
 	
-	<select id="findAllFatherMenus" resultMap="resultMap">
+	<select id="findAllFatherMenus" resultType="MenuEntity">
 		SELECT
 			uid,name,parent_id,pinyin,is_show,orders,url
 		FROM
@@ -29,7 +29,7 @@
 		order by orders desc
 	</select>
 	
-	<select id="findLeftFatherMenus" resultMap="resultMap">
+	<select id="findLeftFatherMenus" resultType="MenuEntity">
 		SELECT
 			uid,name,parent_id,pinyin,is_show,orders,url
 		FROM
@@ -38,7 +38,7 @@
 		order by orders desc
 	</select>
 	
-	<select id="findFooterFatherMenus" resultMap="resultMap">
+	<select id="findFooterFatherMenus" resultType="MenuEntity">
 		SELECT
 			uid,name,parent_id,pinyin,is_show,orders,url
 		FROM
@@ -47,7 +47,7 @@
 		order by orders desc
 	</select>
 	
-	<select id="findByName" resultMap="resultMap">
+	<select id="findByName" resultType="MenuEntity">
 		SELECT
 			m.is_show,
 			m.`name`,

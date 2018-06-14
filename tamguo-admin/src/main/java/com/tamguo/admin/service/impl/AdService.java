@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.mapper.Condition;
 import com.tamguo.admin.dao.AdMapper;
 import com.tamguo.admin.dao.redis.CacheService;
 import com.tamguo.admin.model.AdEntity;
@@ -24,7 +25,7 @@ public class AdService implements IAdService{
 		List<AdEntity> adList = (List<AdEntity>) cacheService.getObject(TamguoConstant.ALL_AD);
 		adList = null;
 		if(adList == null || adList.isEmpty()){
-			adList = adMapper.selectAll();
+			adList = adMapper.selectList(Condition.EMPTY);
 			cacheService.setObject(TamguoConstant.ALL_AD, adList , 2 * 60 * 60);
 		}
 		return adList;

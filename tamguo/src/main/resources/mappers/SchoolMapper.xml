@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tamguo.dao.SchoolMapper">
 
-	<select id="findByAreaId" resultMap="resultMap">
+	<select id="findByAreaId" resultType="SchoolEntity">
 		SELECT
 			s.area_id,s.image,s.`name`,s.uid
 		FROM

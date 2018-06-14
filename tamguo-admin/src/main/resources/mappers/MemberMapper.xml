@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tamguo.admin.dao.MemberMapper">
 
-	<select id="findByUsername" resultMap="resultMap">
+	<select id="findByUsername" resultType="MemberEntity">
 		SELECT
 			m.uid , m.avatar , m.`password` , m.username , m.mobile , m.email
 		FROM
@@ -10,7 +10,7 @@
 		where m.username = #{username}
 	</select>
 	
-	<select id="findByMobile" resultMap="resultMap">
+	<select id="findByMobile" resultType="MemberEntity">
 		SELECT
 			m.uid , m.avatar , m.`password` , m.username , m.mobile , m.email
 		FROM

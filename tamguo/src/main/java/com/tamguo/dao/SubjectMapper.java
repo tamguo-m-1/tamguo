@@ -1,8 +1,8 @@
 package com.tamguo.dao;
 
+import com.tamguo.config.dao.SuperMapper;
 import com.tamguo.model.SubjectEntity;
-import com.tamguo.mybatis.dao.BaseDao;
 
-public interface SubjectMapper extends BaseDao<SubjectEntity>{
+public interface SubjectMapper extends SuperMapper<SubjectEntity>{
 
 }

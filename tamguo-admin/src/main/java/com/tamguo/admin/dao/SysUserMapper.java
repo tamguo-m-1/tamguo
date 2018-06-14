@@ -1,20 +1,16 @@
 package com.tamguo.admin.dao;
 
 import java.util.List;
-import java.util.Map;
+import org.apache.ibatis.annotations.Param;
 
+import com.baomidou.mybatisplus.plugins.Page;
+import com.tamguo.admin.config.dao.SuperMapper;
 import com.tamguo.admin.model.SysUserEntity;
-import com.tamguo.admin.mybatis.dao.BaseDao;
 
-public interface SysUserMapper extends BaseDao<SysUserEntity> {
+public interface SysUserMapper extends SuperMapper<SysUserEntity>{
 
 	SysUserEntity queryByUserName(String username);
-	
-	List<SysUserEntity> listSysUser(SysUserEntity sysUser);
-	
-	/**
-	 * 修改密码
-	 */
-	int updatePassword(Map<String, Object> map);
 
+	List<SysUserEntity> queryPage(@Param(value="userName")String userName , Page<SysUserEntity> page);
+	
 }

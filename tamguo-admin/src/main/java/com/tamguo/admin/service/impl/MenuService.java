@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.admin.dao.MenuMapper;
 import com.tamguo.admin.dao.redis.CacheService;
 import com.tamguo.admin.model.MenuEntity;
@@ -88,19 +88,19 @@ public class MenuService implements IMenuService{
 	}
 
 	@Override
-	public Page<SubjectEntity> list(String name, Integer page, Integer limit) {
-		PageHelper.startPage(page, limit);
-		return menuMapper.findByName(name);
+	public Page<SubjectEntity> list(String name, Page<SubjectEntity> page) {
+		return page.setRecords(menuMapper.findByName(name , page));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MenuEntity> getMenuTree() {
-		return menuMapper.selectAll();
+		return (List<MenuEntity>) menuMapper.selectById(Condition.EMPTY);
 	}
 
 	@Override
 	public MenuEntity findById(String uid) {
-		return menuMapper.select(uid);
+		return menuMapper.selectById(uid);
 	}
 
 	@Override
@@ -110,12 +110,12 @@ public class MenuService implements IMenuService{
 
 	@Override
 	public void update(MenuEntity menu) {
-		menuMapper.update(menu);
+		menuMapper.updateById(menu);
 	}
 
 	@Override
 	public void deleteBatch(String[] menuIds) {
-		menuMapper.deleteByIds(Arrays.asList(menuIds));
+		menuMapper.deleteBatchIds(Arrays.asList(menuIds));
 	}
 
 }

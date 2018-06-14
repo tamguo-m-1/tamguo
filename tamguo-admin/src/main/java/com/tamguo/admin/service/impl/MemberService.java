@@ -174,7 +174,7 @@ public class MemberService implements IMemberService{
 			MemberEntity member = memberMapper.findByUsername(username);
 			if(password.equals(verifypwd)){
 				member.setPassword(new Sha256Hash(password).toHex());
-				memberMapper.update(member);
+				memberMapper.updateById(member);
 			}
 		}
 		return Result.result(200, null, "更新成功");
@@ -183,18 +183,18 @@ public class MemberService implements IMemberService{
 	@Transactional(readOnly=false)
 	@Override
 	public void updateMember(MemberEntity member) {
-		MemberEntity entity = memberMapper.select(member.getUid());
+		MemberEntity entity = memberMapper.selectById(member.getUid());
 		entity.setAvatar(member.getAvatar());
 		entity.setEmail(member.getEmail());
 		entity.setMobile(member.getMobile());
 		
-		memberMapper.update(entity);
+		memberMapper.updateById(entity);
 	}
 
 	@Transactional(readOnly=true)
 	@Override
 	public MemberEntity findByUid(String uid) {
-		return memberMapper.select(uid);
+		return memberMapper.selectById(uid);
 	}
 	
 }

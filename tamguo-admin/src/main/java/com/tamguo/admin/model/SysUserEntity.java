@@ -3,107 +3,93 @@ package com.tamguo.admin.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.tamguo.admin.config.dao.SuperEntity;
+import com.tamguo.admin.model.enums.SysUserStatusEnum;
 
-@Entity
-@Table(name="sys_user")
-@NamedQuery(name="SysUserEntity.findAll", query="SELECT a FROM sys_user a")
-public class SysUserEntity implements Serializable {
+
+/**
+ * The persistent class for the reaps_sys_user database table.
+ * 
+ */
+@TableName(value="sys_user")
+public class SysUserEntity extends SuperEntity<SysUserEntity> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name="user_id")
-    private Long userId;
+	private String userName;
 
-	@Column(name="username")
-    private String username;
-
-	@Column(name="password")
-    private String password;
-
-	@Column(name="email")
-    private String email;
-
-	@Column(name="mobile")
-    private String mobile;
-
-	@Column(name="status")
-    private Byte status;
-
-	@Column(name="create_time")
-    private Long createTime;
+	private String nickName;
 	
-	@Column(name="last_login_time")
-	private Long lastLoginTime;
+	private String mobile;
+	
+	private String email;
 
-    public Long getUserId() {
-        return userId;
-    }
+	private String password;
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+	private String roleIds;
+	
+	@JSONField(serialzeFeatures= SerializerFeature.WriteEnumUsingToString)
+	private SysUserStatusEnum status;
+	
+	private String safeKeyValue;
+	
+	private Long createTime;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile == null ? null : mobile.trim();
-    }
-
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
-    
-	private List<Long> roleIdList;
-
-	public List<Long> getRoleIdList() {
-		return roleIdList;
+	@TableField(exist=false)
+	private List<String> roleIdList;
+	
+	public SysUserEntity() {
 	}
 
-	public void setRoleIdList(List<Long> roleIdList) {
-		this.roleIdList = roleIdList;
+	public String getPassword() {
+		return this.password;
 	}
 
-	public Long getLastLoginTime() {
-		return lastLoginTime;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public void setLastLoginTime(Long lastLoginTime) {
-		this.lastLoginTime = lastLoginTime;
+	public String getRoleIds() {
+		return this.roleIds;
+	}
+
+	public void setRoleIds(String roleIds) {
+		this.roleIds = roleIds;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Long getCreateTime() {
@@ -113,5 +99,30 @@ public class SysUserEntity implements Serializable {
 	public void setCreateTime(Long createTime) {
 		this.createTime = createTime;
 	}
+
+	public List<String> getRoleIdList() {
+		return roleIdList;
+	}
+
+	public void setRoleIdList(List<String> roleIdList) {
+		this.roleIdList = roleIdList;
+	}
+
+	public String getSafeKeyValue() {
+		return safeKeyValue;
+	}
+
+	public void setSafeKeyValue(String safeKeyValue) {
+		this.safeKeyValue = safeKeyValue;
+	}
+
+	public SysUserStatusEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(SysUserStatusEnum status) {
+		this.status = status;
+	}
+
 
 }

@@ -2,7 +2,7 @@ package com.tamguo.admin.service;
 
 import java.util.List;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.admin.model.PaperEntity;
 
 public interface IPaperService {
@@ -22,7 +22,7 @@ public interface IPaperService {
 
 	Long getPaperTotal();
 
-	Page<PaperEntity> list(String name, Integer page, Integer limit);
+	Page<PaperEntity> list(String name, Page<PaperEntity> page);
 
 	PaperEntity select(String paperId);
 

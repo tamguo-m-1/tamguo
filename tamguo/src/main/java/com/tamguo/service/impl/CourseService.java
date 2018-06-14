@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.tamguo.dao.CourseMapper;
 import com.tamguo.dao.redis.CacheService;
 import com.tamguo.model.CourseEntity;
@@ -11,7 +13,7 @@ import com.tamguo.service.ICourseService;
 import com.tamguo.util.TamguoConstant;
 
 @Service
-public class CourseService implements ICourseService{
+public class CourseService extends ServiceImpl<CourseMapper, CourseEntity> implements ICourseService{
 	
 	@Autowired
 	private CourseMapper courseMapper;
@@ -37,7 +39,7 @@ public class CourseService implements ICourseService{
 
 	@Override
 	public CourseEntity find(String uid) {
-		return courseMapper.select(uid);
+		return courseMapper.selectById(uid);
 	}
 
 }

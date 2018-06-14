@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class IndexController {
 	
 	private final String INDEX_PAGE = "index";
+	
+	public final String UNAUTHORIZED = "unauthorized";
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView indexAction(ModelAndView model) {
@@ -28,5 +30,9 @@ public class IndexController {
         return INDEX_PAGE;
     }
     
+	@RequestMapping(value = "unauthorized", method = RequestMethod.GET)
+	public String unauthorized() {
+		return UNAUTHORIZED;
+	}
    
 }

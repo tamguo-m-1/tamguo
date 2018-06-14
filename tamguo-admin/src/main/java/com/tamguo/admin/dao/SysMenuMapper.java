@@ -3,15 +3,18 @@ package com.tamguo.admin.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
+import com.tamguo.admin.config.dao.SuperMapper;
 import com.tamguo.admin.model.SysMenuEntity;
-import com.tamguo.admin.mybatis.dao.BaseDao;
 
-public interface SysMenuMapper extends BaseDao<SysMenuEntity> {
+public interface SysMenuMapper extends SuperMapper<SysMenuEntity>{
 
-	List<SysMenuEntity> queryList(Map<String, Object> map);
+	List<SysMenuEntity> queryList(Map<String, Object> hashMap , Pagination page);
 
-	List<SysMenuEntity> queryListParentId(Long parentId);
-	
 	List<SysMenuEntity> queryNotButtonList();
+
+	SysMenuEntity queryByParentId(String parentId);
+
+	SysMenuEntity queryByUid(String uid);
 
 }

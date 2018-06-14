@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.model.QuestionEntity;
 import com.tamguo.service.IPaperService;
 import com.tamguo.service.IQuestionService;
@@ -52,8 +52,11 @@ public class QuestionController {
 	@ResponseBody
 	public Map<String, Object> queryQuestionList(String questionType , String uid , String reviewPoint , String paperId ,
 			Integer page , Integer limit){
-		Page<QuestionEntity> list = iQuestionService.queryQuestionList(questionType , uid , reviewPoint , paperId , page , limit);
-		return Result.jqGridResult(list.getResult(), list.getTotal(), limit, page, list.getPages());
+		Page<QuestionEntity> p = new Page<>();
+		p.setCurrent(page);
+		p.setSize(limit);
+		Page<QuestionEntity> list = iQuestionService.queryQuestionList(questionType , uid , reviewPoint , paperId , p);
+		return Result.jqGridResult(list.getRecords(), list.getTotal(), limit, page, list.getPages());
 	}
 	
 	@RequestMapping(value = "/member/editQuestion", method = RequestMethod.GET)

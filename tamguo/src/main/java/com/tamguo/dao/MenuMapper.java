@@ -2,12 +2,12 @@ package com.tamguo.dao;
 
 import java.util.List;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.tamguo.config.dao.SuperMapper;
 import com.tamguo.model.MenuEntity;
 import com.tamguo.model.SubjectEntity;
-import com.tamguo.mybatis.dao.BaseDao;
 
-public interface MenuMapper extends BaseDao<MenuEntity>{
+public interface MenuMapper extends SuperMapper<MenuEntity>{
 
 	public List<MenuEntity> findFatherMenus();
 	

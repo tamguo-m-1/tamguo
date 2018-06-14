@@ -1,8 +1,8 @@
 package com.tamguo.dao;
 
+import com.tamguo.config.dao.SuperMapper;
 import com.tamguo.model.AreaEntity;
-import com.tamguo.mybatis.dao.BaseDao;
 
-public interface AreaMapper extends BaseDao<AreaEntity>{
+public interface AreaMapper extends SuperMapper<AreaEntity>{
 
 }
