@@ -107,7 +107,7 @@
     padding-top: 12px;
     padding-bottom: 12px;
     background-repeat: no-repeat;
-    background-image: url(//wkstatic.bdimg.com/static/gaokao/static/miti/tikupc/widget/singledetail/single/images/paper-default_4279412.png);
+    background-image: url(../images/paper-default_4279412.png);
     background-position-y: 50%;
     display: block;
     color: #333;
@@ -126,7 +126,7 @@
 }
 .single .answer .exam-answer-title {
     background-size: inherit;
-    background-image: url(//wkstatic.bdimg.com/static/gaokao/static/miti/tikupc/widget/singledetail/single/images/answer-ic_e2a51c3.png);
+    background-image: url(../images/answer-ic_e2a51c3.png);
     padding-top: 24px;
     padding-bottom: 15px;
     background-position-y: 22px;
@@ -140,7 +140,7 @@
     line-height: 1.5;
 }
 .single .answer .analysis-ic {
-    background-image: url(//wkstatic.bdimg.com/static/gaokao/static/miti/tikupc/widget/singledetail/single/images/analysis-ic_9ed7fd8.png);
+    background-image: url(../images/analysis-ic_9ed7fd8.png);
 }
 .single .answer .ic {
     font-size: 16px;
