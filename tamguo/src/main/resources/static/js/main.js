@@ -1,7 +1,7 @@
 $(function(){
 	
 	// 头部选项事件
-	$(".header .menu .menu-contain .contain-ul li").bind("mouseover",function(event){
+	$(".header .menu .menu-contain .contain-ul .contain-li-hashover").bind("mouseover",function(event){
 		$(".header .menu .menu-contain .contain-ul li i").css("transform","rotate(0deg)");
 		$(this).find("i").css("transform","rotate(180deg)");
 		$(".header .submenu-container .subm-ul").addClass("dis-none");
@@ -10,7 +10,7 @@ $(function(){
 		$(this).addClass("li-hover");
 		event.stopPropagation();
 	}).bind("mouseleave",function(event){
-		if(event.relatedTarget == null || event.relatedTarget.id != "submenu"){
+		if(event.relatedTarget == null || $(event.relatedTarget).attr("data-id") != "submenu"){
 			$(this).find("i").css("transform","rotate(0deg)");
 			$(".header .submenu-container .subm-ul").addClass("dis-none");
 			$(".header .submenu-container .all-exm").addClass("dis-none");

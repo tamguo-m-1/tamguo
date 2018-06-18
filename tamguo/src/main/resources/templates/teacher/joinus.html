@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="Zh-hans" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>教师招募_探果网</title>
+		<meta name="description" content="教师招募_探果网"/>
+		<meta name="author" content="Tamguo Team" />
+		<meta name="copyright" content="Tamguo" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/teacher/joinus.css'}" />
+		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	</head>
+	<body>
+		<div id="wrapper" class="">
+		    <div id="head">
+		        <div class="mod-header">
+		            <a th:href="${setting.domain}" style="display: block;">
+		                <img th:src="${setting.domain + 'images/logo_731bc32.png'}" alt="logo"></a>
+		        </div>
+		    </div>
+		    <div id="nav">
+		        <div class="nav-2">
+		            <div class="mod-nav clearfix">
+		                <h1 class="page-type-notab"></h1>
+		            </div>
+		        </div>
+		    </div>
+		    <div id="content">
+		        <div class="mod-reg clearfix mod-reg-">
+					<div id="infoForm">
+						<el-steps :active="active" finish-status="success">
+						  <el-step title="手机号"></el-step>
+						  <el-step title="档案信息"></el-step>
+						  <el-step title="审核状态"></el-step>
+						</el-steps>
+						<div style="width:90%;margin-top:50px;">
+						<el-form ref="form" :model="form" label-width="120px">
+						  <el-form-item label="手机号">
+						    <el-input v-model="form.name"></el-input>
+						  </el-form-item>
+						</el-form>
+						<el-button style="float:right;">下一步</el-button>
+						</div>
+					</div>
+		            <div class="login-link" id="login_link">
+		                <span>我已加入，现在就</span>
+		                <button class="login-btn" id="login_btn">登录</button></div>
+		        	</div>
+				    <div id="foot">
+				        <div class="mod-footer">
+				            <div class="copy-box">2018&nbsp;©Tamguo</div></div>
+				    </div>
+				</div>
+			</div>
+	</body>
+	<script type="text/javascript" th:inline="javascript">
+	var mainHttp = [[${setting.domain}]];
+	</script>
+	<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}"></script>
+	<script type="text/javascript" th:src="${setting.domain + 'js/member/register.js'}"></script>
+	<!-- 引入组件库 -->
+	<script type="text/javascript" src="https://vuejs.org/js/vue.min.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+		  el: '#infoForm',
+		  data() {
+		      return {
+		        form: {
+		          name: '',
+		          region: '',
+		          date1: '',
+		          date2: '',
+		          delivery: false,
+		          type: [],
+		          resource: '',
+		          desc: ''
+		        },
+		        active: 3
+		      }
+		    },
+		    methods: {
+		      onSubmit() {
+		        console.log('submit!');
+		      },
+		      next() {
+		          if (this.active++ > 2) this.active = 0;
+		        }
+		    }
+		});
+	</script>
+</html>

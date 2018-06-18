@@ -72,10 +72,6 @@
     -webkit-transition: -webkit-transform .2s ease-in 0s;
     transition: transform .2s ease-in 0s;
 }
-.header .menu .menu-contain .contain-ul .contain-li:hover {
-    background-color: #fff;
-    color: #11a68d;
-}
 .header .menu .menu-contain .contain-ul .li-hover {
     background-color: #fff;
     color: #11a68d;
@@ -191,4 +187,13 @@
 }
 .header .menu .menu-contain .contain-login .login-option li a:hover {
     color: #11a68d
+}
+.header .menu .menu-contain .jiaoshirukou:hover {
+    color: #ccc
+}
+.header .menu .menu-contain .jiaoshirukou a {
+    color: #fff
+}
+.header .menu .menu-contain .jiaoshirukou a:hover {
+    color: #ccc
 }

@@ -24,21 +24,24 @@
                 <li class="contain-li contain-li-hashover" data-class="all">
                                         全部考试<i class="li-icon iconfont icon-yingyongchengxu-xianxing" data-class="all" style="transform: rotate(0deg);"></i>
                 </li>
-            </ul>	
+                <li class="contain-li jiaoshirukou">
+                    <a th:href="${setting.domain + 'teacher/joinus.html'}">教师入口</a><i class="li-icon iconfont icon-jiaoshi1"></i>
+                </li>
+            </ul>
           </div>
 	</div>
-	<div class="clearfix submenu-container">
-	    <div class="submenu clearfix" id="submenu">
-	        <ul th:class="${m.pinyin + ' subm-ul dis-none'}" th:each="m,mStat:${menuList}">
+	<div class="clearfix submenu-container" data-id="submenu">
+	    <div class="submenu clearfix" id="submenu" data-id="submenu">
+	        <ul th:class="${m.pinyin + ' subm-ul dis-none'}" th:each="m,mStat:${menuList}" data-id="submenu">
 	            <li class="subm-li" th:each="c,cmStat:${m.childSubjects}"><a th:href="${setting.domain + m.url}" target="_blank" th:text="${c.name}">高考</a></li>
 	        </ul>
-	        <div class="all-exm all dis-none">
+	        <div class="all-exm all dis-none" data-id="submenu">
 	            <div class="all-ul" th:each="m,mStat:${allMenuList}">
 	                <span class="all-ul-title">
 	                    <i class="title-icon iconfont icon-iconfontshu"></i>
 	                    <span th:text="${m.name}"></span>
 	                </span>
-	                <ul class="all-list clearfix">
+	                <ul class="all-list clearfix" id="allmenu">
 	                    <li class="all-list-li" th:each="c,cmStat:${m.childSubjects}"><a th:href="${setting.domain + m.url}" target="_blank" th:text="${c.name}">高考</a></li>
 	                </ul>
 	            </div>
