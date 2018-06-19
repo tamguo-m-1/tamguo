@@ -35,14 +35,34 @@
 						  <el-step title="档案信息"></el-step>
 						  <el-step title="审核状态"></el-step>
 						</el-steps>
-						<div style="width:90%;margin-top:50px;">
-						<el-form ref="form" :model="form" label-width="120px">
-						  <el-form-item label="手机号">
-						    <el-input v-model="form.name"></el-input>
-						  </el-form-item>
-						</el-form>
-						<el-button style="float:right;">下一步</el-button>
+						<div v-show="active == 1" style="width:90%;margin-top:50px;">
+							<el-form ref="form" :model="form" label-width="120px">
+							  <el-form-item label="手机号1">
+							    <el-input v-model="form.name"></el-input>
+							  </el-form-item>
+							</el-form>
 						</div>
+						<div v-show="active == 2" style="width:90%;margin-top:50px;">
+							<el-form ref="form" :model="form" label-width="120px">
+							  <el-form-item label="手机号2">
+							    <el-input v-model="form.name"></el-input>
+							  </el-form-item>
+							</el-form>
+						</div>
+						<div v-show="active == 3" style="width:90%;margin-top:50px;">
+							<el-form ref="form" :model="form" label-width="120px">
+							  <el-form-item label="手机号3">
+							    <el-input v-model="form.name"></el-input>
+							  </el-form-item>
+							</el-form>
+						</div>
+						<el-row>
+						  <el-col :span="24">
+						  	<div class="grid-content bg-purple-dark" style="text-align: center;">
+						  		<el-button :onclick="next">下一步</el-button>
+						  	</div>
+						  </el-col>
+						</el-row>
 					</div>
 		            <div class="login-link" id="login_link">
 		                <span>我已加入，现在就</span>
@@ -69,25 +89,20 @@
 		  data() {
 		      return {
 		        form: {
-		          name: '',
-		          region: '',
-		          date1: '',
-		          date2: '',
-		          delivery: false,
-		          type: [],
-		          resource: '',
-		          desc: ''
+		          mobile: '',
 		        },
-		        active: 3
+		        active: 1
 		      }
 		    },
 		    methods: {
-		      onSubmit() {
+		      onSubmit:function(){
 		        console.log('submit!');
 		      },
-		      next() {
-		          if (this.active++ > 2) this.active = 0;
-		        }
+		      next:function(){
+		    	  if(this.active == 1){
+		    		  console.log(this.active);
+		    	}
+		      }
 		    }
 		});
 	</script>
