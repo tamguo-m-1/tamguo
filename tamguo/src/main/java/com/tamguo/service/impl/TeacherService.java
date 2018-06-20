@@ -25,13 +25,21 @@ public class TeacherService extends ServiceImpl<TeacherMapper, TeacherEntity> im
 	public Result getTeacherByMobile(String mobile, String verifyCode) {
 		// 校验短信验证码
 		if(!cacheService.isExist(TamguoConstant.ALIYUN_MOBILE_SMS_PREFIX + mobile)){
-		//	return Result.result(201, null, "验证码错误");
+//			if(!((String)cacheService.getObject(TamguoConstant.ALIYUN_MOBILE_SMS_PREFIX + mobile)).equals(verifyCode)) {
+//				return Result.result(201, null, "验证码错误");
+//			}
 		}
 		TeacherEntity teacher = teacherMapper.findByMobile(mobile);
 		if(teacher == null) {
 			return Result.result(202, null, "欢迎");
 		}
 		return Result.successResult(teacher);
+	}
+
+	@Transactional(readOnly=false)
+	@Override
+	public void joinus(TeacherEntity teacher) {
+		teacherMapper.insert(teacher);
 	}
 
 }

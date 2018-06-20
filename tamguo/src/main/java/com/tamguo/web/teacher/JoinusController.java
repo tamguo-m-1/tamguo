@@ -39,6 +39,7 @@ public class JoinusController {
 	@RequestMapping(value = "teacher/joinus", method = RequestMethod.POST)
 	@ResponseBody
 	public Result teacherJoinus(@RequestBody TeacherEntity teacher) {
+		iTeacherService.joinus(teacher);
 		return Result.successResult(null);
 	}
 }

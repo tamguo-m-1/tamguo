@@ -1,5 +1,6 @@
 package com.tamguo.service;
 
+import com.tamguo.model.TeacherEntity;
 import com.tamguo.util.Result;
 
 public interface ITeacherService {
@@ -11,5 +12,12 @@ public interface ITeacherService {
 	 * @return
 	 */
 	Result getTeacherByMobile(String mobile , String verifyCode);
+	
+	/**
+	 * 加入我们
+	 * @param teacher
+	 * @return
+	 */
+	void joinus(TeacherEntity teacher);
 	
 }
