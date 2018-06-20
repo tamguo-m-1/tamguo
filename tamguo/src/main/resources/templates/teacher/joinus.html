@@ -46,35 +46,60 @@
 							</el-form>
 						</div>
 						<div v-show="active == 2" style="width:90%;margin-top:50px;">
-							<el-form ref="form" :model="teacher" label-width="120px">
-
-								  <el-form-item label="地区">
+							<el-form ref="teacherForm" :model="teacher" :rules="teacherRules" label-width="120px">
+								  <el-form-item label="地区" prop="areaId">
 									  <el-cascader
 									    :options="options"
-									    v-model="selectedOptions"
-									    @change="handleChange">
+									    v-model="teacher.areaId">
 									  </el-cascader>
 								  </el-form-item>
-								  <el-form-item label="科目">
+								  <el-form-item label="科目" prop="courseId">
 								    <el-cascader
-									    :options="options"
-									    v-model="selectedOptions"
-									    @change="handleChange">
+									    :options="courses"
+									    v-model="teacher.courseId">
 									  </el-cascader>
 								  </el-form-item>
-								  <el-form-item label="学校">
-								    <el-cascader
-									    :options="options"
-									    v-model="selectedOptions"
-									    @change="handleChange">
-									  </el-cascader>
-								  </el-form-item>
-								  <el-form-item label="姓名">
+								  <el-form-item label="真实姓名" prop="name">
 								    <el-input v-model="teacher.name"></el-input>
 								  </el-form-item>
-								    <el-form-item label="座右铭">
-								    <el-input type="textarea" v-model="teacher.motto"></el-input>
+								  <el-form-item label="身份证号" prop="cardId">
+								    <el-input v-model="teacher.cardId"></el-input>
 								  </el-form-item>
+								  <el-form-item label="身份证正面照" prop="cardPhoto">
+								    <el-upload
+								      name="upfile"
+									  class="upload-demo"
+									  action="http://localhost/uploadFile.html"
+									  :before-remove="beforeRemove"
+									  :limit="1"
+									  :on-exceed="handleExceed"
+									  :on-remove="handleCardPhotoRemove"
+									  :on-success="uploadCardPhotoSuccess"
+									  list-type="picture"
+									  :file-list="cardPhotoList">
+									  <el-button size="small" type="primary">点击上传</el-button>
+									  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+									</el-upload>
+								  </el-form-item>
+								  <el-form-item label="证件照" prop="occupationPapers">
+								    <el-upload
+								      name="upfile"
+									  class="upload-demo"
+									  action="http://localhost/uploadFile.html"
+									  :before-remove="beforeRemove"
+									  :limit="1"
+									  :on-remove="handleOccupationPapersRemove"
+									  :on-exceed="handleExceed"
+									  :on-success="uploadOccupationPapersSuccess"
+									  list-type="picture"
+									  :file-list="occupationPapersList">
+									  <el-button size="small" type="primary">点击上传</el-button>
+									  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+									</el-upload>
+								  </el-form-item>
+								  <el-form-item label="QQ号">
+								    <el-input v-model="teacher.qq"></el-input>
+								  </el-form-item>							  
 							</el-form>
 						</div>
 						<div v-show="active == 3" style="width:90%;margin-top:50px;">
@@ -107,12 +132,24 @@
 	var mainHttp = [[${setting.domain}]];
 	</script>
 	<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}"></script>
-	<script type="text/javascript" th:src="${setting.domain + 'js/member/register.js'}"></script>
 	<!-- 引入组件库 -->
 	<script type="text/javascript" src="https://vuejs.org/js/vue.min.js"></script>
 	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script type="text/javascript">
+		function cardPhoto(rule, value, callback) {
+	        if (vm.cardPhotoList == undefined || vm.cardPhotoList.length == 0) {
+	          return callback(new Error('请上传身份证正面照'));
+	        }
+	        return callback();
+	    };
+	    function occupationPaper(rule, value, callback){
+	    	if (vm.occupationPapersList == undefined || vm.occupationPapersList.length == 0) {
+		        return callback(new Error('请上传证件照'));
+		    }
+	    	return callback();
+	    }
+	    
 		var vm = new Vue({
 		  el: '#infoForm',
 		  data:{
@@ -133,10 +170,20 @@
 		            	{min:6, max:6, message: '验证码格式错误', trigger: 'blur' }
 		            ]
 		        },
+		        teacherRules: {
+		        	areaId:[{required: true, message: '请选择地区', trigger: 'blur'}],
+		        	courseId:[{required: true, message: '请选择科目', trigger: 'blur'}],
+		        	name:[{required: true, message: '请输入姓名', trigger: 'blur'}],
+		        	cardId:[{required: true, message: '请输入身份证号', trigger: 'blur'}],
+		        	cardId:[{required: true, message: '请输入身份证号', trigger: 'blur'}],
+		        	cardPhoto:[{validator: cardPhoto, trigger: 'change'}],
+		        	occupationPapers:[{validator: occupationPaper, trigger: 'change'}]
+		        },
 		        active: 1,
 		        options: [],
-		          selectedOptions: [],
-		          selectedOptions2: []
+		        courses: [],
+		        cardPhotoList: [],
+		        occupationPapersList:[]
 		  },
 		  methods: {
 		      next:function(){
@@ -161,23 +208,64 @@
 		    	             return false;
 		    	          }
 			          });
-		    	  }else if(active == 2){ // 第二步
-		    		  
+		    	  }else if(vm.active == 2){ // 第二步
+		    		  this.$refs.teacherForm.validate((valid) => {
+			    		  if (valid) {
+			    			 vm.teacher.areaId = vm.teacher.areaId[vm.teacher.areaId.length-1];
+			    			 vm.teacher.courseId = vm.teacher.courseId[vm.teacher.courseId.length-1];
+			    			 vm.teacher.cardPhoto = vm.cardPhotoList[0].url;
+						     vm.teacher.occupationPapers = vm.occupationPapersList[0].url;
+						     
+						     axios.post('joinus.html', vm.teacher).then(function (response) {
+						    	 console.log(response);
+						     }).catch(function (error) {console.log(error);});
+		    	          } else {
+		    	             console.log('error submit!!');
+		    	             return false;
+		    	          }
+			          });
 		    	  }
 		      },
 		      getTeacher:function(){
 		    	  return axios.post(mainHttp + 'teacher/info.html',{mobile: '15618910786',verifyCode: 'Flintstone'});
 		      },
-		      handleChange(value) {
-		          console.log(value);
+		      getCourses:function(){
+		    	  axios.get(mainHttp + 'subject/getCourseCascaderTree.html').then(function(response){
+		    		  vm.courses = response.data.result;
+		    	  });  
 		      },
 		      getArea:function(){
-		    	  axios.get(mainHttp + 'libs/area.json').then(function(response){
-		    		  vm.options = response.data;
+		    	  axios.get(mainHttp + 'area/findAreaTree.html').then(function(response){
+		    		  vm.options = response.data.result;
 		    	  });
-		      }
+		      },
+		      handleOccupationPapersRemove(file, fileList) {
+		          vm.occupationPapersList = [];
+		      },
+		      handleCardPhotoRemove(file, fileList){
+		    	  vm.cardPhotoList = [];
+		      },
+		      handleExceed(files, fileList) {
+	              this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+	          },
+	          beforeRemove(file, fileList) {
+	              return this.$confirm(`确定移除 ${ file.name }？`);
+	          },
+	          uploadCardPhotoSuccess(response, file, fileList){
+	        	  var cardPhoto = {};
+	        	  cardPhoto.name = file.response.title;
+	        	  cardPhoto.url = file.response.url;
+	        	  vm.cardPhotoList.push(cardPhoto);
+	          },
+	          uploadOccupationPapersSuccess(response, file, fileList){
+	        	  var occupationPapers = {};
+	        	  occupationPapers.name = file.response.title;
+	        	  occupationPapers.url = file.response.url;
+	        	  vm.occupationPapersList.push(occupationPapers);
+	          }
 		    }
 		});
 		vm.getArea();
+		vm.getCourses();
 	</script>
 </html>

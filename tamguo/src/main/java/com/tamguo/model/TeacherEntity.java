@@ -24,6 +24,14 @@ public class TeacherEntity extends SuperEntity<TeacherEntity> implements Seriali
 	private String courseId;
 	
 	private String schoolId;
+	
+	private String cardId;
+	
+	private String cardPhoto;
+	
+	private String occupationPapers;
+	
+	private String qq;
 
 	public String getMobile() {
 		return mobile;
@@ -71,6 +79,38 @@ public class TeacherEntity extends SuperEntity<TeacherEntity> implements Seriali
 
 	public void setSchoolId(String schoolId) {
 		this.schoolId = schoolId;
+	}
+
+	public String getCardId() {
+		return cardId;
+	}
+
+	public void setCardId(String cardId) {
+		this.cardId = cardId;
+	}
+
+	public String getCardPhoto() {
+		return cardPhoto;
+	}
+
+	public void setCardPhoto(String cardPhoto) {
+		this.cardPhoto = cardPhoto;
+	}
+
+	public String getOccupationPapers() {
+		return occupationPapers;
+	}
+
+	public void setOccupationPapers(String occupationPapers) {
+		this.occupationPapers = occupationPapers;
+	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
 	}
 
 	public static long getSerialversionuid() {

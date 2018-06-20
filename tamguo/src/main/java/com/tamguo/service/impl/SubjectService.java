@@ -56,5 +56,34 @@ public class SubjectService extends ServiceImpl<SubjectMapper, SubjectEntity> im
 		}
 		return courseTree;
 	}
+
+	@Override
+	public JSONArray getCourseCascaderTree() {
+		JSONArray courseTree = new JSONArray();
+		
+		@SuppressWarnings("unchecked")
+		List<SubjectEntity> subjectList = subjectMapper.selectList(Condition.EMPTY);
+		for(int i=0 ; i<subjectList.size() ; i++){
+			SubjectEntity subject = subjectList.get(i);
+			JSONObject node = new JSONObject();
+			node.put("value", "s" + subject.getUid());
+			node.put("label", subject.getName());
+			
+			
+			JSONArray children = new JSONArray();
+			List<CourseEntity> courseList = courseMapper.findBySubjectId(subject.getUid());
+			for(int k=0 ; k<courseList.size() ; k++){
+				CourseEntity course = courseList.get(k);
+				
+				JSONObject no = new JSONObject();
+				no.put("value", course.getUid());
+				no.put("label", course.getName());
+				children.add(no);
+			}
+			node.put("children", children);
+			courseTree.add(node);
+		}
+		return courseTree;
+	}
 	
 }

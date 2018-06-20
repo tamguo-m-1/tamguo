@@ -154,7 +154,7 @@
     border-top: 1px solid #e0e0e0;
 }
 .mainlist .paperlist-content .paperlist .zhenti {
-    background: url(//wkstatic.bdimg.com/static/gaokao/static/miti/tikupc/widget/paperlibrary/mainlist/images/list-zhenti_ae69a34.png) no-repeat;
+    background: url(../images/list-zhenti_ae69a34.png) no-repeat;
 }
 .mainlist .paperlist-content .paperlist .paper-title-content {
     float: left;
@@ -177,7 +177,7 @@
     max-width: 540px;
 }
 .mainlist .paperlist-content .paperlist .paper-title-content .read {
-    background: url(//wkstatic.bdimg.com/static/gaokao/static/miti/tikupc/widget/paperlibrary/mainlist/images/read_96d8ed6.png) no-repeat;
+    background: url(../images/read_96d8ed6.png) no-repeat;
     background-position-y: 4px;
     margin-right: 24px;
 }
@@ -190,7 +190,7 @@
     padding-left: 15px;
 }
 .mainlist .paperlist-content .paperlist .paper-title-content .down {
-    background: url(//wkstatic.bdimg.com/static/gaokao/static/miti/tikupc/widget/paperlibrary/mainlist/images/download_92a804b.png) no-repeat;
+    background: url(../images/download_92a804b.png) no-repeat;
     background-position-y: 3px;
 }
 .main .main-inner .list-right {

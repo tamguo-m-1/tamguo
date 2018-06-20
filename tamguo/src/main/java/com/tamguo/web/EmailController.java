@@ -17,7 +17,7 @@ public class EmailController {
 	@Autowired
 	private IEmailService iEmailService;
 
-	@RequestMapping(value = {"email/sendFindPasswordEmail.html"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"email/sendFindPasswordEmail"}, method = RequestMethod.GET)
 	@ResponseBody
 	public Result sendFindPasswordEmail(String email){
 		try {

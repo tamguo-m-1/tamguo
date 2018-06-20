@@ -8,5 +8,7 @@ public interface ISubjectService {
 	public SubjectEntity find(String uid);
 	
 	public JSONArray getCourseTree();
+
+	public JSONArray getCourseCascaderTree();
 	
 }

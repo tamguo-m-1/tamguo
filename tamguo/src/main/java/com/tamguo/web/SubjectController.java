@@ -58,4 +58,12 @@ public class SubjectController {
 		JSONArray list = iSubjectService.getCourseTree();
 		return Result.successResult(list);
 	}
+	
+	// [{"value":"11","label":"北京市","children":[{"value":"1101","label":"市辖区"}]}]
+	@RequestMapping(value = {"subject/getCourseCascaderTree"}, method = RequestMethod.GET)
+	@ResponseBody
+	public Result getCourseCascaderTree() {
+		JSONArray list = iSubjectService.getCourseCascaderTree();
+		return Result.successResult(list);
+	}
 }

@@ -117,4 +117,7 @@ public class TamguoConstant {
 	/** 题目审核失败*/
 	public static final String QUESTION_FAILED_AUDIT_STATUS = "2";
 	
+	/** 所有地区*/
+	public static final String AREA_ALL_TREE = "AREAALL:";
+	
 }

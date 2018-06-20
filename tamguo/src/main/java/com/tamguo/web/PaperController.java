@@ -40,7 +40,7 @@ public class PaperController {
     		@PathVariable String year , @PathVariable String area , @PathVariable Integer pageNum, ModelAndView model) {
     	model.setViewName("paperlist");
     	model.addObject("courseList", iCourseService.findBySubjectId(subjectId));
-    	model.addObject("areaList", iAreaService.findAll());
+    	model.addObject("areaList", iAreaService.findRootArea());
     	model.addObject("paperPage" , PageUtils.getPage(iPaperService.findList(courseId , paperType , year , area , pageNum)));
     	model.addObject("total" , iPaperService.getPaperTotal());
     	model.addObject("courseId", courseId);
