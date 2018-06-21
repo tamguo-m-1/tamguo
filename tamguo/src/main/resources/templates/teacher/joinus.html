@@ -197,7 +197,7 @@
 		        	cardPhoto:[{validator: cardPhoto, trigger: 'change'}],
 		        	occupationPapers:[{validator: occupationPaper, trigger: 'change'}]
 		        },
-		        active: 2,
+		        active: 1,
 		        options: [],
 		        courses: [],
 		        cardPhotoList: [],
@@ -218,6 +218,7 @@
 					    		    	  }});
 					    		     }else if(tResponse.data.code == 203){
 					    		    	 vm.active = 2;
+					    		    	 vm.teacher.mobile = vm.mobileModel.mobile;
 					    		     }else if(tResponse.data.code == 0){
 					    		    	 vm.active = 3;
 					    		    	 vm.teacher = tResponse.data.result;
