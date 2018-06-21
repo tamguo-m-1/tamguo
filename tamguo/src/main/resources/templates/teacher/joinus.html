@@ -2,8 +2,9 @@
 <html lang="Zh-hans" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
-		<title>教师招募_探果网</title>
-		<meta name="description" content="教师招募_探果网"/>
+		<title>教师招募_探果题库</title>
+		<meta name="description" content="教师招募"/>
+		<meta name="keyword" content="教师招募"/>
 		<meta name="author" content="Tamguo Team" />
 		<meta name="copyright" content="Tamguo" />
 		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
@@ -118,10 +119,10 @@
 								  <el-tag style="float: right;" type="warning">审核中</el-tag>
 							  </div>
 							  <div class="text item">
-							    {{'姓名：' + vm.teacher.name}}
+							    {{'姓名：' + teacher.name}}
 							  </div>
 							  <div class="text item">
-							    {{'个人简介：' + vm.teacher.name}}
+							    {{'个人简介：' + teacher.name}}
 							  </div>
 							</el-card>
 						</div>
@@ -152,20 +153,7 @@
 	<script type="text/javascript" src="https://vuejs.org/js/vue.min.js"></script>
 	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<script type="text/javascript">
-		function cardPhoto(rule, value, callback) {
-	        if (vm.cardPhotoList == undefined || vm.cardPhotoList.length == 0) {
-	          return callback(new Error('请上传身份证正面照'));
-	        }
-	        return callback();
-	    };
-	    function occupationPaper(rule, value, callback){
-	    	if (vm.occupationPapersList == undefined || vm.occupationPapersList.length == 0) {
-		        return callback(new Error('请上传证件照'));
-		    }
-	    	return callback();
-	    }
-	    
+	<script type="text/javascript">	    
 		var vm = new Vue({
 		  el: '#infoForm',
 		  data:{
@@ -180,7 +168,6 @@
 		        	mobile: [
 		                { required: true, message: '请输入手机号', trigger: 'blur' },
 		                { pattern: /^1[345678]\d{9}$/, message: '手机号格式错误', trigger: 'blur' },
-		                {validator: checkMobile, trigger: 'blur'}
 		            ],
 		            verifyCode: [
 		            	{required: true, message: '请输入验证码', trigger: 'blur'},
@@ -293,6 +280,20 @@
 	          }
 		    }
 		});
+		
+		function cardPhoto(rule, value, callback) {
+	        if (vm.cardPhotoList == undefined || vm.cardPhotoList.length == 0) {
+	          return callback(new Error('请上传身份证正面照'));
+	        }
+	        return callback();
+	    };
+	    function occupationPaper(rule, value, callback){
+	    	if (vm.occupationPapersList == undefined || vm.occupationPapersList.length == 0) {
+		        return callback(new Error('请上传证件照'));
+		    }
+	    	return callback();
+	    }
+	    
 		vm.getArea();
 		vm.getCourses();
 	</script>
