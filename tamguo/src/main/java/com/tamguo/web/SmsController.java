@@ -16,7 +16,7 @@ public class SmsController {
 	@Autowired
 	ISmsService iSmsService;
 
-	@RequestMapping(value = {"sms/sendFindPasswordSms.html"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"sms/sendFindPasswordSms"}, method = RequestMethod.GET)
 	@ResponseBody
 	public Result sendFindPasswordSms(String mobile){
 		try {

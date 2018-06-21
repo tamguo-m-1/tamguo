@@ -41,7 +41,8 @@
 							    <el-input v-model="mobileModel.mobile"></el-input>
 							  </el-form-item>
 							  <el-form-item label="验证码" prop="verifyCode">
-							    <el-input v-model="mobileModel.verifyCode"></el-input>
+							    <el-input v-model="mobileModel.verifyCode" style="width:120px;"></el-input>
+							    <el-button plain @click="sendSms()">发送验证码</el-button>
 							  </el-form-item>
 							</el-form>
 						</div>
@@ -105,7 +106,7 @@
 						<div v-show="active == 3" style="width:95%;margin-top:50px;">
 							<template>
 							  <el-alert
-							    title="提交成功，请耐心等到工作人员联系您！"
+							    title="请耐心等到工作人员联系您！"
 							    type="success"
 							    :closable="false">
 							  </el-alert>
@@ -194,7 +195,7 @@
 		        	cardPhoto:[{validator: cardPhoto, trigger: 'change'}],
 		        	occupationPapers:[{validator: occupationPaper, trigger: 'change'}]
 		        },
-		        active: 3,
+		        active: 1,
 		        options: [],
 		        courses: [],
 		        cardPhotoList: [],
@@ -208,13 +209,16 @@
 			    		  if (valid) {
 						      if(this.active == 1){
 					    		  axios.all([this.getTeacher()]).then(axios.spread(function (tResponse) {
-					    		     if(tResponse.data.code == 201){
-					    		    	  vm.$message({showClose:true,duration:1000,message:'验证码错误，请重新输入！',type:'error',onClose:function(){
+					    		     if(tResponse.data.code == 201 || tResponse.data.code == 202){
+					    		    	  vm.$message({showClose:true,duration:1000,message:tResponse.data.message,type:'error',onClose:function(){
 					    		    		  vm.mobileModel.verifyCode = "";
 							    		      vm.$refs.mobileForm.validate('verifyCode');
 					    		    	  }});
-					    		     }else if(tResponse.data.code == 202){
+					    		     }else if(tResponse.data.code == 203){
 					    		    	 vm.active = 2;
+					    		     }else if(tResponse.data.code == 0){
+					    		    	 vm.active = 3;
+					    		    	 vm.teacher = tResponse.data.result;
 					    		     }
 					    		  }));
 					    	  }
@@ -243,7 +247,7 @@
 		    	  }
 		      },
 		      getTeacher:function(){
-		    	  return axios.post(mainHttp + 'teacher/info.html',{mobile: '15618910786',verifyCode: 'Flintstone'});
+		    	  return axios.post(mainHttp + 'teacher/info.html',{mobile: vm.mobileModel.mobile,verifyCode: vm.mobileModel.verifyCode});
 		      },
 		      getCourses:function(){
 		    	  axios.get(mainHttp + 'subject/getCourseCascaderTree.html').then(function(response){
@@ -278,6 +282,13 @@
 	        	  occupationPapers.name = file.response.title;
 	        	  occupationPapers.url = file.response.url;
 	        	  vm.occupationPapersList.push(occupationPapers);
+	          },
+	          sendSms(){
+	        	  axios.get(mainHttp + 'sms/sendFindPasswordSms.html?mobile='+vm.mobileModel.mobile).then(function(response){
+	        		  if(response.data.code == 200){
+	        			  vm.$message('发送成功！');
+	        		  }
+		    	  });
 	          }
 		    }
 		});
