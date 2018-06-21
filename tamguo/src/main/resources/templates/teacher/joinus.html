@@ -179,7 +179,8 @@
 		        rules: {
 		        	mobile: [
 		                { required: true, message: '请输入手机号', trigger: 'blur' },
-		                { pattern: /^1[345678]\d{9}$/, message: '手机号格式错误', trigger: 'blur' }
+		                { pattern: /^1[345678]\d{9}$/, message: '手机号格式错误', trigger: 'blur' },
+		                {validator: checkMobile, trigger: 'blur'}
 		            ],
 		            verifyCode: [
 		            	{required: true, message: '请输入验证码', trigger: 'blur'},
