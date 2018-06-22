@@ -48,7 +48,7 @@ public class SubjectController {
     	model.addObject("course" , course);
     	model.addObject("courseList", subject.getCourseList());
     	model.addObject("chapterList" , chapterList);
-    	model.addObject("areaList", iAreaService.findAll());
+    	model.addObject("areaList", iAreaService.findRootArea());
         return model;
     }
 	
