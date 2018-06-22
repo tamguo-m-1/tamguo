@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.tamguo.config.ueditor.Ueditor;
 import com.tamguo.dao.redis.CacheService;
 import com.tamguo.util.DateUtils;
-import com.tamguo.util.Setting;
 
 /**
  * 文件上传
@@ -32,8 +31,6 @@ public class FileUploadController {
 	private Logger logger = org.slf4j.LoggerFactory.getLogger(getClass());
 	@Value("${file.storage.path}")
 	private String fileStoragePath;
-	@Autowired
-	private Setting setting;
 	@Autowired
 	private CacheService cacheService;
 	private static final String FILES_NO_FORMAT = "00000";
@@ -67,7 +64,7 @@ public class FileUploadController {
 		        Ueditor ueditor = new Ueditor();
 		        ueditor.setState("SUCCESS");
 		        ueditor.setTitle(upfile.getOriginalFilename());
-		        ueditor.setUrl(setting.domain + "files" + "/" +DateUtils.format(new Date(), "yyyyMMdd") + "/" + fileName);
+		        ueditor.setUrl("files" + "/" +DateUtils.format(new Date(), "yyyyMMdd") + "/" + fileName);
 		        return ueditor;
 			} catch (Exception e) {
 				Ueditor ueditor = new Ueditor();
