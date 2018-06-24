@@ -119,4 +119,8 @@ public class SysUserController {
 		return Result.successResult(ShiroUtils.getUser());
 	}
 
+	@RequestMapping(path="sysUser/password" , method=RequestMethod.POST)
+	public @ResponseBody Result password(String password , String newPassword) {
+		return sysUserService.updatePassword(password, newPassword, newPassword);
+	}
 }

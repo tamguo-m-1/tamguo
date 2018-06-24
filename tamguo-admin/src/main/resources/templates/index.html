@@ -79,7 +79,7 @@
 	<div class="form-group">
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">账号</div>
-		    <span class="label label-success" style="vertical-align: bottom;">{{user.username}}</span>
+		    <span class="label label-success" style="vertical-align: bottom;" th:text="${session.currAdmin.userName}"></span>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">原密码</div>

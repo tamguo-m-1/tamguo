@@ -5,7 +5,7 @@ $(function () {
         colModel: [			
 			{ label: '角色ID', name: 'uid', width: 45, key: true , hidden:true},
 			{ label: '角色名称', name: 'name', width: 75 },
-			{ label: '权限', name: 'perms', width: 100 },
+			{ label: '权限', name: 'perms', width: 100 , hidden:true},
         ],
 		viewrecords: true,
         height: 385,
