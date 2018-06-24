@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tamguo.admin.dao.TeacherMapper">
+
+	<select id="queryPage" resultType="TeacherEntity">
+		SELECT
+			t.uid,
+			t.mobile,
+			t.name,
+			t.motto,
+			t.area_id,
+			t.course_id,
+			t.school_id,
+			t.card_id,
+		  t.card_photo , 
+			t.occupation_papers , 
+			t.qq
+		FROM
+			tiku_teacher t
+		<where>
+			<if test="mobile != null and mobile != ''">
+				t.mobile = #{mobile}
+			</if>
+		</where>
+	</select>
+
+</mapper>

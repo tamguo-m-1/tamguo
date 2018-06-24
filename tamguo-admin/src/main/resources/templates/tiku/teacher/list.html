@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<title>探果-考试类型</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" th:href="${setting.domain + 'css/bootstrap.min.css'}">
+<link rel="stylesheet" th:href="${setting.domain + 'css/font-awesome.min.css'}">
+<link rel="stylesheet" th:href="${setting.domain + 'plugins/jqgrid/ui.jqgrid-bootstrap.css'}">
+<link rel="stylesheet" th:href="${setting.domain + 'plugins/ztree/css/metroStyle/metroStyle.css'}">
+<link rel="stylesheet" th:href="${setting.domain + 'plugins/jquery-tags-input/jquery.tagsinput.css'}">
+<link rel="stylesheet" th:href="${setting.domain + 'css/main.css'}">
+<script th:src="${setting.domain + 'libs/jquery.min.js'}"></script>
+<script th:src="${setting.domain + 'plugins/layer/layer.js'}"></script>
+<script th:src="${setting.domain + 'libs/bootstrap.min.js'}"></script>
+<script th:src="${setting.domain + 'libs/vue.min.js'}"></script>
+<script th:src="${setting.domain + 'plugins/jqgrid/grid.locale-cn.js'}"></script>
+<script th:src="${setting.domain + 'plugins/jqgrid/jquery.jqGrid.min.js'}"></script>
+<script th:src="${setting.domain + 'plugins/ztree/jquery.ztree.all.min.js'}"></script>
+<script th:src="${setting.domain + 'plugins/jquery-tags-input/jquery.tagsinput.js'}"></script>
+<script th:src="${setting.domain + 'js/common.js'}"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+	<div v-show="showList">
+		<div class="grid-btn">
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" v-model="q.name" @keyup.enter="query" placeholder="用户名">
+			</div>
+			<a class="btn btn-default" @click="query">查询</a>
+			<a shiro:hasPermission="tiku:teacher:audit" class="btn btn-primary" @click="audit"><i class="fa fa-plus"></i>&nbsp;审核</a>
+			<a shiro:hasPermission="tiku:subject:edit" class="btn btn-primary" @click="edit"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+		</div>
+	    <table id="jqGrid"></table>
+	    <div id="jqGridPager"></div>
+    </div>
+    <div v-show="!showList" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+			<input type="text" class="form-control" type="hidden" v-model="teacher.uid"/>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">真实姓名</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="teacher.name" placeholder="真实姓名"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">手机号</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="teacher.mobile" placeholder="手机号"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">个人简介</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="teacher.motto" placeholder="个人简介"/>
+			    </div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label"></div> 
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+<script th:src="${setting.domain + 'js/tiku/teacher/list.js?v=6'}"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" th:inline="javascript">
+	var mainHttp = [[${setting.domain}]];
+</script>
+</html>
