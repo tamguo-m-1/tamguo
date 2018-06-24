@@ -1,8 +1,12 @@
 package com.tamguo.model;
 
 import java.io.Serializable;
+
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.tamguo.config.dao.SuperEntity;
+import com.tamguo.model.enums.TeacherStatus;
 
 
 /**
@@ -19,17 +23,24 @@ public class TeacherEntity extends SuperEntity<TeacherEntity> implements Seriali
 	
 	private String motto;
 	
-	private String areaId;
+	private String provinceId;
+	
+	private String cityId;
+	
+	private String subjectId;
 	
 	private String courseId;
-	
-	private String schoolId;
 	
 	private String cardId;
 	
 	private String cardPhoto;
 	
 	private String occupationPapers;
+	
+	private Long createTime;
+	
+	@JSONField(serialzeFeatures= SerializerFeature.WriteEnumUsingToString)
+	private TeacherStatus status;
 	
 	private String qq;
 
@@ -57,28 +68,12 @@ public class TeacherEntity extends SuperEntity<TeacherEntity> implements Seriali
 		this.motto = motto;
 	}
 
-	public String getAreaId() {
-		return areaId;
-	}
-
-	public void setAreaId(String areaId) {
-		this.areaId = areaId;
-	}
-
 	public String getCourseId() {
 		return courseId;
 	}
 
 	public void setCourseId(String courseId) {
 		this.courseId = courseId;
-	}
-
-	public String getSchoolId() {
-		return schoolId;
-	}
-
-	public void setSchoolId(String schoolId) {
-		this.schoolId = schoolId;
 	}
 
 	public String getCardId() {
@@ -115,6 +110,46 @@ public class TeacherEntity extends SuperEntity<TeacherEntity> implements Seriali
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(String subjectId) {
+		this.subjectId = subjectId;
+	}
+
+	public String getProvinceId() {
+		return provinceId;
+	}
+
+	public void setProvinceId(String provinceId) {
+		this.provinceId = provinceId;
+	}
+
+	public String getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
+	}
+
+	public Long getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Long createTime) {
+		this.createTime = createTime;
+	}
+
+	public TeacherStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(TeacherStatus status) {
+		this.status = status;
 	}
 
 }

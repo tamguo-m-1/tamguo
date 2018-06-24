@@ -54,7 +54,31 @@
 			<div class="form-group">
 			   	<div class="col-sm-2 control-label">个人简介</div>
 			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="teacher.motto" placeholder="个人简介"/>
+			      <textarea class="form-control" rows="3">{{teacher.motto}}</textarea>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">身份证号</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="teacher.cardId" placeholder="身份证号"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">QQ号</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="teacher.qq" placeholder="qq号"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">身份证正面照</div>
+			   	<div class="col-sm-10">
+			      	<img :src="teacher.cardPhoto" class="img-thumbnail" alt="身份证正面照">
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">证件照</div>
+			   	<div class="col-sm-10">
+			      	<img :src="teacher.occupationPapers" class="img-thumbnail" alt="证件照">
 			    </div>
 			</div>
 			<div class="form-group">

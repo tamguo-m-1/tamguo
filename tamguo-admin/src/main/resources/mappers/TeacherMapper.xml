@@ -8,15 +8,26 @@
 			t.mobile,
 			t.name,
 			t.motto,
-			t.area_id,
+			t.province_id,
+			a.name as province_name,
+			t.city_id,
+			a1.name as city_name,
 			t.course_id,
-			t.school_id,
+			c.name as course_name,
+			t.subject_id,
+			s.name as subject_name,
 			t.card_id,
-		  t.card_photo , 
+		    t.card_photo , 
 			t.occupation_papers , 
-			t.qq
+			t.qq,
+			t.create_time,
+			t.status
 		FROM
 			tiku_teacher t
+		left join tiku_area a on t.province_id = a.uid
+		left join tiku_area a1 on t.city_id = a1.uid
+		left join tiku_subject s on t.subject_id = s.uid
+		left join tiku_course c on t.course_id = c.uid
 		<where>
 			<if test="mobile != null and mobile != ''">
 				t.mobile = #{mobile}

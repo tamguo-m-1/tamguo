@@ -66,7 +66,7 @@ public class SubjectService extends ServiceImpl<SubjectMapper, SubjectEntity> im
 		for(int i=0 ; i<subjectList.size() ; i++){
 			SubjectEntity subject = subjectList.get(i);
 			JSONObject node = new JSONObject();
-			node.put("value", "s" + subject.getUid());
+			node.put("value", subject.getUid());
 			node.put("label", subject.getName());
 			
 			

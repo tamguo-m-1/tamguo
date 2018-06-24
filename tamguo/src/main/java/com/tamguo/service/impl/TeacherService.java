@@ -8,7 +8,9 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.tamguo.dao.TeacherMapper;
 import com.tamguo.dao.redis.CacheService;
 import com.tamguo.model.TeacherEntity;
+import com.tamguo.model.enums.TeacherStatus;
 import com.tamguo.service.ITeacherService;
+import com.tamguo.util.DateUtil;
 import com.tamguo.util.Result;
 import com.tamguo.util.TamguoConstant;
 
@@ -40,6 +42,8 @@ public class TeacherService extends ServiceImpl<TeacherMapper, TeacherEntity> im
 	@Transactional(readOnly=false)
 	@Override
 	public void joinus(TeacherEntity teacher) {
+		teacher.setCreateTime(DateUtil.getTime());
+		teacher.setStatus(TeacherStatus.APPLY);
 		teacherMapper.insert(teacher);
 	}
 

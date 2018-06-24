@@ -55,10 +55,10 @@
 									    v-model="teacher.areaId">
 									  </el-cascader>
 								  </el-form-item>
-								  <el-form-item label="科目" prop="courseId">
+								  <el-form-item label="科目" prop="kemuId">
 								    <el-cascader
 									    :options="courses"
-									    v-model="teacher.courseId">
+									    v-model="teacher.kemuId">
 									  </el-cascader>
 								  </el-form-item>
 								  <el-form-item label="真实姓名" prop="name">
@@ -190,7 +190,7 @@
 		        },
 		        teacherRules: {
 		        	areaId:[{required: true, message: '请选择地区', trigger: 'blur'}],
-		        	courseId:[{required: true, message: '请选择科目', trigger: 'blur'}],
+		        	kemuId:[{required: true, message: '请选择科目', trigger: 'blur'}],
 		        	name:[{required: true, message: '请输入姓名', trigger: 'blur'}],
 		        	cardId:[{required: true, message: '请输入身份证号', trigger: 'blur'}],
 		        	cardId:[{required: true, message: '请输入身份证号', trigger: 'blur'}],
@@ -221,6 +221,7 @@
 					    		    	 vm.teacher.mobile = vm.mobileModel.mobile;
 					    		    	 
 					    		    	 vm.getCourses();
+					    		    	 vm.getArea();
 					    		     }else if(tResponse.data.code == 0){
 					    		    	 vm.active = 3;
 					    		    	 vm.teacher = tResponse.data.result;
@@ -235,8 +236,10 @@
 		    	  }else if(vm.active == 2){ // 第二步
 		    		  this.$refs.teacherForm.validate((valid) => {
 			    		  if (valid) {
-			    			 vm.teacher.areaId = vm.teacher.areaId[vm.teacher.areaId.length-1];
-			    			 vm.teacher.courseId = vm.teacher.courseId[vm.teacher.courseId.length-1];
+			    			 vm.teacher.provinceId = vm.teacher.areaId[0];
+			    			 vm.teacher.cityId = vm.teacher.areaId[1];
+			    			 vm.teacher.courseId = vm.teacher.kemuId[1];
+			    			 vm.teacher.subjectId = vm.teacher.kemuId[0];
 			    			 vm.teacher.cardPhoto = vm.cardPhotoList[0].path;
 						     vm.teacher.occupationPapers = vm.occupationPapersList[0].path;
 						     
@@ -299,6 +302,5 @@
 	          }
 		    }
 		});
-		vm.getArea();
 	</script>
 </html>

@@ -6,6 +6,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,4 +34,26 @@ public class TikuTeacherController {
 	public Result find(@PathVariable String teacherId){
 		return Result.successResult(iTeacherService.find(teacherId));
 	}
+	
+	
+	@RequestMapping("teacher/update")
+	@ResponseBody
+	public Result update(@RequestBody TeacherEntity teacher){
+		return Result.successResult(iTeacherService.update(teacher));
+	}
+	
+	@RequestMapping("teacher/unpass/{teacherId}")
+	@ResponseBody
+	@RequiresPermissions("tiku:teacher:unpass")
+	public Result unpass(@PathVariable String teacherId){
+		return Result.successResult(iTeacherService.unpass(teacherId));
+	}
+	
+	@RequestMapping("teacher/unpass/{teacherId}")
+	@ResponseBody
+	@RequiresPermissions("tiku:teacher:pass")
+	public Result pass(@PathVariable String teacherId){
+		return Result.successResult(iTeacherService.pass(teacherId));
+	}
+	
 }

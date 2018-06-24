@@ -6,8 +6,22 @@ $(function () {
             { label: '教师ID', name: 'uid', width: 45, key: true , hidden:true},       	
 			{ label: '真实名称', name: 'name', width: 45},
 			{ label: '手机号', name: 'mobile', width: 45 },
+			{ label: '考试', name: 'subjectName', width: 45 },
+			{ label: '科目', name: 'courseName', width: 45 },
+			{ label: '省份', name: 'provinceName', width: 45 },
+			{ label: '城市', name: 'cityName', width: 45 },
 			{ label: '身份证号', name: 'cardId', width: 45 },
-			{ label: 'QQ号', name: 'qq', width: 45 }
+			{ label: 'QQ号', name: 'qq', width: 45 },
+			{ label: '创建时间', name: 'createTime', width: 45 },
+			{ label: '状态', name: 'status', width: 25,formatter: function(value, options, row){
+				if(value === "apply"){
+					return '<span class="label label-danger">申请中</span>';
+				}else if(value === "pass"){
+					return '<span class="label label-success">通过</span>';
+				}else if(value === "unpass"){
+					return '<span class="label label-danger">未通过</span>';
+				}
+			}},
         ],
 		viewrecords: true,
         height: 385,
@@ -58,9 +72,22 @@ var vm = new Vue({
             }).trigger("reloadGrid");
 		},
 		audit: function(event){
-			vm.showList = false;
-			vm.title = "审核";
-			vm.teacher = {};
+			var teacherId = getSelectedRow();
+			if(teacherId == null){
+				return ;
+			}
+			axios.get(mainHttp + 'teacher/find/'+teacherId+'.html').then(function (response) {
+				vm.teacher = response.data.result;
+				confirm('您是希望【'+vm.teacher.name+'】成为探果题库的老师？', {
+					btn: ['通过','不通过'] //按钮
+				}, function(){
+				    vm.pass();
+				},function(){
+					vm.unpass();
+				});
+			}).catch(function (error) {
+			    console.log(error);
+			});
 		},
 		edit:function(event){
 			var teacherId = getSelectedRow();
@@ -74,7 +101,7 @@ var vm = new Vue({
 			vm.getTeacher(teacherId);
 		},
 		saveOrUpdate:function(event){
-			var url = vm.teacher.uid == null ? mainHttp + "teacher/audit.html" : mainHttp + "teacher/update.html";
+			var url = mainHttp + "teacher/update.html";
 			$.ajax({
 				type: "POST",
 			    url: url,
@@ -93,6 +120,22 @@ var vm = new Vue({
 		getTeacher:function(teacherId){
 			axios.get(mainHttp + 'teacher/find/'+teacherId+'.html').then(function (response) {
 				vm.teacher = response.data.result;
+				vm.teacher.cardPhoto = mainHttp + vm.teacher.cardPhoto;
+				vm.teacher.occupationPapers = mainHttp + vm.teacher.occupationPapers;
+			}).catch(function (error) {
+			    console.log(error);
+			});
+		},
+		pass:function(teacherId){
+			axios.get(mainHttp + 'teacher/pass/'+teacherId+'.html').then(function (response) {
+				console.log(response.data);
+			}).catch(function (error) {
+			    console.log(error);
+			});
+		},
+		unpass:function(teacherId){
+			axios.get(mainHttp + 'teacher/unpass/'+teacherId+'.html').then(function (response) {
+				console.log(response.data);
 			}).catch(function (error) {
 			    console.log(error);
 			});

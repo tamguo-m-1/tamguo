@@ -5,12 +5,18 @@
 	<select id="findByMobile" resultType="TeacherEntity">
 		SELECT
 			t.uid,
-			t.area_id,
-			t.course_id,
 			t.mobile,
+			t.name,
 			t.motto,
-			t.`name`,
-			t.school_id
+			t.province_id,
+			t.city_id,
+			t.course_id,
+			t.card_id,
+		  	t.card_photo , 
+			t.occupation_papers , 
+			t.qq,
+			t.create_time,
+			t.status
 		FROM
 			tiku_teacher t
 		WHERE

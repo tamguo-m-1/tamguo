@@ -1,11 +1,20 @@
 package com.tamguo.admin.model;
 
+import java.io.Serializable;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.tamguo.admin.config.dao.SuperEntity;
+import com.tamguo.admin.model.enums.TeacherStatus;
 
+
+/**
+ * The persistent class for the tiku_teacher database table.
+ * 
+ */
 @TableName(value="tiku_teacher")
-public class TeacherEntity extends SuperEntity<TeacherEntity>{
-
+public class TeacherEntity extends SuperEntity<TeacherEntity> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String mobile;
@@ -14,11 +23,13 @@ public class TeacherEntity extends SuperEntity<TeacherEntity>{
 	
 	private String motto;
 	
-	private String areaId;
+	private String provinceId;
+	
+	private String cityId;
+	
+	private String subjectId;
 	
 	private String courseId;
-	
-	private String schoolId;
 	
 	private String cardId;
 	
@@ -26,7 +37,24 @@ public class TeacherEntity extends SuperEntity<TeacherEntity>{
 	
 	private String occupationPapers;
 	
+	private Long createTime;
+	
+	@JSONField(serialzeFeatures= SerializerFeature.WriteEnumUsingToString)
+	private TeacherStatus status;
+	
 	private String qq;
+	
+	@TableField(exist=false)
+	private String provinceName;
+	
+	@TableField(exist=false)
+	private String courseName;
+	
+	@TableField(exist=false)
+	private String cityName;
+	
+	@TableField(exist=false)
+	private String subjectName;
 
 	public String getMobile() {
 		return mobile;
@@ -52,28 +80,12 @@ public class TeacherEntity extends SuperEntity<TeacherEntity>{
 		this.motto = motto;
 	}
 
-	public String getAreaId() {
-		return areaId;
-	}
-
-	public void setAreaId(String areaId) {
-		this.areaId = areaId;
-	}
-
 	public String getCourseId() {
 		return courseId;
 	}
 
 	public void setCourseId(String courseId) {
 		this.courseId = courseId;
-	}
-
-	public String getSchoolId() {
-		return schoolId;
-	}
-
-	public void setSchoolId(String schoolId) {
-		this.schoolId = schoolId;
 	}
 
 	public String getCardId() {
@@ -111,6 +123,77 @@ public class TeacherEntity extends SuperEntity<TeacherEntity>{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
+	public String getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(String subjectId) {
+		this.subjectId = subjectId;
+	}
+
+	public String getProvinceId() {
+		return provinceId;
+	}
+
+	public void setProvinceId(String provinceId) {
+		this.provinceId = provinceId;
+	}
+
+	public String getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
+	}
+
+	public Long getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Long createTime) {
+		this.createTime = createTime;
+	}
+
+	public TeacherStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(TeacherStatus status) {
+		this.status = status;
+	}
+
+	public String getProvinceName() {
+		return provinceName;
+	}
+
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
+	}
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getSubjectName() {
+		return subjectName;
+	}
+
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
+	}
 
 }
