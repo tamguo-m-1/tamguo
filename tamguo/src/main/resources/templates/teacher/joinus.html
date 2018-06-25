@@ -67,6 +67,12 @@
 								  <el-form-item label="身份证号" prop="cardId">
 								    <el-input v-model="teacher.cardId"></el-input>
 								  </el-form-item>
+								  <el-form-item label="邮箱" prop="email">
+								    <el-input v-model="teacher.email"></el-input>
+								  </el-form-item>
+								  <el-form-item label="QQ号">
+								    <el-input v-model="teacher.qq"></el-input>
+								  </el-form-item>
 								  <el-form-item label="身份证正面照" prop="cardPhoto">
 								    <el-upload
 								      name="upfile"
@@ -98,9 +104,6 @@
 									  <el-button size="small" type="primary">点击上传</el-button>
 									  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
 									</el-upload>
-								  </el-form-item>
-								  <el-form-item label="QQ号">
-								    <el-input v-model="teacher.qq"></el-input>
 								  </el-form-item>							  
 							</el-form>
 						</div>
@@ -193,7 +196,8 @@
 		        	kemuId:[{required: true, message: '请选择科目', trigger: 'blur'}],
 		        	name:[{required: true, message: '请输入姓名', trigger: 'blur'}],
 		        	cardId:[{required: true, message: '请输入身份证号', trigger: 'blur'}],
-		        	cardId:[{required: true, message: '请输入身份证号', trigger: 'blur'}],
+		        	email:[{required: true, message: '请输入邮箱', trigger: 'blur'},
+		        	{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }],
 		        	cardPhoto:[{validator: cardPhoto, trigger: 'change'}],
 		        	occupationPapers:[{validator: occupationPaper, trigger: 'change'}]
 		        },

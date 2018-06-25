@@ -19,6 +19,8 @@ public class TeacherEntity extends SuperEntity<TeacherEntity> implements Seriali
 	
 	private String mobile;
 	
+	private String email;
+	
 	private String name;
 	
 	private String motto;
@@ -150,6 +152,14 @@ public class TeacherEntity extends SuperEntity<TeacherEntity> implements Seriali
 
 	public void setStatus(TeacherStatus status) {
 		this.status = status;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }
