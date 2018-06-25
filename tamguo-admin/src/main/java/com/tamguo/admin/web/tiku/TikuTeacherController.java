@@ -2,6 +2,8 @@ package com.tamguo.admin.web.tiku;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,8 +54,12 @@ public class TikuTeacherController {
 	@RequestMapping("teacher/pass/{teacherId}")
 	@ResponseBody
 	@RequiresPermissions("tiku:teacher:pass")
-	public Result pass(@PathVariable String teacherId){
-		return Result.successResult(iTeacherService.pass(teacherId));
+	public Result pass(HttpServletRequest req , @PathVariable String teacherId){
+		try {
+			return iTeacherService.pass(req , teacherId);
+		} catch (Exception e) {
+			return Result.failResult("通过失败");
+		}
 	}
 	
 }

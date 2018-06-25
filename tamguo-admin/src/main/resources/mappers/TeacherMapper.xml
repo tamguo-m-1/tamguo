@@ -21,7 +21,8 @@
 			t.occupation_papers , 
 			t.qq,
 			t.create_time,
-			t.status
+			t.status,
+			t.email
 		FROM
 			tiku_teacher t
 		left join tiku_area a on t.province_id = a.uid

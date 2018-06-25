@@ -16,7 +16,8 @@
 			t.occupation_papers , 
 			t.qq,
 			t.create_time,
-			t.status
+			t.status,
+			t.email
 		FROM
 			tiku_teacher t
 		WHERE

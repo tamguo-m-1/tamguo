@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<title>探果-考试类型</title>
+<meta charset="UTF-8">
+</head>
+<div id="qm_con_body">
+<div id="mailContentContainer" class="qmbox qm_con_body_content qqmail_webmail_only" style="">
+<style type="text/css">
+.qmbox html, .qmbox body {
+	font: 14px/1.666 Tahoma, Arial;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	color: #000000;
+	scrollbar-base-color: #dddddd;
+	scrollbar-3dlight-color: #ffffff;
+	scrollbar-highlight-color: #dddddd;
+	scrollbar-shadow-color: #ffffff;
+	scrollbar-darkshadow-color: #ffffff;
+	scrollbar-track-color: #ffffff;
+	scrollbar-arrow-color: #999999;
+}
+
+.qmbox div, .qmbox form, .qmbox input, .qmbox textarea, .qmbox span,
+	.qmbox img, .qmbox iframe {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+}
+
+.qmbox input {
+	cursor: pointer;
+}
+
+.qmbox blockquote {
+	margin-left: 30px;
+	margin-right: 0;
+	padding: 0;
+	border: 0;
+}
+
+.qmbox blockquote blockquote {
+	margin-left: 0px;
+}
+
+.qmbox pre {
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+}
+</style>
+	<div style="height: 1px; overflow: hidden; visibility: hidden;" cr="1">
+		<div style="width: 1203px; height: 1px;" cr="1"></div>
+	</div>
+	<div style="clear: both; font-size: 0; height: 1px; overflow: hidden;"></div>
+	<div class="aym_table_wrap"
+		style="overflow: hidden; display: table; width: 600px; height: 377px; margin: 0px;">
+		<table cellpadding="0" cellspacing="0" width="600"
+			style="border: #dddddd 1.0px solid; padding: 20.0px 0;">
+			<tbody>
+				<tr>
+					<td>
+						<table align="center" cellpadding="0" cellspacing="0"
+							width="100%"
+							style="border-bottom: #ff6600 2.0px solid; padding-bottom: 12.0px;">
+							<tbody>
+								<tr>
+									<td
+										style="line-height: 22px; padding-left: 20px; height: auto;"><a
+										th:href="${setting.domain}" target="_blank"
+										title="为老师创造价值-探果题库"><img border="0" height="31"
+											th:src="${setting.domain + 'images/logo_731bc32.png'}"
+											width="100px"></a></td>
+									<td align="right"
+										style="font-size: 12.0px; padding-right: 20.0px; padding-top: 30.0px;"><a
+										th:href="${setting.domain}" target="_blank"
+										style="color: #22aaff; text-decoration: none;">首页</a><b
+										style="width: 1px; height: auto; vertical-align: -1px; font-size: 1px; display: inline-block; margin: 0px 5px; background: rgb(202, 202, 202);"></b><a
+										th:href="${setting.domain}" target="_blank"
+										style="color: #22aaff; text-decoration: none;">我的探果题库</a><b
+										style="width: 1px; height: auto; vertical-align: -1px; font-size: 1px; display: inline-block; margin: 0px 5px; background: rgb(202, 202, 202);"></b><a
+										th:href="${setting.domain}" target="_blank"
+										style="color: #22aaff; text-decoration: none;">帮助</a></td>
+								</tr>
+							</tbody>
+						</table>
+						<table align="center" cellpadding="0" cellspacing="0"
+							width="100%" style="padding: 0 20.0px;">
+							<tbody>
+								<tr>
+									<td
+										style="font-size: 14px; color: rgb(51, 51, 51); height: auto; line-height: 40px; padding-top: 10px;">亲爱的
+										<b style="color: #333333; font-family: Arial;"><a
+											href="mailto:smiletocandy@qq.com" target="_blank" th:text="${teacher.name}">candy.tam<wbr>@aliyun.com
+										</a></b>：
+									</td>
+								</tr>
+								<tr>
+									<td
+										style="font-size: 12px; color: rgb(51, 51, 51); line-height: 22px; height: auto;"><p
+											style="text-indent: 2.0em; padding: 0; margin: 0;">您好！</p></td>
+								</tr>
+								<tr>
+									<td
+										style="font-size: 12px; color: rgb(51, 51, 51); line-height: 22px; height: auto;"><p
+											style="text-indent: 2.0em; padding: 0; margin: 0;">
+											探果题库已经通过您的申请资料，您已经成为探果题库的一员。</br>
+											探果题库绝对不会泄露您的个人信息，当您在探果题库完成相应任务，探果题库会给与您一定报酬。
+										</p></td>
+								</tr>
+							</tbody>
+						</table>
+						<table align="center" cellpadding="0" cellspacing="0"
+							width="100%" style="margin-top: 60.0px;">
+							<tbody>
+								<tr>
+									<td
+										style="font-size: 12px; color: rgb(119, 119, 119); line-height: 22px; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: rgb(34, 170, 255); padding-bottom: 8px; padding-left: 20px; height: auto;">此邮件由系统自动发出，请勿回复！</td>
+								</tr>
+								<tr>
+									<td
+										style="font-size: 12px; color: rgb(51, 51, 51); line-height: 22px; padding: 8px 20px 0px; height: auto;">感谢您对探果题库（<a
+										th:href="${setting.domain}" target="_blank" style="color: #22aaff; font-family: Arial;" th:text="${setting.domain}">https://www.tamguo.com</a>）的支持，祝您好运！
+									</td>
+								</tr>
+								<tr>
+									<td
+										style="font-size: 12px; color: rgb(51, 51, 51); line-height: 22px; padding: 0px 20px; height: auto;">客服热线：<b
+										style="color: #ff6600; font-family: Arial;"><span
+											style="border-bottom: 1px dashed #ccc; z-index: 1" t="7"
+											onclick="return false;">4000-000-000</span></b></td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="aym_table_wrap"
+		style="overflow: hidden; display: table; width: 600px; height: 30px; margin: 0px;">
+		<table cellpadding="0" cellspacing="0" width="600">
+			<tbody>
+				<tr>
+					<td align="center"
+						style="font-size: 12.0px; color: #bbbbbb; padding-top: 10.0px;"><span
+						style="font-family: Arial;">Copyright © 2011 - 2018,</span> 版权所有
+						<span style="font-family: Arial;">tamguo.com</span> 沪<span
+						style="font-family: Arial;">ICP</span>备<span
+						style="font-family: Arial;"><span style="border-bottom: 1px dashed #ccc; z-index: 1" t="7"
+							onclick="return false;" data="09213115">14022608</span></span>号
+						<span style="font-family: Arial;">-1</span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<style type="text/css">
+	.qmbox style, .qmbox script, .qmbox head, .qmbox link, .qmbox meta {
+		display: none !important;
+	}
+	</style>
+	</div>
+</div>
+</html>

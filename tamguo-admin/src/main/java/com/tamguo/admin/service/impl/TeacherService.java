@@ -3,6 +3,10 @@ package com.tamguo.admin.service.impl;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,17 +14,32 @@ import org.springframework.util.CollectionUtils;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.tamguo.admin.dao.SysUserMapper;
 import com.tamguo.admin.dao.TeacherMapper;
+import com.tamguo.admin.model.SysUserEntity;
 import com.tamguo.admin.model.TeacherEntity;
+import com.tamguo.admin.model.enums.SysUserStatusEnum;
 import com.tamguo.admin.model.enums.TeacherStatus;
+import com.tamguo.admin.service.IEmailService;
+import com.tamguo.admin.service.ISmsService;
 import com.tamguo.admin.service.ITeacherService;
+import com.tamguo.admin.util.DateUtil;
 import com.tamguo.admin.util.Result;
+import com.tamguo.admin.util.TamguoConstant;
 
 @Service
 public class TeacherService extends ServiceImpl<TeacherMapper, TeacherEntity> implements ITeacherService {
 
 	@Autowired
 	private TeacherMapper teacherMapper;
+	@Autowired
+	private IEmailService iEmailService;
+	@Autowired
+	private ISmsService iSmsService;
+	@Autowired
+	private SysUserMapper sysUserMapper;
+	
+	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Override
 	public Page<TeacherEntity> queryPage(String mobile, Page<TeacherEntity> page) {
@@ -41,18 +60,36 @@ public class TeacherService extends ServiceImpl<TeacherMapper, TeacherEntity> im
 		entity.setMobile(teacher.getMobile());
 		entity.setCardId(teacher.getCardId());
 		entity.setQq(teacher.getQq());
+		entity.setEmail(teacher.getEmail());
 		teacherMapper.updateById(entity);
 		return Result.successResult("修改成功");
 	}
 
 	@Transactional(readOnly=false)
 	@Override
-	public Result pass(String teacherId) {
+	public Result pass(HttpServletRequest req , String teacherId) {
+		TeacherEntity teacher = teacherMapper.selectById(teacherId);
 		// 创建管理员账号
+		SysUserEntity user = new SysUserEntity();
+		user.setCreateTime(DateUtil.getTime());
+		user.setEmail(teacher.getEmail());
+		user.setMobile(teacher.getMobile());
+		user.setNickName(teacher.getName());
+		user.setPassword(this.generatePassword());
+		user.setRoleIds(TamguoConstant.TEACHER_ROLE_ID);
+		user.setStatus(SysUserStatusEnum.NORMAL);
+		user.setUserName(teacher.getMobile());
+		sysUserMapper.insert(user);
 		
-		// 发送邮件
+		try {
+			// 发送邮件
+			iEmailService.sendPassJoinusEmail(req , teacher);
+			// 发送短信
+			iSmsService.sendPassJoinusSms(teacher.getMobile());
+		} catch (Exception e) {
+			log.error(e.getMessage() , e);
+		}
 		
-		// 发送短信
 		return Result.result(Result.SUCCESS_CODE, null, "审核通过成功");
 	}
 
@@ -79,5 +116,16 @@ public class TeacherService extends ServiceImpl<TeacherMapper, TeacherEntity> im
 		return Result.failResult("请选择要删除的记录！");
 	}
 
-
+	public String generatePassword() {
+	    //字符源，可以根据需要删减
+	    String generateSource = "0123456789abcdefghigklmnopqrstuvwxyz";
+	    String rtnStr = "";
+	    for (int i = 0; i < 8; i++) {
+	        //循环随机获得当次字符，并移走选出的字符
+	        String nowStr = String.valueOf(generateSource.charAt((int) Math.floor(Math.random() * generateSource.length())));
+	        rtnStr += nowStr;
+	        generateSource = generateSource.replaceAll(nowStr, "");
+	    }
+	    return rtnStr;
+	}
 }

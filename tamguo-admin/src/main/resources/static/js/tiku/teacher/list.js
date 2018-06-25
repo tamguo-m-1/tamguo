@@ -10,8 +10,6 @@ $(function () {
 			{ label: '科目', name: 'courseName', width: 45 },
 			{ label: '省份', name: 'provinceName', width: 45 },
 			{ label: '城市', name: 'cityName', width: 45 },
-			{ label: '身份证号', name: 'cardId', width: 45 },
-			{ label: 'QQ号', name: 'qq', width: 45 },
 			{ label: '创建时间', name: 'createTime', width: 45 },
 			{ label: '状态', name: 'status', width: 25,formatter: function(value, options, row){
 				if(value === "apply"){
@@ -79,7 +77,7 @@ var vm = new Vue({
 			axios.get(mainHttp + 'teacher/find/'+teacherId+'.html').then(function (response) {
 				vm.teacher.name = response.data.result.name;
 				confirm('您是希望【'+vm.teacher.name+'】成为探果题库的老师？', function(){
-					vm.pass();
+					vm.pass(teacherId);
 				});
 			}).catch(function (error) {
 			    console.log(error);

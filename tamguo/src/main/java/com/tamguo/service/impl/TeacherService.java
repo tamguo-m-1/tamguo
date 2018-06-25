@@ -12,7 +12,6 @@ import com.tamguo.model.enums.TeacherStatus;
 import com.tamguo.service.ITeacherService;
 import com.tamguo.util.DateUtil;
 import com.tamguo.util.Result;
-import com.tamguo.util.TamguoConstant;
 
 @Service
 public class TeacherService extends ServiceImpl<TeacherMapper, TeacherEntity> implements ITeacherService {
