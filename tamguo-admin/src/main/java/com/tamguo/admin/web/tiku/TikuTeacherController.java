@@ -42,14 +42,14 @@ public class TikuTeacherController {
 		return Result.successResult(iTeacherService.update(teacher));
 	}
 	
-	@RequestMapping("teacher/unpass/{teacherId}")
+	@RequestMapping("teacher/delete")
 	@ResponseBody
-	@RequiresPermissions("tiku:teacher:unpass")
-	public Result unpass(@PathVariable String teacherId){
-		return Result.successResult(iTeacherService.unpass(teacherId));
+	@RequiresPermissions("tiku:teacher:delete")
+	public Result delete(@RequestBody String[] teacherIds){
+		return Result.successResult(iTeacherService.deleteByIds(teacherIds));
 	}
 	
-	@RequestMapping("teacher/unpass/{teacherId}")
+	@RequestMapping("teacher/pass/{teacherId}")
 	@ResponseBody
 	@RequiresPermissions("tiku:teacher:pass")
 	public Result pass(@PathVariable String teacherId){

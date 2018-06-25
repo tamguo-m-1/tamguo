@@ -30,7 +30,8 @@
 			</div>
 			<a class="btn btn-default" @click="query">查询</a>
 			<a shiro:hasPermission="tiku:teacher:audit" class="btn btn-primary" @click="audit"><i class="fa fa-plus"></i>&nbsp;审核</a>
-			<a shiro:hasPermission="tiku:subject:edit" class="btn btn-primary" @click="edit"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			<a shiro:hasPermission="tiku:teacher:edit" class="btn btn-primary" @click="edit"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			<a shiro:hasPermission="tiku:teacher:delete" class="btn btn-primary" @click="del"><i class="fa fa-pencil-square-o"></i>&nbsp;删除</a>
 		</div>
 	    <table id="jqGrid"></table>
 	    <div id="jqGridPager"></div>

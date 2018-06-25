@@ -12,8 +12,8 @@ public interface ITeacherService {
 
 	Result update(TeacherEntity teacher);
 
-	Result unpass(String teacherId);
-
 	Result pass(String teacherId);
+
+	Result deleteByIds(String[] teacherIds);
 
 }

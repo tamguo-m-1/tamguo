@@ -77,13 +77,9 @@ var vm = new Vue({
 				return ;
 			}
 			axios.get(mainHttp + 'teacher/find/'+teacherId+'.html').then(function (response) {
-				vm.teacher = response.data.result;
-				confirm('您是希望【'+vm.teacher.name+'】成为探果题库的老师？', {
-					btn: ['通过','不通过'] //按钮
-				}, function(){
-				    vm.pass();
-				},function(){
-					vm.unpass();
+				vm.teacher.name = response.data.result.name;
+				confirm('您是希望【'+vm.teacher.name+'】成为探果题库的老师？', function(){
+					vm.pass();
 				});
 			}).catch(function (error) {
 			    console.log(error);
@@ -128,16 +124,31 @@ var vm = new Vue({
 		},
 		pass:function(teacherId){
 			axios.get(mainHttp + 'teacher/pass/'+teacherId+'.html').then(function (response) {
-				console.log(response.data);
+				alert(response.data.result.message);
 			}).catch(function (error) {
 			    console.log(error);
 			});
 		},
-		unpass:function(teacherId){
-			axios.get(mainHttp + 'teacher/unpass/'+teacherId+'.html').then(function (response) {
-				console.log(response.data);
-			}).catch(function (error) {
-			    console.log(error);
+		del:function(teacherId){
+			var teacherIds = getSelectedRows();
+			if(teacherIds == null){
+				return ;
+			}
+			confirm('确定要删除选中的记录？', function(){
+				$.ajax({
+					type: "POST",
+				    url: mainHttp + "teacher/delete.html",
+				    data: JSON.stringify(teacherIds),
+				    success: function(r){
+						if(r.code == 0){
+							alert('操作成功', function(index){
+								$("#jqGrid").trigger("reloadGrid");
+							});
+						}else{
+							alert(r.message);
+						}
+					}
+				});
 			});
 		}
 	}
