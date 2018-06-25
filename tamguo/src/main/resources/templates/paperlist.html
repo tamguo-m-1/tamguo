@@ -135,8 +135,8 @@
 			<div class="title">
 				<span class="all">全部试卷</span>
 				<div class="sort">
-					<a class="sort-down current" href="/tikupc/paperlist/1bfd700abb68a98271fefa04-16-1-0-0-1-download?school_id=">下载量<i class="iconfont icon-sort"></i></a>
-					<a class="sort-read " href="/tikupc/paperlist/1bfd700abb68a98271fefa04-16-1-0-0-1-view?school_id=">最新<i class="iconfont icon-sort"></i></a>
+					<a class="sort-down current" th:href="${setting.domain}">下载量<i class="iconfont icon-sort"></i></a>
+					<a class="sort-read " th:href="${setting.domain}">最新<i class="iconfont icon-sort"></i></a>
 				</div>
 			</div>
 			<div class="paperlist-content">
@@ -144,7 +144,7 @@
 				<div class="paperlist" th:each="p,pStat:${paperPage.list}">
 					<div class="paper-title-content zhenti">
 						<h3 class="paper-title">
-                    <a href="/tikupc/paperdetail/c772cfeeaeaad1f346933fa4?key=20170214" class="paper-a" th:text="${p.name}">2017年高考真题 理科数学 (全国I卷)</a>
+                    <a th:href="${setting.domain}" class="paper-a" th:text="${p.name}">2017年高考真题 理科数学 (全国I卷)</a>
                 </h3>
 						<span class="read" th:text="${p.openHits}">0</span>
 						<span class="down" th:text="${p.downHits}">0</span>

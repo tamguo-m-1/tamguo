@@ -12,6 +12,7 @@
 	<link rel="stylesheet" th:href="${setting.domain + 'css/main.css'}"></link>
 	<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
 	<link rel="stylesheet" th:href="${setting.domain + 'css/iconfont.css'}" />
+	<link rel="stylesheet" th:href="${setting.domain + 'css/footer.css'}" />
 	<link rel="stylesheet" th:href="${setting.domain + 'css/paper.css'}" />
 	<link rel="stylesheet" th:href="${setting.domain + 'css/member/minilogin.css'}" />
 	<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
@@ -351,6 +352,9 @@
 </div>
 <div class="mask firstleader"></div>
 
+<!--尾部-->
+<div th:replace="include/footer :: footer"></div>
+	
 <!-- 登录 -->
 <div th:replace="include/minilogin :: minilogin"></div>	
 </body>

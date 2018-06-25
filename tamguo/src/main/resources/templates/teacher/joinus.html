@@ -8,6 +8,7 @@
 		<meta name="author" content="Tamguo Team" />
 		<meta name="copyright" content="Tamguo" />
 		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
+		<link rel="stylesheet" th:href="${setting.domain + 'css/footer.css'}" />
 		<link rel="stylesheet" th:href="${setting.domain + 'css/teacher/joinus.css'}" />
 		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
 		<!-- 引入样式 -->
@@ -147,6 +148,9 @@
 				    </div>
 				</div>
 			</div>
+			
+			<!--尾部-->
+			<div th:replace="include/footer :: footer"></div>
 	</body>
 	<script type="text/javascript" th:inline="javascript">
 	var mainHttp = [[${setting.domain}]];
