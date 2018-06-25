@@ -49,7 +49,7 @@ public class EmailService implements IEmailService{
 	}
 
 	@Override
-	public Integer sendPassJoinusEmail(HttpServletRequest req , TeacherEntity teacher) throws EmailException {
+	public Integer sendPassJoinusEmail(HttpServletRequest req , TeacherEntity teacher , String password) throws EmailException {
 		HtmlEmail mail = new HtmlEmail();
 		mail.setHostName(TamguoConstant.ALIYUN_SMTP_HOST_NAME);
 		mail.setSmtpPort(TamguoConstant.ALIYUN_SMTP_HOST_PORT);
@@ -63,6 +63,7 @@ public class EmailService implements IEmailService{
 		Map<String, Object> map = new HashMap<>();
 		map.put("teacher", teacher);
 		map.put("setting", setting);
+		map.put("password", password);
 		IContext context = new Context(req.getLocale() , map);
 		String html = templateEngine.process("email/joinus", context);
 		mail.setHtmlMsg(html);

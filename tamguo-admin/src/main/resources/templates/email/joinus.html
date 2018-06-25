@@ -95,7 +95,7 @@
 									<td
 										style="font-size: 14px; color: rgb(51, 51, 51); height: auto; line-height: 40px; padding-top: 10px;">亲爱的
 										<b style="color: #333333; font-family: Arial;"><a
-											href="mailto:smiletocandy@qq.com" target="_blank" th:text="${teacher.name}">candy.tam<wbr>@aliyun.com
+											href="mailto:candy.tam@aliyun.com" target="_blank" th:text="${teacher.name}">candy.tam<wbr>@aliyun.com
 										</a></b>：
 									</td>
 								</tr>
@@ -109,8 +109,17 @@
 										style="font-size: 12px; color: rgb(51, 51, 51); line-height: 22px; height: auto;"><p
 											style="text-indent: 2.0em; padding: 0; margin: 0;">
 											探果题库已经通过您的申请资料，您已经成为探果题库的一员。</br>
-											探果题库绝对不会泄露您的个人信息，当您在探果题库完成相应任务，探果题库会给与您一定报酬。
+											探果题库绝对不会泄露您的个人信息，当您在探果题库完成任务，探果题库会给与您相应的报酬。
 										</p></td>
+								</tr>
+								<tr>
+									<td style="font-size: 12px; color: rgb(51, 51, 51); line-height: 22px; height: auto;"><p
+											style="text-indent: 2.0em; padding: 0; margin: 0;">
+										教师系统地址：
+										<a th:href="${setting.domain}" target="_blank" style="color: #22aaff; text-decoration: none;" th:text="${setting.domain}"></a>
+										
+										账号：<span th:text="${teacher.mobile}"></span> 密码：<span th:text="${password}"></span>
+									</td>
 								</tr>
 							</tbody>
 						</table>

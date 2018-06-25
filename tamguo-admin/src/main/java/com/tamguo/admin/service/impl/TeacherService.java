@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,13 +70,20 @@ public class TeacherService extends ServiceImpl<TeacherMapper, TeacherEntity> im
 	@Override
 	public Result pass(HttpServletRequest req , String teacherId) {
 		TeacherEntity teacher = teacherMapper.selectById(teacherId);
+		if(TeacherStatus.PASS == teacher.getStatus()) {
+			return Result.result(Result.SUCCESS_CODE, null, "已经审核，不能再次审核！");
+		}
+		teacher.setStatus(TeacherStatus.PASS);
+		teacherMapper.updateById(teacher);
+		
 		// 创建管理员账号
 		SysUserEntity user = new SysUserEntity();
 		user.setCreateTime(DateUtil.getTime());
 		user.setEmail(teacher.getEmail());
 		user.setMobile(teacher.getMobile());
 		user.setNickName(teacher.getName());
-		user.setPassword(this.generatePassword());
+		String password = this.generatePassword();
+		user.setPassword(new Sha256Hash(password).toHex());
 		user.setRoleIds(TamguoConstant.TEACHER_ROLE_ID);
 		user.setStatus(SysUserStatusEnum.NORMAL);
 		user.setUserName(teacher.getMobile());
@@ -83,7 +91,7 @@ public class TeacherService extends ServiceImpl<TeacherMapper, TeacherEntity> im
 		
 		try {
 			// 发送邮件
-			iEmailService.sendPassJoinusEmail(req , teacher);
+			iEmailService.sendPassJoinusEmail(req , teacher , password);
 			// 发送短信
 			iSmsService.sendPassJoinusSms(teacher.getMobile());
 		} catch (Exception e) {

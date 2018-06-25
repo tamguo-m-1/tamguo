@@ -12,5 +12,5 @@ public interface IEmailService {
 	public Integer sendFindPasswordEmail(String email , String subject) throws EmailException;
 	
 	/** 发送通过教师招募邮件*/
-	public Integer sendPassJoinusEmail(HttpServletRequest req , TeacherEntity teacher) throws EmailException;
+	public Integer sendPassJoinusEmail(HttpServletRequest req , TeacherEntity teacher , String password) throws EmailException;
 }

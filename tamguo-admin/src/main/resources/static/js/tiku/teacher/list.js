@@ -122,7 +122,7 @@ var vm = new Vue({
 		},
 		pass:function(teacherId){
 			axios.get(mainHttp + 'teacher/pass/'+teacherId+'.html').then(function (response) {
-				alert(response.data.result.message);
+				alert(response.data.message);
 			}).catch(function (error) {
 			    console.log(error);
 			});
