@@ -80,6 +80,7 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.paper = {courseId:null,schoolId:null,areaId:null,name:null,questionInfo:null,type:null,year:null,downHits:null,openHits:null};
+			vm.courseList = [];
 			
 			axios.all([vm.getSubjectList()]).then(axios.spread(function (sResponse) {
 				vm.subjectList = sResponse.data.result;

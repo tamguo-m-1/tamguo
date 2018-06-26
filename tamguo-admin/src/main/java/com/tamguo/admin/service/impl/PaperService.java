@@ -15,6 +15,7 @@ import com.tamguo.admin.dao.PaperMapper;
 import com.tamguo.admin.dao.redis.CacheService;
 import com.tamguo.admin.model.PaperEntity;
 import com.tamguo.admin.service.IPaperService;
+import com.tamguo.admin.util.ShiroUtils;
 import com.tamguo.admin.util.TamguoConstant;
 
 @Service
@@ -108,6 +109,7 @@ public class PaperService implements IPaperService{
 
 	@Override
 	public void save(PaperEntity paper) {
+		paper.setCreaterId(ShiroUtils.getUid());
 		paperMapper.insert(paper);
 	}
 
