@@ -29,6 +29,8 @@ public class MenuEntity extends SuperEntity<MenuEntity> implements Serializable 
 
 	private String url;
 	
+	private String reserve1;
+	
 	// 子类型
 	@TableField(exist=false)
 	private List<MenuEntity> childSubjects;
@@ -90,6 +92,14 @@ public class MenuEntity extends SuperEntity<MenuEntity> implements Serializable 
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getReserve1() {
+		return reserve1;
+	}
+
+	public void setReserve1(String reserve1) {
+		this.reserve1 = reserve1;
 	}
 
 }

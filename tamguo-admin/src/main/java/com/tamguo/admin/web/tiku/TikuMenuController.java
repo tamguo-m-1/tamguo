@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.admin.model.MenuEntity;
-import com.tamguo.admin.model.SubjectEntity;
 import com.tamguo.admin.service.IMenuService;
 import com.tamguo.admin.util.ExceptionSupport;
 import com.tamguo.admin.util.Result;
@@ -28,8 +27,8 @@ public class TikuMenuController {
 	@RequiresPermissions("tiku:menu:list")
 	@ResponseBody
 	public Map<String, Object> list(String name , Integer page , Integer limit){
-		Page<SubjectEntity> p = new Page<>(page , limit);
-		Page<SubjectEntity> list = iMenuService.list(name, p);
+		Page<MenuEntity> p = new Page<>(page , limit);
+		Page<MenuEntity> list = iMenuService.list(name, p);
 		return Result.jqGridResult(list.getRecords(), list.getTotal(), limit, page, list.getPages());
 	}
 	

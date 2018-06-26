@@ -1,7 +1,6 @@
 package com.tamguo.interceptor;
 
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +10,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tamguo.model.AdEntity;
-import com.tamguo.model.CourseEntity;
 import com.tamguo.model.MenuEntity;
 import com.tamguo.model.PaperEntity;
 import com.tamguo.model.SchoolEntity;
@@ -70,8 +68,8 @@ public class MenuInterceptor implements HandlerInterceptor {
     	request.setAttribute("footerMenuList", footerMenuList);
     	
     	// 获取首页专区
-    	List<CourseEntity> courseList = iCourseService.findGaokaoArea(TamguoConstant.GAOKAO_SUBJECT_ID);
-    	request.setAttribute("gaokaoCourseList", courseList);
+    	List<MenuEntity> chapterMenuList = iSubjectService.findChapterMenus();
+    	request.setAttribute("chapterMenuList", chapterMenuList);
     	
     	// 获取首页历年真题试卷
     	List<PaperEntity> historyPaperList = iPaperService.findHistoryPaper();

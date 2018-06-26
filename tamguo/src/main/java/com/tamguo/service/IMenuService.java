@@ -22,6 +22,9 @@ public interface IMenuService {
 	
 	/** 资格考试专区*/
 	public List<MenuEntity> findFooterMenus();
+	
+	/** 首页章节学习*/
+	public List<MenuEntity> findChapterMenus();
 
 	/** 获取菜单树*/
 	public List<MenuEntity> getMenuTree();

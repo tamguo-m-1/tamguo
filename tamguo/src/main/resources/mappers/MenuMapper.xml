@@ -4,7 +4,7 @@
 	
 	<select id="findFatherMenus" resultType="MenuEntity">
 		SELECT
-			uid,name,parent_id,pinyin,is_show,orders,url
+			uid,name,parent_id,pinyin,is_show,orders,url,reserve_1
 		FROM
 			tiku_menu
 		where parent_id = 1 and is_show = 1
@@ -13,7 +13,7 @@
 	
 	<select id="findMenuByParentId" resultType="MenuEntity">
 		SELECT
-			uid,name,parent_id,pinyin,is_show,orders,url
+			uid,name,parent_id,pinyin,is_show,orders,url,reserve_1
 		FROM
 			tiku_menu
 		where parent_id = #{parentId}
@@ -22,7 +22,7 @@
 	
 	<select id="findAllFatherMenus" resultType="MenuEntity">
 		SELECT
-			uid,name,parent_id,pinyin,is_show,orders,url
+			uid,name,parent_id,pinyin,is_show,orders,url,reserve_1
 		FROM
 			tiku_menu
 		where parent_id = 1
@@ -31,19 +31,28 @@
 	
 	<select id="findLeftFatherMenus" resultType="MenuEntity">
 		SELECT
-			uid,name,parent_id,pinyin,is_show,orders,url
+			uid,name,parent_id,pinyin,is_show,orders,url,reserve_1
 		FROM
 			tiku_menu
 		where parent_id = 2
 		order by orders desc
-	</select>
+	</select>	
 	
 	<select id="findFooterFatherMenus" resultType="MenuEntity">
 		SELECT
-			uid,name,parent_id,pinyin,is_show,orders,url
+			uid,name,parent_id,pinyin,is_show,orders,url,reserve_1
 		FROM
 			tiku_menu
 		where parent_id = 3
+		order by orders desc
+	</select>
+	
+	<select id="findChapterFatherMenus" resultType="MenuEntity">
+		SELECT
+			uid,name,parent_id,pinyin,is_show,orders,url,reserve_1
+		FROM
+			tiku_menu
+		where parent_id = 4
 		order by orders desc
 	</select>
 	
@@ -55,7 +64,8 @@
 			m.parent_id,
 			m.pinyin,
 			m.uid,
-			m.url
+			m.url,
+			m.reserve_1
 		FROM
 			tiku_menu m
 		<where>

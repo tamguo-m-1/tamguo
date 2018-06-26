@@ -11,7 +11,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.admin.dao.MenuMapper;
 import com.tamguo.admin.dao.redis.CacheService;
 import com.tamguo.admin.model.MenuEntity;
-import com.tamguo.admin.model.SubjectEntity;
 import com.tamguo.admin.service.IMenuService;
 import com.tamguo.admin.util.TamguoConstant;
 
@@ -88,14 +87,14 @@ public class MenuService implements IMenuService{
 	}
 
 	@Override
-	public Page<SubjectEntity> list(String name, Page<SubjectEntity> page) {
+	public Page<MenuEntity> list(String name, Page<MenuEntity> page) {
 		return page.setRecords(menuMapper.findByName(name , page));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<MenuEntity> getMenuTree() {
-		return (List<MenuEntity>) menuMapper.selectById(Condition.EMPTY);
+		return (List<MenuEntity>) menuMapper.selectList(Condition.EMPTY);
 	}
 
 	@Override

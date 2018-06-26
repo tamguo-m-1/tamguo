@@ -56,7 +56,6 @@ public class MenuService extends ServiceImpl<MenuMapper, MenuEntity> implements 
 	@Override
 	public List<MenuEntity> findLeftMenus() {
 		List<MenuEntity> leftMenuList = ((List<MenuEntity>) cacheService.getObject(TamguoConstant.LEFT_INDEX_MENU));
-		leftMenuList = null;
 		if(leftMenuList == null || leftMenuList.isEmpty()){
 			leftMenuList = menuMapper.findLeftFatherMenus();
 			for(MenuEntity menu : leftMenuList){
@@ -67,6 +66,23 @@ public class MenuService extends ServiceImpl<MenuMapper, MenuEntity> implements 
 		}
 		return leftMenuList;
 	}
+	
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MenuEntity> findChapterMenus() {
+		List<MenuEntity> chapterMenuList = ((List<MenuEntity>) cacheService.getObject(TamguoConstant.CHAPTER_INDEX_MENU));
+		if(chapterMenuList == null || chapterMenuList.isEmpty()){
+			chapterMenuList = menuMapper.findChapterFatherMenus();
+			for(MenuEntity menu : chapterMenuList){
+				List<MenuEntity> childSubjects = menuMapper.findMenuByParentId(menu.getUid());
+				menu.setChildSubjects(childSubjects);
+			}
+			cacheService.setObject(TamguoConstant.CHAPTER_INDEX_MENU, chapterMenuList , 2 * 60 * 60);
+		}
+		return chapterMenuList;
+	}
+
 
 	@SuppressWarnings("unchecked")
 	@Override

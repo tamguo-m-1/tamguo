@@ -69,12 +69,12 @@
 						<p class="title">章节学习<span class="detail">考点各个击破，重难点自测</span>
 						</p>
 						<div class="class-box-container">
-							<div class="class-box" th:each="c,cStat:${gaokaoCourseList}">
-								<a th:href="${setting.domain + 'chapter/'+c.subjectId+'/'+c.uid+'.html'}" target="_blank" class="class-link" data-courseid="17">
+							<div class="class-box" th:each="c,cStat:${chapterMenuList}">
+								<a th:href="${setting.domain + c.url}" target="_blank" class="class-link" data-courseid="17">
 									<div class="box-content">
-										<div style="font-size:45px;" th:class="${c.icon + ' iconfont box-icon'}"></div>
+										<div style="font-size:45px;" th:class="${c.pinyin + ' iconfont box-icon'}"></div>
 										<p class="box-classname" course_id="17" th:text="${c.name}">文科数学</p>
-										<p class="box-classnum"><span th:text="${c.pointNum}">495</span>个考点</p>
+										<p class="box-classnum"><span th:text="${c.reserve1}">495</span>个考点</p>
 									</div>
 								</a>
 							</div>

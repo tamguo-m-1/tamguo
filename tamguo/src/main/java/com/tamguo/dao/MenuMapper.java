@@ -19,6 +19,8 @@ public interface MenuMapper extends SuperMapper<MenuEntity>{
 
 	public List<MenuEntity> findFooterFatherMenus();
 
+	public List<MenuEntity> findChapterFatherMenus();
+
 	public Page<SubjectEntity> findByName(String name);
 	
 }

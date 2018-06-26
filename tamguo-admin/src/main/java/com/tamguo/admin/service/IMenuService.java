@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.admin.model.MenuEntity;
-import com.tamguo.admin.model.SubjectEntity;
 
 /**
  * Service - 类型
@@ -27,7 +26,7 @@ public interface IMenuService {
 	public List<MenuEntity> findFooterMenus();
 
 	/** 根据名称查询*/
-	public Page<SubjectEntity> list(String name, Page<SubjectEntity> page);
+	public Page<MenuEntity> list(String name, Page<MenuEntity> page);
 
 	/** 获取菜单树*/
 	public List<MenuEntity> getMenuTree();
