@@ -24,7 +24,6 @@ public class MenuService extends ServiceImpl<MenuMapper, MenuEntity> implements 
 	@Override
 	public List<MenuEntity> findMenus() {
 		List<MenuEntity> menuList = ((List<MenuEntity>) cacheService.getObject(TamguoConstant.INDEX_MENU));
-		menuList = null;
 		if (menuList == null || menuList.isEmpty()) {
 			menuList = menuMapper.findFatherMenus();
 			for(MenuEntity menu : menuList){
@@ -40,7 +39,6 @@ public class MenuService extends ServiceImpl<MenuMapper, MenuEntity> implements 
 	@Override
 	public List<MenuEntity> findAllMenus() {
 		List<MenuEntity> allMenuList = ((List<MenuEntity>) cacheService.getObject(TamguoConstant.ALL_INDEX_MENU));
-		allMenuList = null;
 		if(allMenuList == null || allMenuList.isEmpty()){
 			allMenuList = menuMapper.findAllFatherMenus();
 			for(MenuEntity menu : allMenuList){
