@@ -46,17 +46,25 @@ public class MybatisPlusConfig {
         tenantSqlParser.setTenantHandler(new TenantHandler() {
             @Override
             public Expression getTenantId() {
-                return new LongValue(ShiroUtils.getUid());
+                return new LongValue(ShiroUtils.getUser().getCourseId());
             }
 
             @Override
             public String getTenantIdColumn() {
-                return "company_id";
+                return "course_id";
             }
 
             @Override
             public boolean doTableFilter(String tableName) {
                 // 这里可以判断是否过滤表
+            	if(ShiroUtils.getUser() != null) {
+            		if("1".equals(ShiroUtils.getUser().getRoleIds())) {
+                		return true;
+                	}
+            		if(tableName.equals("tiku_chapter") || tableName.equals("tiku_question")) {
+            			return false;
+            		}
+            	}
                 return true;
             }
         });

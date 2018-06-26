@@ -31,9 +31,9 @@
 				<input type="text" class="form-control" v-model="q.name" @keyup.enter="query" placeholder="用户名">
 			</div>
 			<a class="btn btn-default" @click="query">查询</a>
-			<a shiro:hasPermission="tiku:course:save" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			<a shiro:hasPermission="tiku:course:update" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-			<a shiro:hasPermission="tiku:course:delete" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			<a shiro:hasPermission="tiku:paper:save" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			<a shiro:hasPermission="tiku:paper:update" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			<a shiro:hasPermission="tiku:paper:delete" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
 		</div>
 	    <table id="jqGrid"></table>
 	    <div id="jqGridPager"></div>

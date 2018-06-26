@@ -30,6 +30,9 @@ public class ChapterEntity extends SuperEntity<ChapterEntity> implements Seriali
 	private Integer orders;
 	
 	@TableField(exist=false)
+	private String parentName;
+	
+	@TableField(exist=false)
 	private List<ChapterEntity> childChapterList;
 
 	public ChapterEntity() {
@@ -89,6 +92,14 @@ public class ChapterEntity extends SuperEntity<ChapterEntity> implements Seriali
 
 	public void setOrders(Integer orders) {
 		this.orders = orders;
+	}
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 
 }

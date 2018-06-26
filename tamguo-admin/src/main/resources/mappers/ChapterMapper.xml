@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tamguo.admin.dao.ChapterMapper">
 
+	<select id="queryPage" resultType="ChapterEntity">
+		SELECT
+			c.uid,
+			c.course_id,
+			c.parent_id,
+			p.name as parent_name,
+			c.name,
+			c.question_num,
+			c.point_num,
+			c.orders
+		FROM
+			tiku_chapter c
+		LEFT JOIN tiku_chapter p on p.uid = c.parent_id
+		WHERE c.parent_id != '-1'
+			<if test="name != null and name != ''">
+				and c.name like #{name}
+			</if>
+	</select>
+
 	<select id="findByCourseId" resultType="ChapterEntity">
 		SELECT
 			c.uid,c.course_id , c.parent_id , c.`name` , c.question_num , c.point_num , c.orders
@@ -9,8 +28,7 @@
 			tiku_chapter c
 		WHERE c.course_id = #{courseId}
 		ORDER BY c.orders asc
-	</select>
-	
+	</select>	
 	
 	<select id="findByParentId" resultType="ChapterEntity">
 		SELECT
@@ -45,6 +63,22 @@
 		]]>
 		ORDER BY orders ASC
 		LIMIT 1
+	</select>
+	
+	<select id="select" resultType="ChapterEntity">
+		SELECT
+			c.uid,
+			c.course_id,
+			c.parent_id,
+			p.name as parent_name,
+			c.`name`, 
+			c.question_num, 
+			c.point_num,
+			c.orders
+		FROM
+			tiku_chapter c
+		LEFT JOIN tiku_chapter p on p.uid = c.parent_id
+		WHERE c.uid = #{chapterId}
 	</select>
 	
 	<delete id="deleteByCourseId">

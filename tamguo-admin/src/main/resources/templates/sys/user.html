@@ -10,6 +10,7 @@
 <link rel="stylesheet" th:href="@{../plugins/jqgrid/ui.jqgrid-bootstrap.css}">
 <link rel="stylesheet" th:href="@{../plugins/ztree/css/metroStyle/metroStyle.css}">
 <link rel="stylesheet" th:href="@{../css/main.css}">
+<link rel="stylesheet" th:href="${setting.domain + 'plugins/bootstrap-select/bootstrap-select.min.css'}">
 <script th:src="@{../libs/jquery.min.js}"></script>
 <script th:src="@{../plugins/layer/layer.js}"></script>
 <script th:src="@{../libs/bootstrap.min.js}"></script>
@@ -19,6 +20,7 @@
 <script th:src="@{../plugins/ztree/jquery.ztree.all.min.js}"></script>
 <script th:src="@{../js/common.js}"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script th:src="${setting.domain + 'plugins/bootstrap-select/bootstrap-select.min.js'}"></script>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -45,6 +47,34 @@
 			      <input type="text" class="form-control" v-model="user.userName" placeholder="登录账号"/>
 			    </div>
 			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-2 control-label">考试</div>
+			   	<div class="col-sm-10">
+			       <select id="subjectId" data-live-search="true" v-model="user.subjectId" @change="changeSubject">
+			      	   <option value="">请选择</option>
+					   <option v-bind:value="subject.uid" v-for="subject in subjectList">{{subject.name}}</option>
+				   </select>
+			    </div>
+			</div>
+			
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">科目</div>
+			   	<div class="col-sm-10">
+			      <select id="courseId" data-live-search="true" v-model="user.courseId">
+			      	   <option value="">请选择</option>
+					   <option v-bind:value="course.uid" v-for="course in courseList">{{course.name}}</option>
+				   </select>
+			    </div>
+			</div>
+			
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">邮箱</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="user.email" placeholder="邮箱"/>
+			    </div>
+			</div>
+			
 			<div class="form-group">
 			   	<div class="col-sm-2 control-label">密码</div>
 			   	<div class="col-sm-10">
@@ -65,11 +95,9 @@
 			</div>
 			<div class="form-group">
 			   	<div class="col-sm-2 control-label">角色</div>
-			   	<div class="col-sm-10">
-				   	<label v-for="role in roleList" class="checkbox-inline">
-					  <input type="checkbox" :value="role.uid" v-model="user.roleIdList">{{role.name}}
-					</label>
-				</div>
+			   	<label v-for="role in roleList" class="radio-inline">
+				  <input type="radio" name="roleId" :value="role.uid" v-model="user.roleIds"> {{role.name}}
+				</label>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-2 control-label">状态</div> 
@@ -89,6 +117,9 @@
 	</div>
 </div>
 
+<script type="text/javascript" th:inline="javascript">
+	var mainHttp = [[${setting.domain}]];
+</script>
 <script th:src="@{../js/sys/user.js?v=9}"></script>
 </body>
 </html>

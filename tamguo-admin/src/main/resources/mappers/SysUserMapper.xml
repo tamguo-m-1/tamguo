@@ -4,14 +4,15 @@
 	
 	<select id="queryByUserName" resultType="SysUserEntity">
 		SELECT
-			uid,
-			user_name,
-			role_ids,
-			password,
-			status,
-			nick_name,
-			mobile,
-			email
+			u.uid,
+			u.user_name,
+			u.role_ids,
+			u.password,
+			u.status,
+			u.nick_name,
+			u.mobile,
+			u.email,
+			u.course_id
 		FROM
 			sys_user u
 		WHERE
@@ -20,16 +21,19 @@
   	
   	<select id="queryPage" resultType="SysUserEntity">
   		SELECT
-			uid,
-			user_name,
-			role_ids,
-			password,
-			status,
-			nick_name,
-			mobile,
-			email
+			u.uid,
+			u.user_name,
+			u.role_ids,
+			r.name as role_name,
+			u.password,
+			u.status,
+			u.nick_name,
+			u.mobile,
+			u.email,
+			u.course_id
 		FROM
 			sys_user u
+		LEFT JOIN sys_role r ON r.uid = u.role_ids 
 		<where>
 			<if test="userName != null and userName != ''">
 				u.user_name like #{userName}

@@ -118,5 +118,5 @@ public class TamguoConstant {
 	public static final String QUESTION_FAILED_AUDIT_STATUS = "2";
 	
 	/** 题目审核失败*/
-	public static final String TEACHER_ROLE_ID = "3";
+	public static final String TEACHER_ROLE_ID = "2";
 }

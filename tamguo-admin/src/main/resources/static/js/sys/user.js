@@ -7,6 +7,7 @@ $(function () {
 			{ label: '用户ID', name: 'uid', width: 45, key: true , hidden:true},
 			{ label: '用户名', name: 'userName', width: 75 },
 			{ label: '昵称', name: 'nickName', width: 75 },
+			{ label: '角色名称', name: 'roleName', width: 75 },
 			{ label: '邮箱', name: 'email', width: 90 },
 			{ label: '手机号', name: 'mobile', width: 100 },
 			{ label: '状态', name: 'status', width: 80, formatter: function(value, options, row){
@@ -51,6 +52,8 @@ var vm = new Vue({
 		showList: true,
 		title:null,
 		roleList:{},
+		subjectList:null,
+		courseList:null,
 		user:{
 			status:"normal",
 			roleIdList:[]
@@ -64,10 +67,13 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.roleList = {};
-			vm.user = {status:'normal',roleIdList:[]};
+			vm.user = {status:'normal',roleIds:null};
+			vm.courseList = [];
 			
-			axios.all([this.getRoleList()]).then(axios.spread(function (rResponse) {
+			axios.all([this.getRoleList() , vm.getSubjectList()]).then(axios.spread(function (rResponse , sResponse) {
 				vm.roleList = rResponse.data.result;
+				
+				vm.subjectList = sResponse.data.result;
             }));
 		},
 		update: function () {
@@ -80,9 +86,15 @@ var vm = new Vue({
             vm.title = "修改";
             vm.roleList = {};
             
-            axios.all([this.getUser(userId),this.getRoleList()]).then(axios.spread(function (uResponse , rResponse) {
+            axios.all([vm.getUser(userId),vm.getRoleList(), vm.getSubjectList()]).then(axios.spread(function (uResponse , rResponse , sResponse) {
             	vm.user = uResponse.data.result;
             	vm.roleList = rResponse.data.result;
+            	vm.subjectList = sResponse.data.result;
+            	
+            	axios.all([vm.getUser(userId),vm.getCouseList()]).then(axios.spread(function (uResponse , cResponse) {
+            		vm.user = uResponse.data.result;
+                	vm.courseList = cResponse.data.result;
+                }));
             }));
             
 		},
@@ -142,6 +154,30 @@ var vm = new Vue({
                 postData:{'userName':vm.q.userName},
                 page:page
             }).trigger("reloadGrid");
+		},
+		getCouseList: function(){
+			return axios.get(mainHttp + "course/findBySubjectId.html?subjectId="+vm.user.subjectId);
+		},
+		getSubjectList: function(){
+			return axios.get(mainHttp + "subject/getSubject.html");
+		},
+		changeSubject:function(){
+			axios.all([this.getCouseList()]).then(axios.spread(function (cResponse) {
+				vm.courseList = cResponse.data.result;
+            }));
 		}
+	},
+	watch:{
+		  // 数据修改时触发
+	      subjectList: function() {
+	        this.$nextTick(function(){
+		        $('#subjectId').selectpicker('refresh');
+	        })
+	      },
+	      courseList: function() {
+		        this.$nextTick(function(){
+			        $('#courseId').selectpicker('refresh');
+		        })
+	      }
 	}
 });

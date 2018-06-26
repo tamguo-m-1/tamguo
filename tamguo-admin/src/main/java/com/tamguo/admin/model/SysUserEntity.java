@@ -37,9 +37,16 @@ public class SysUserEntity extends SuperEntity<SysUserEntity> implements Seriali
 	private String safeKeyValue;
 	
 	private Long createTime;
+	
+	private String courseId;
+	
+	private String subjectId;
 
 	@TableField(exist=false)
 	private List<String> roleIdList;
+	
+	@TableField(exist=false)
+	private String roleName;
 	
 	public SysUserEntity() {
 	}
@@ -122,6 +129,30 @@ public class SysUserEntity extends SuperEntity<SysUserEntity> implements Seriali
 
 	public void setStatus(SysUserStatusEnum status) {
 		this.status = status;
+	}
+
+	public String getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(String courseId) {
+		this.courseId = courseId;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public String getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(String subjectId) {
+		this.subjectId = subjectId;
 	}
 
 

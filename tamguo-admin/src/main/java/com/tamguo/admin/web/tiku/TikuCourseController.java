@@ -36,14 +36,12 @@ public class TikuCourseController {
 	}
 	
 	@RequestMapping("course/getChapterTree/{courseId}.html")
-	@RequiresPermissions("tiku:course:list")
 	@ResponseBody
 	public Result getChapterTree(@PathVariable String courseId){
 		return Result.result(0, iChapterService.getChapterTree(courseId), null);
 	}
 	
 	@RequestMapping("course/info/{courseId}.html")
-	@RequiresPermissions("tiku:course:list")
 	@ResponseBody
 	public Result info(@PathVariable String courseId){
 		try {

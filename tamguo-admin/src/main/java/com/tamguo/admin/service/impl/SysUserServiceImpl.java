@@ -96,10 +96,6 @@ public class SysUserServiceImpl implements ISysUserService{
 		} else {
 			user.setPassword(ShaEncrypt.SHA256(user.getPassword()));
 		}
-		// 处理角色
-		if(!CollectionUtils.isEmpty(user.getRoleIdList())) {
-			user.setRoleIds(StringUtils.join(user.getRoleIdList(), ","));
-		}
 		sysUserMapper.updateById(user);
 	}
 
