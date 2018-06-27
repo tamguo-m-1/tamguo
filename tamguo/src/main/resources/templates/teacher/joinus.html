@@ -7,9 +7,9 @@
 		<meta name="keyword" content="教师招募"/>
 		<meta name="author" content="Tamguo Team" />
 		<meta name="copyright" content="Tamguo" />
-		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
-		<link rel="stylesheet" th:href="${setting.domain + 'css/footer.css'}" />
-		<link rel="stylesheet" th:href="${setting.domain + 'css/teacher/joinus.css'}" />
+		<link rel="stylesheet" type="text/css" th:href="${setting.domain + 'css/reset.css'}" />
+		<link rel="stylesheet" type="text/css" th:href="${setting.domain + 'css/footer.css'}" />
+		<link rel="stylesheet" type="text/css" th:href="${setting.domain + 'css/teacher/joinus.css'}" />
 		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
 		<!-- 引入样式 -->
 		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
@@ -140,7 +140,7 @@
 					</div>
 		            <div class="login-link" id="login_link">
 		                <span>我已加入，现在就</span>
-		                <button class="login-btn" id="login_btn">登录</button></div>
+		                <button class="login-btn" id="login_btn"><a th:href="${setting.adminDomain}">登录</a></button></div>
 		        	</div>
 				    <div id="foot">
 				        <div class="mod-footer">
@@ -215,7 +215,7 @@
 		      next:function(){
 		    	  // 第一步
 		    	  if(vm.active == 1){
-		    		  this.$refs.mobileForm.validate((valid) => {
+		    		  this.$refs.mobileForm.validate(function(valid){
 			    		  if (valid) {
 						      if(this.active == 1){
 					    		  axios.all([this.getTeacher()]).then(axios.spread(function (tResponse) {
@@ -242,7 +242,7 @@
 		    	          }
 			          });
 		    	  }else if(vm.active == 2){ // 第二步
-		    		  this.$refs.teacherForm.validate((valid) => {
+		    		  this.$refs.teacherForm.validate(function(valid) {
 			    		  if (valid) {
 			    			 vm.teacher.provinceId = vm.teacher.areaId[0];
 			    			 vm.teacher.cityId = vm.teacher.areaId[1];
@@ -275,33 +275,33 @@
 		    		  vm.options = response.data.result;
 		    	  });
 		      },
-		      handleOccupationPapersRemove(file, fileList) {
+		      handleOccupationPapersRemove:function(file, fileList) {
 		          vm.occupationPapersList = [];
 		      },
-		      handleCardPhotoRemove(file, fileList){
+		      handleCardPhotoRemove:function(file, fileList){
 		    	  vm.cardPhotoList = [];
 		      },
-		      handleExceed(files, fileList) {
-	              this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+		      handleExceed:function(files, fileList) {
+	              this.$message.warning('当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件');
 	          },
-	          beforeRemove(file, fileList) {
-	              return this.$confirm(`确定移除 ${ file.name }？`);
+	          beforeRemove:function(file, fileList) {
+	              return this.$confirm('确定移除 ${ file.name }？');
 	          },
-	          uploadCardPhotoSuccess(response, file, fileList){
+	          uploadCardPhotoSuccess:function(response, file, fileList){
 	        	  var cardPhoto = {};
 	        	  cardPhoto.name = file.response.title;
 	        	  cardPhoto.url = mainHttp + file.response.url;
 	        	  cardPhoto.path = file.response.url;
 	        	  vm.cardPhotoList.push(cardPhoto);
 	          },
-	          uploadOccupationPapersSuccess(response, file, fileList){
+	          uploadOccupationPapersSuccess:function(response, file, fileList){
 	        	  var occupationPapers = {};
 	        	  occupationPapers.name = file.response.title;
 	        	  occupationPapers.url = mainHttp + file.response.url;
 	        	  occupationPapers.path = file.response.url;
 	        	  vm.occupationPapersList.push(occupationPapers);
 	          },
-	          sendSms(){
+	          sendSms:function(){
 	        	  axios.get(mainHttp + 'sms/sendFindPasswordSms.html?mobile='+vm.mobileModel.mobile).then(function(response){
 	        		  if(response.data.code == 200){
 	        			  vm.$message('发送成功！');
