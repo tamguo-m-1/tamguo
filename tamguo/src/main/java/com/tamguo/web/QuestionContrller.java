@@ -10,9 +10,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.model.ChapterEntity;
+import com.tamguo.model.CourseEntity;
 import com.tamguo.model.QuestionEntity;
+import com.tamguo.model.SubjectEntity;
 import com.tamguo.service.IChapterService;
+import com.tamguo.service.ICourseService;
 import com.tamguo.service.IQuestionService;
+import com.tamguo.service.ISubjectService;
 import com.tamguo.util.Result;
 
 @Controller
@@ -22,12 +26,18 @@ public class QuestionContrller {
 	private IQuestionService iQuestionService;
 	@Autowired
 	private IChapterService iChapterService;
+	@Autowired
+	private ISubjectService iSubjectService;
+	@Autowired
+	private ICourseService iCourseService;
 	
 	@RequestMapping(value = {"/question/{subjectId}/{courseId}/{parentChapterId}/{chapterId}-{offset}-{limit}.html"}, method = RequestMethod.GET)
 	public ModelAndView questionList(@PathVariable String subjectId , @PathVariable String courseId , 
 			@PathVariable String parentChapterId ,@PathVariable String chapterId , @PathVariable Integer offset , 
 			@PathVariable Integer limit , ModelAndView model){
 		model.setViewName("questionList");
+		SubjectEntity subject = iSubjectService.find(subjectId);
+		CourseEntity course = iCourseService.find(courseId);
 		ChapterEntity chapter = iChapterService.findById(chapterId);
 		ChapterEntity parentChapter = iChapterService.findById(parentChapterId);
 		ChapterEntity nextChapter = iChapterService.findNextPoint(chapter.getParentId() , chapter.getOrders());
@@ -36,6 +46,8 @@ public class QuestionContrller {
 		page.setCurrent(offset);
 		page.setSize(limit);
 		Page<QuestionEntity> questionList = iQuestionService.findByChapterId(chapterId , page);
+		model.addObject("subject", subject);
+		model.addObject("course", course);
 		model.addObject("chapter", chapter);
 		model.addObject("parentChapter" , parentChapter);
 		model.addObject("nextChapter" , nextChapter);

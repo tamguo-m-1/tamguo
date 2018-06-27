@@ -7,12 +7,12 @@
 		<meta name="keyword" content="试题库,试卷库,智能题库,历年真题,模拟试题,押题,预测试题,高考,会计证,会计从业,会计师,经济师,施工员,建造师,建筑师,造价师,职业资格,证券资格,考研,计算机考试,建筑考试,财会类,医卫类,护士资格,公务员,知识点"/>
 		<meta name="author" content="Tamguo Team" />
 		<meta name="copyright" content="Tamguo" />		
-		<link rel="stylesheet" th:href="${setting.domain + 'css/main.css'}"></link>
-		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
-		<link rel="stylesheet" th:href="${setting.domain + 'css/iconfont.css'}" />
-		<link rel="stylesheet" th:href="${setting.domain + 'css/questionList.css'}" />
-		<link rel="stylesheet" th:href="${setting.domain + 'css/footer.css'}" />
-		<link rel="stylesheet" th:href="${setting.domain + 'css/member/minilogin.css'}" />
+		<link rel="stylesheet" type="text/css" th:href="${setting.domain + 'css/main.css'}"></link>
+		<link rel="stylesheet" type="text/css" th:href="${setting.domain + 'css/reset.css'}" />
+		<link rel="stylesheet" type="text/css" th:href="${setting.domain + 'css/iconfont.css'}" />
+		<link rel="stylesheet" type="text/css" th:href="${setting.domain + 'css/questionList.css'}" />
+		<link rel="stylesheet" type="text/css" th:href="${setting.domain + 'css/footer.css'}" />
+		<link rel="stylesheet" type="text/css" th:href="${setting.domain + 'css/member/minilogin.css'}" />
 		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
 	</head>
 	<body>
@@ -68,10 +68,10 @@
 					    </span>
 					</div>
 	                <div class="crumbs">
-	                    <a th:href="${setting.domain}">探果题库</a> &gt;
-	                    <a th:href="${setting.domain}">社会工作师</a> &gt;
-	                    <a th:href="${setting.domain}">综合能力（中级）</a> &gt;
-	                    <span>中国社会工作在不同发展阶段的特点</span>
+	                    <a th:href="${setting.domain}">探果题库</a>
+	                    <a th:href="${setting.domain + 'subject/' + subject.uid + '.html'}" th:text="${subject.name}">社会工作师</a>
+	                    <a th:href="${setting.domain + 'chapter/' + subject.uid + '/'+course.uid+'.html'}" th:utext="${course != null} ? '&gt;' + ${course.name}:''">综合能力（中级）</a> &gt;
+	                    <span th:utext="${chapter.name}">中国社会工作在不同发展阶段的特点</span>
 	                 </div>
 	
 	        </div>
@@ -126,7 +126,7 @@
 <div th:replace="include/minilogin :: minilogin"></div>
 </body>
 <script type="text/javascript" src="http://static.tamguo.com/static/js/jquery-1.8.3.min.js" ></script>
-<script type="text/javascript" src="http://static.tamguo.com/static/js/jquery.iDialog.js'}"></script>
+<script type="text/javascript" src="http://static.tamguo.com/static/js/jquery.iDialog.js"></script>
 <script type="text/javascript" th:src="${setting.domain + 'js/main.js'}" ></script>
 <script type="text/javascript" th:src="${setting.domain + 'js/questionList.js'}" ></script>
 <script type="text/javascript" th:src="${setting.domain + 'js/member/minlogin.js'}"></script>
