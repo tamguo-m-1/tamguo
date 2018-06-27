@@ -18,6 +18,7 @@ import com.tamguo.service.IPaperService;
 import com.tamguo.service.IQuestionService;
 import com.tamguo.service.ISubjectService;
 import com.tamguo.util.PageUtils;
+import com.tamguo.util.TamguoConstant;
 
 /**
  * Controller - 试卷
@@ -64,6 +65,11 @@ public class PaperController {
 		model.addObject("subject", StringUtils.isEmpty(paper.getSubjectId()) ? null : iSubjectService.find(paper.getSubjectId()));
 		model.addObject("course", StringUtils.isEmpty(paper.getCourseId()) ? null : iCourseService.find(paper.getCourseId()));
 		model.addObject("questionList", iQuestionService.findPaperQuestion(paperId));
+
+    	// 获取推荐试卷
+		model.addObject("zhentiPaperList", iPaperService.featuredPaper(TamguoConstant.ZHENGTI_PAPER_ID, paper.getSubjectId()));
+		model.addObject("moniPaperList", iPaperService.featuredPaper(TamguoConstant.MONI_PAPER_ID, paper.getSubjectId()));
+		model.addObject("yatiPaperList", iPaperService.featuredPaper(TamguoConstant.YATI_PAPER_ID, paper.getSubjectId()));
 		return model;
 	}
 	

@@ -42,7 +42,7 @@ public class PaperService extends ServiceImpl<PaperMapper, PaperEntity> implemen
 		List<PaperEntity> paperList = (List<PaperEntity>) cacheService.getObject(TamguoConstant.SIMULATION_PAPER);
 		if(paperList == null || paperList.isEmpty()){
 			Page<PaperEntity> page = new Page<>(1 , 6);
-			paperList = paperMapper.findByTypeAndAreaId(TamguoConstant.SIMULATION_PAPER_ID , TamguoConstant.BEIJING_AREA_ID , page);
+			paperList = paperMapper.findByTypeAndAreaId(TamguoConstant.MONI_PAPER_ID , TamguoConstant.BEIJING_AREA_ID , page);
 			cacheService.setObject(TamguoConstant.SIMULATION_PAPER, paperList , 2 * 60 * 60);
 		}
 		return paperList;
@@ -192,6 +192,13 @@ public class PaperService extends ServiceImpl<PaperMapper, PaperEntity> implemen
 		paper.setSeoKeywords(paper.getName());
 		paper.setSeoDescription(paper.getName());
 		paperMapper.insert(paper);
+	}
+
+	@Transactional(readOnly=false)
+	@Override
+	public List<PaperEntity> featuredPaper(String type, String subjectId) {
+		Page<PaperEntity> page = new Page<>(1,8);
+		return paperMapper.featuredPaper(type , subjectId , page);
 	}
 
 }

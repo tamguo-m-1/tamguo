@@ -168,4 +168,30 @@
 		</where>
 	</select>
 	
+	<select id="featuredPaper" resultType="PaperEntity">
+		SELECT
+			p.area_id,
+			p.subject_id,
+			p.course_id,
+			p.down_hits,
+			p.`name`,
+			p.open_hits,
+			p.question_info,
+			p.school_id,
+			p.type,
+			p.uid,
+			p.`year`
+		FROM
+			tiku_paper p
+		<where>
+			1 = 1
+			<if test="type != null and type != ''">
+				and p.type like #{type}
+			</if>
+			<if test="subjectId != null and subjectId != ''">
+				and p.subject_id like #{subjectId}
+			</if>
+		</where>
+	</select>
+	
 </mapper>

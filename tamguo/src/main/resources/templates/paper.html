@@ -145,168 +145,46 @@
 				    </ul>
 				    <div class="recp-contain recp-dis-zhenti" style="display: block;">
 				        <ul class="clearfix">
-				            <li class="recp-contain-li">
+				            <li class="recp-contain-li" th:each="zhenti,zhentiStat:${zhentiPaperList}">
 				                <i class="recp-icon repc-zhen"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="zhenti">
+				                <a th:href="${setting.domain + 'paper/'+zhenti.uid+'.html'}" class="recp-link" data-class="zhenti" th:text="${zhenti.name}">
 				                    2017年高考真题 英语 (浙江卷)
 				                </a>
 				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-zhen"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="zhenti">
-				                    2017年高考真题 英语 (天津卷)
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-zhen"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="zhenti">
-				                    2017年高考真题 英语 (全国III卷)
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-zhen"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="zhenti">
-				                    2017年高考真题 英语 (江苏卷)
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-zhen"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="zhenti">
-				                    2017年高考真题 英语 (全国II卷)
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-zhen"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="zhenti">
-				                    2017年高考真题 英语 (全国I卷)
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-zhen"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="zhenti">
-				                    2016年高考真题 英语 (江苏卷)
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-zhen"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="zhenti">
-				                    2016年高考真题 英语 (上海卷)
-				                </a>
-				            </li>
-				            <a th:href="${setting.domain}" class="recp-more" data-class="zhenti">查看更多真题试卷 &gt;</a>
+				            <a th:if="${paper.subjectId != null}" th:href="${setting.domain + 'paperlist/'+paper.subjectId+'/0-0-0-0-0.html'}" class="recp-more" data-class="zhenti">查看更多真题试卷 &gt;</a>
 				        </ul>
 				    </div>
 				    <div class="recp-contain recp-dis-moni" style="display: none;">
 				        <ul class="clearfix">
-				            <li class="recp-contain-li">
+				            <li class="recp-contain-li" th:each="moni,moniStat:${moniPaperList}">
 				                <i class="recp-icon repc-mo"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="moni">
+				                <a th:href="${setting.domain + 'paper/'+moni.uid+'.html'}" class="recp-link" data-class="moni" th:text="${moni.name}">
 				                    英语 2017年期末考试
 				                </a>
 				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-mo"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="moni">
-				                    英语 2017年第一次模拟考试
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-mo"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="moni">
-				                    英语 2017年第三次模拟考试
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-mo"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="moni">
-				                    英语 2017年第一次质检考试
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-mo"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="moni">
-				                    英语 2016年第二次模拟考试
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-mo"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="moni">
-				                    英语 2016年第二次模拟考试
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-mo"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="moni">
-				                    英语 2016年第二次模拟考试
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-mo"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="moni">
-				                    英语 2016年第二次模拟考试
-				                </a>
-				            </li>
-				            <a th:href="${setting.domain}" class="recp-more" data-class="moni">查看更多模拟试卷 &gt;</a>
+				            <a th:if="${paper.subjectId != null}" th:href="${setting.domain + 'paperlist/'+paper.subjectId+'/0-1-0-0-0.html'}" class="recp-more" data-class="moni">查看更多模拟试卷 &gt;</a>
 				        </ul>
 				    </div>
 				    <div class="recp-contain recp-dis-yuce" style="display: none;">
 				        <ul class="clearfix">
-				            <li class="recp-contain-li">
+				            <li class="recp-contain-li" th:each="yati,yatiStat:${yatiPaperList}">
 				                <i class="recp-icon repc-ya"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="yuce">
+				                <a th:href="${setting.domain + 'paper/'+yati.uid+'.html'}" class="recp-link" data-class="yuce" th:text="${yati.name}">
 				                    2015年高考权威预测卷 英语 (大纲全国卷)
 				                </a>
 				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-ya"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="yuce">
-				                    2015年高考权威预测卷 英语 (江苏卷)
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-ya"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="yuce">
-				                    2015年高考权威预测卷 英语 (辽宁卷)
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-ya"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="yuce">
-				                    2015年高考权威预测卷 英语 (上海卷)
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-ya"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="yuce">
-				                    2015年高考权威预测卷 英语 (安徽卷)
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-ya"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="yuce">
-				                    2015年高考权威预测卷 英语 (全国新课标卷II)
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-ya"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="yuce">
-				                    2015年高考权威预测卷 英语 (山东卷)
-				                </a>
-				            </li>
-				            <li class="recp-contain-li">
-				                <i class="recp-icon repc-ya"></i>
-				                <a th:href="${setting.domain}" class="recp-link" data-class="yuce">
-				                    2015年高考权威预测卷 英语 (湖北卷)
-				                </a>
-				            </li>
 				        </ul>
-				        <a th:href="${setting.domain}" class="recp-more" data-class="yuce">查看更多预测试卷 &gt;</a>
+				        <a th:if="${paper.subjectId != null}" th:href="${setting.domain + 'paperlist/'+paper.subjectId+'/0-2-0-0-0.html'}" class="recp-more" data-class="yuce">查看更多预测试卷 &gt;</a>
 				    </div>
 				</div>
                 <div class="crumbs">
-                    <a th:href="${setting.domain}">探果题库</a>
-                    <a th:if="${subject != null}" th:href="${setting.domain + 'subject/' + subject.uid + '.html'}" th:utext="${'&gt;' +subject.name}">社会工作师</a>
-                    <a th:if="${course != null}" th:href="${setting.domain + 'chapter/' + subject.uid + '/'+course.uid+'.html'}" th:utext="${course != null} ? '&gt;' + ${course.name}:''">综合能力（中级）</a>
+                    <a th:href="${setting.domain}" th:text="${subject != null}">探果题库</a>
+                    <span th:if="${subject != null}">
+                        <a th:href="${setting.domain + 'subject/' + subject.uid + '.html'}" th:utext="${'&gt;' +subject.name}">社会工作师</a>
+                    </span>
+                    <span th:if="${subject != null && course != null}">
+                        <a th:if="${course != null}" th:href="${setting.domain + 'chapter/' + subject.uid + '/'+course.uid+'.html'}" th:utext="${course != null} ? '&gt;' + ${course.name}:''">综合能力（中级）</a>
+                    </span>
                     <span th:utext="${'&gt;' +paper.name}">中国社会工作在不同发展阶段的特点</span>
                  </div>
 	        </div>

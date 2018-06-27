@@ -39,5 +39,7 @@ public interface IPaperService {
 	Page<PaperEntity> memberPaperList(String name, String memberId , Page<PaperEntity> page);
 
 	void addPaper(PaperEntity paper);
+	
+	List<PaperEntity> featuredPaper(String type , String subjectId);
 
 }

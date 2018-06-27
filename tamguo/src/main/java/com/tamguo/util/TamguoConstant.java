@@ -34,7 +34,13 @@ public class TamguoConstant {
 	public static final String ZHENGTI_PAPER_ID = "1";
 	
 	/** 模拟类型ID */
-	public static final String SIMULATION_PAPER_ID = "2";
+	public static final String MONI_PAPER_ID = "2";
+	
+	/** 押题预测ID */
+	public static final String YATI_PAPER_ID = "3";
+	
+	/** 名校精品ID */
+	public static final String MINGXIAO_PAPER_ID = "4";
 	
 	/** 首页历年真题缓存KEY*/
 	public static final String HISTORY_PAPER = "HistoryPaper:";

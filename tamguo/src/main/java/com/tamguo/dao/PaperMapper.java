@@ -26,4 +26,6 @@ public interface PaperMapper extends SuperMapper<PaperEntity>{
 
 	List<PaperEntity> queryPageByNameAndCreatorId(@Param(value="name")String name, @Param(value="memberId")String memberId , Pagination page);
 
+	List<PaperEntity> featuredPaper(@Param(value="type")String type, @Param(value="subjectId")String subjectId , Pagination page);
+
 }

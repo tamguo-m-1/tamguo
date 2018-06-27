@@ -201,10 +201,10 @@ var vue = new Vue({
 				html += '<div class="layui-form-item">';
 				html += '<label class="layui-form-label">试卷类型</label>';
 				html += '<div class="layui-input-block">';
-				html += '<input type="radio" name="paperType" value="0" title="真题试卷" checked="">';
-				html += '<input type="radio" name="paperType" value="1" title="模拟试卷">';
-				html += '<input type="radio" name="paperType" value="2" title="押题预测">';
-				html += '<input type="radio" name="paperType" value="3" title="名校精品">';
+				html += '<input type="radio" name="paperType" value="1" title="真题试卷" checked="">';
+				html += '<input type="radio" name="paperType" value="2" title="模拟试卷">';
+				html += '<input type="radio" name="paperType" value="3" title="押题预测">';
+				html += '<input type="radio" name="paperType" value="4" title="名校精品">';
 				html += '</div>';
 				html += '</div>';
 				
