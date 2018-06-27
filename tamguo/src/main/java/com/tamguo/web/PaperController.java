@@ -70,6 +70,7 @@ public class PaperController {
 		model.addObject("zhentiPaperList", iPaperService.featuredPaper(TamguoConstant.ZHENGTI_PAPER_ID, paper.getSubjectId()));
 		model.addObject("moniPaperList", iPaperService.featuredPaper(TamguoConstant.MONI_PAPER_ID, paper.getSubjectId()));
 		model.addObject("yatiPaperList", iPaperService.featuredPaper(TamguoConstant.YATI_PAPER_ID, paper.getSubjectId()));
+		model.addObject("hotPaperList", iPaperService.findHotPaper(paper.getSubjectId(), paper.getCourseId()));
 		return model;
 	}
 	

@@ -28,4 +28,6 @@ public interface PaperMapper extends SuperMapper<PaperEntity>{
 
 	List<PaperEntity> featuredPaper(@Param(value="type")String type, @Param(value="subjectId")String subjectId , Pagination page);
 
+	List<PaperEntity> findHotPaper(@Param(value="subjectId")String subjectId,@Param(value="courseId") String courseId, Pagination page);
+
 }

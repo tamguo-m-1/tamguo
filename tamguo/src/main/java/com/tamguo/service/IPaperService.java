@@ -42,4 +42,12 @@ public interface IPaperService {
 	
 	List<PaperEntity> featuredPaper(String type , String subjectId);
 
+	/**
+	 * 试卷添加下载推荐
+	 * @param subjectId
+	 * @param courseId
+	 * @return
+	 */
+	List<PaperEntity> findHotPaper(String subjectId, String courseId);
+
 }

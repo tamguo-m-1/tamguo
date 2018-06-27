@@ -194,11 +194,18 @@ public class PaperService extends ServiceImpl<PaperMapper, PaperEntity> implemen
 		paperMapper.insert(paper);
 	}
 
-	@Transactional(readOnly=false)
+	@Transactional(readOnly=true)
 	@Override
 	public List<PaperEntity> featuredPaper(String type, String subjectId) {
 		Page<PaperEntity> page = new Page<>(1,8);
 		return paperMapper.featuredPaper(type , subjectId , page);
+	}
+
+	@Transactional(readOnly=true)
+	@Override
+	public List<PaperEntity> findHotPaper(String subjectId, String courseId) {
+		Page<PaperEntity> page = new Page<>(1,5);
+		return paperMapper.findHotPaper(subjectId , courseId , page);
 	}
 
 }

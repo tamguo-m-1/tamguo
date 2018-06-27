@@ -68,38 +68,10 @@
 			        <h1 class="paper-title">物理 热门试卷</h1>
 			        <ul class="paper-ul">
 			            
-			            <li class="paper-li">
+			            <li class="paper-li" th:each="hot,hotStat:${hotPaperList}">
 			                <i class="paper-icon paper-1"></i>
-			                <a th:href="${setting.domain}" class="paper-contain">
+			                <a th:href="${setting.domain + 'paper/' + hot.uid + '.html'}" class="paper-contain" th:text="${hot.name}">
 			                    2017年高考真题 物理 (海南卷)
-			                </a>
-			            </li>
-			            
-			            <li class="paper-li">
-			                <i class="paper-icon paper-4"></i>
-			                <a th:href="${setting.domain}" class="paper-contain">
-			                    物理 2017年第二次联考
-			                </a>
-			            </li>
-			            
-			            <li class="paper-li">
-			                <i class="paper-icon paper-1"></i>
-			                <a th:href="${setting.domain}" class="paper-contain">
-			                    2017年高考真题 物理 (江苏卷)
-			                </a>
-			            </li>
-			            
-			            <li class="paper-li">
-			                <i class="paper-icon paper-1"></i>
-			                <a th:href="${setting.domain}" class="paper-contain">
-			                    2016年高考真题 物理 (江苏卷)
-			                </a>
-			            </li>
-			            
-			            <li class="paper-li">
-			                <i class="paper-icon paper-4"></i>
-			                <a th:href="${setting.domain}" class="paper-contain">
-			                    物理 2017年第三次模拟考试
 			                </a>
 			            </li>
 			            
@@ -107,7 +79,9 @@
 			    </div>
 			    <span class="downleader-close">X</span>
 			    <!-- <span class="downleader-ok">知道啦</span> -->
-			    <a class="downleader-more" th:href="${setting.domain}">查看更多试卷</a>
+			    <span th:if="${paper.subjectId != ''}">
+			    	<a class="downleader-more" th:href="${setting.domain + 'paperlist/'+paper.subjectId+'/0-0-0-0-0.html'}">查看更多试卷</a>
+			    </span>
 			</div>
 
 			<!-- 主体内容 -->
