@@ -19,4 +19,6 @@ public interface QuestionMapper extends SuperMapper<QuestionEntity>{
 
 	QuestionEntity findNormalQuestion(@Param(value="uid")String uid);
 
+	List<QuestionEntity> featuredQuestion(@Param(value="subjectId")String subjectId, @Param(value="courseId")String courseId , Pagination page);
+
 }

@@ -66,7 +66,11 @@ public class QuestionContrller {
 	@RequestMapping(value = {"/question/{uid}.html"}, method = RequestMethod.GET)
 	public ModelAndView question(@PathVariable String uid , ModelAndView model){
 		model.setViewName("question");
-		model.addObject("question", iQuestionService.findNormalQuestion(uid));
+		QuestionEntity question = iQuestionService.findNormalQuestion(uid);
+		model.addObject("question", question);
+		
+		// 推荐试题
+		model.addObject("featuredQuestionList", iQuestionService.featuredQuestion(question.getSubjectId(),question.getCourseId()));
 		return model;
 	}
 	

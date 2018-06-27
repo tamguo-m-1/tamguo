@@ -136,4 +136,32 @@
 		WHERE
 			q.uid = #{uid} and q.audit_status = '1'
 	</select>
+	
+	<select id="featuredQuestion" resultType="QuestionEntity">
+		SELECT
+			q.analysis,
+			q.answer,
+			q.chapter_id,
+			q.content,
+			q.paper_id,
+			q.question_type,
+			q.review_point,
+			q.score,
+			q.course_id,
+			q.uid,
+			q.`year`,
+			q.subject_id,
+			q.audit_status
+		FROM
+			tiku_question q
+		<where>
+			1=1 
+			<if test="subjectId != null and subjectId != ''">
+				and q.subject_id = #{subjectId}
+			</if>
+			<if test="courseId != null and courseId != ''">
+				and q.course_id = #{courseId}
+			</if>
+		</where>
+	</select>
 </mapper>

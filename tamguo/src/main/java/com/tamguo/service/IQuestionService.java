@@ -25,4 +25,6 @@ public interface IQuestionService {
 
 	public void delete(String uid);
 
+	public List<QuestionEntity> featuredQuestion(String subjectId, String courseId);
+
 }

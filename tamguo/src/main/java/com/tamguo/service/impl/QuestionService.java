@@ -73,4 +73,11 @@ public class QuestionService extends ServiceImpl<QuestionMapper, QuestionEntity>
 		questionMapper.deleteById(uid);
 	}
 
+	@Transactional(readOnly=true)
+	@Override
+	public List<QuestionEntity> featuredQuestion(String subjectId, String courseId) {
+		Page<QuestionEntity> page = new Page<>(1 , 5);
+		return questionMapper.featuredQuestion(subjectId , courseId , page);
+	}
+
 }
