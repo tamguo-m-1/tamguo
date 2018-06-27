@@ -2,6 +2,7 @@ package com.tamguo.web;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,6 +61,8 @@ public class PaperController {
 		model.setViewName("paper");
 		PaperEntity paper = iPaperService.find(paperId);
 		model.addObject("paper", paper);
+		model.addObject("subject", StringUtils.isEmpty(paper.getSubjectId()) ? null : iSubjectService.find(paper.getSubjectId()));
+		model.addObject("course", StringUtils.isEmpty(paper.getCourseId()) ? null : iCourseService.find(paper.getCourseId()));
 		model.addObject("questionList", iQuestionService.findPaperQuestion(paperId));
 		return model;
 	}
