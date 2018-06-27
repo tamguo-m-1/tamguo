@@ -30,7 +30,7 @@
     			<div class="main-submenu">
 				    <div class="submenu-contain clearfix">
 				        <span class="contain-title">
-				            <a th:href="${setting.domain + 'subject/' + subject.uid + '.html'}">高考</a>
+				            <a th:href="${setting.domain + 'subject/' + subject.uid + '.html'}" th:text="${subject.name}">高考</a>
 				        </span>
 				        <ul class="contain-ul">
 				            <li class="contain-li">
@@ -274,7 +274,7 @@
     			<div class="gaokao-crumbs-box">
 				    <div class="homepage-crumbs">
 				        <a th:href="${setting.domain}">探果题库</a> &gt;
-				        <a th:href="${setting.domain}" class="cur-crumbs">高考</a> 
+				        <a th:href="${setting.domain + 'subject/' + subject.uid + '.html'}" class="cur-crumbs" th:text="${subject.name}">高考</a> 
 				    </div>
 				</div>
     			<!-- 页尾结束-->
@@ -290,7 +290,7 @@
 </body>
 	
 <script type="text/javascript" src="http://static.tamguo.com/static/js/jquery-1.8.3.min.js" ></script>
-<script type="text/javascript" src="http://static.tamguo.com/static/js/jquery.iDialog.js'}"></script>
+<script type="text/javascript" src="http://static.tamguo.com/static/js/jquery.iDialog.js"></script>
 <script type="text/javascript" th:src="${setting.domain + 'js/main.js'}" ></script>
 <script type="text/javascript" th:src="${setting.domain + 'js/member/minlogin.js'}"></script>
 <script type="text/javascript" th:src="${setting.domain + 'js/subject.js'}" ></script>

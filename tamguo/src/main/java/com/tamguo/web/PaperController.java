@@ -15,6 +15,7 @@ import com.tamguo.service.IAreaService;
 import com.tamguo.service.ICourseService;
 import com.tamguo.service.IPaperService;
 import com.tamguo.service.IQuestionService;
+import com.tamguo.service.ISubjectService;
 import com.tamguo.util.PageUtils;
 
 /**
@@ -34,14 +35,18 @@ public class PaperController {
 	private IPaperService iPaperService;
 	@Autowired
 	private IQuestionService iQuestionService;
+	@Autowired
+	private ISubjectService iSubjectService;
 
 	@RequestMapping(value = {"/paperlist/{subjectId}/{courseId}-{paperType}-{year}-{area}-{pageNum}.html"}, method = RequestMethod.GET)
     public ModelAndView indexAction(@PathVariable String subjectId , @PathVariable String courseId , @PathVariable String paperType,
     		@PathVariable String year , @PathVariable String area , @PathVariable Integer pageNum, ModelAndView model) {
     	model.setViewName("paperlist");
     	model.addObject("courseList", iCourseService.findBySubjectId(subjectId));
+    	model.addObject("subject", iSubjectService.find(subjectId));
+    	model.addObject("course", iCourseService.find(courseId));
     	model.addObject("areaList", iAreaService.findRootArea());
-    	model.addObject("paperPage" , PageUtils.getPage(iPaperService.findList(courseId , paperType , year , area , pageNum)));
+    	model.addObject("paperPage" , PageUtils.getPage(iPaperService.findList(subjectId , courseId , paperType , year , area , pageNum)));
     	model.addObject("total" , iPaperService.getPaperTotal());
     	model.addObject("courseId", courseId);
     	model.addObject("paperType", paperType);

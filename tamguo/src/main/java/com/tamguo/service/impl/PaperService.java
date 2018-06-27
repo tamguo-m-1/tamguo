@@ -62,10 +62,10 @@ public class PaperService extends ServiceImpl<PaperMapper, PaperEntity> implemen
 	}
 
 	@Override
-	public Page<PaperEntity> findList(String courseId,
+	public Page<PaperEntity> findList(String subjectId , String courseId,
 			String paperType, String year, String area , Integer pageNum) {
 		Page<PaperEntity> page = new Page<>(pageNum , TamguoConstant.DEFAULT_PAGE_SIZE);
-		return page.setRecords(paperMapper.findList(courseId , paperType , year , area , page));
+		return page.setRecords(paperMapper.findList(subjectId , courseId , paperType , year , area , page));
 	}
 
 	@Override

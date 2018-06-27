@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tamguo.model.ChapterEntity;
 import com.tamguo.service.IChapterService;
 import com.tamguo.service.ICourseService;
+import com.tamguo.service.ISubjectService;
 import com.tamguo.util.Result;
 
 
@@ -23,6 +24,8 @@ public class ChapterController {
 	private IChapterService iChapterService;
 	@Autowired
 	private ICourseService iCourseService;
+	@Autowired
+	private ISubjectService iSubjectService;
 	
 	@RequestMapping(value = {"/chapter/{subjectId}/{courseId}.html"}, method = RequestMethod.GET)
     public ModelAndView indexAction(@PathVariable String subjectId , @PathVariable String courseId, ModelAndView model) {
@@ -31,6 +34,7 @@ public class ChapterController {
     	model.addObject("courseList", iCourseService.findBySubjectId(subjectId));
     	model.addObject("subjectId", subjectId);
     	model.addObject("course", iCourseService.find(courseId));
+    	model.addObject("subject", iSubjectService.find(subjectId));
         return model;
     }
 

@@ -28,7 +28,7 @@
         	<div class="main-submenu">
 			    <div class="submenu-contain clearfix">
 			        <span class="contain-title">
-			            <a th:href="${setting.domain + 'subject/' + subjectId + '.html'}">高考</a>
+			            <a th:href="${setting.domain + 'subject/' + subjectId + '.html'}" th:text="${subject.name}">高考</a>
 			        </span>
 			        <ul class="contain-ul">
 			            <li class="contain-li">
@@ -150,9 +150,9 @@
     
     <div class="foot">
 	    <div class="crumbs">
-	        <a th:href="${setting.domain}">探果题库</a> &gt;
-	        <a th:href="${setting.domain}">高考</a> &gt;
-	        <span>理科数学</span>
+	        <a th:href="${setting.domain}">探果题库</a>
+	        <a th:href="${setting.domain + 'subject/' + subject.uid + '.html'}" th:utext="${subject != null} ? '&gt;' + ${subject.name}:''">高考</a>
+	        <span th:utext="${course != null} ? '&gt;' + ${course.name}:''">理科数学</span>
 	     </div>
     </div>
 	

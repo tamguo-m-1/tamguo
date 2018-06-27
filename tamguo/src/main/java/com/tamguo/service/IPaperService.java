@@ -13,7 +13,7 @@ public interface IPaperService {
 
 	List<PaperEntity> findHotPaper(String areaId);
 
-	Page<PaperEntity> findList(String courseId, String paperType,
+	Page<PaperEntity> findList(String subjectId , String courseId, String paperType,
 			String year, String area , Integer pageNum);
 	
 	PaperEntity find(String paperId);
