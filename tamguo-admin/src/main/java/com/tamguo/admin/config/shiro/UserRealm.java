@@ -1,4 +1,4 @@
-package com.tamguo.admin.shiro;
+package com.tamguo.admin.config.shiro;
 
 import java.util.ArrayList;
 import java.util.Arrays;
