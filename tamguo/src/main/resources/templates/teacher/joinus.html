@@ -217,8 +217,8 @@
 		    	  if(vm.active == 1){
 		    		  this.$refs.mobileForm.validate(function(valid){
 			    		  if (valid) {
-						      if(this.active == 1){
-					    		  axios.all([this.getTeacher()]).then(axios.spread(function (tResponse) {
+						      if(vm.active == 1){
+					    		  axios.all([vm.getTeacher()]).then(axios.spread(function (tResponse) {
 					    		     if(tResponse.data.code == 201 || tResponse.data.code == 202){
 					    		    	  vm.$message({showClose:true,duration:1000,message:tResponse.data.message,type:'error',onClose:function(){
 					    		    		  vm.mobileModel.verifyCode = "";
