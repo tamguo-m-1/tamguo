@@ -9,6 +9,7 @@
 		<meta name="copyright" content="Tamguo" />
 		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
 		<link rel="stylesheet" th:href="${setting.domain + 'css/member/register.css'}" />
+		<link rel="stylesheet" href="https://unpkg.zhimg.com/element-ui@2.4.2/lib/theme-chalk/index.css">
 		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
 	</head>
 	<body>
@@ -29,81 +30,34 @@
 		    <div id="content">
 		        <div class="mod-reg clearfix mod-reg-">
 		            <div class="reg-content tang-pass-reg" id="reg_content" style="width:50%">
-		                <form autocomplete="off" id="TANGRAM__PSP_3__form" method="POST">
-		                    <p id="TANGRAM__PSP_3__errorWrapper" class="pass-generalErrorWrapper">
-		                        <span id="TANGRAM__PSP_3__error" class="pass-generalError"></span>
-		                    </p>
-		                    <p id="TANGRAM__PSP_3__userNameWrapper" class="pass-form-item pass-form-item-userName" style="display:">
-		                        <label for="TANGRAM__PSP_3__userName" id="TANGRAM__PSP_3__userNameLabel" class="pass-label pass-label-userName">用户名</label>
-		                        <input type="text" style="display:none;">
-		                        <input id="TANGRAM__PSP_3__userName" type="text" name="userName" class="pass-text-input pass-text-input-userName" autocomplete="new-password" value="" placeholder="请设置用户名">
-		                        <span id="TANGRAM__PSP_3__userName_clearbtn" class="pass-clearbtn pass-clearbtn-userName" style="display:none;"></span>
-		                        <span id="TANGRAM__PSP_3__userNameError" class="pass-item-error pass-item-error-userName" style="display: none;"></span>
-		                        <span id="TANGRAM__PSP_3__userNameSucc" class="pass-item-succ pass-item-succ-userName" style="display:none;"></span>
-		                        <span id="TANGRAM__PSP_3__userNameTip" class="pass-item-tip pass-item-tip-userName" style="display:none">
-		                            <span id="TANGRAM__PSP_3__userNameTipText" class="pass-item-tiptext pass-item-tiptext-userName">设置后不可更改
-		                                <br>中英文均可，最长14个英文或7个汉字</span></span>
-		                    </p>
-		                    <p id="TANGRAM__PSP_3__phoneWrapper" class="pass-form-item pass-form-item-phone" style="display:">
-		                        <label for="TANGRAM__PSP_3__phone" id="TANGRAM__PSP_3__phoneLabel" class="pass-label pass-label-phone">手机号</label>
-		                        <input type="text" style="display:none;">
-		                        <input id="TANGRAM__PSP_3__phone" type="text" name="phone" class="pass-text-input pass-text-input-phone" maxlength="11" autocomplete="new-password" value="" placeholder="可用于登录和找回密码">
-		                        <span id="TANGRAM__PSP_3__phone_clearbtn" class="pass-clearbtn pass-clearbtn-phone" style="display: none; visibility: hidden;"></span>
-		                        <span id="TANGRAM__PSP_3__phoneError" class="pass-item-error pass-item-error-phone" style="display: none;"></span>
-		                        <span id="TANGRAM__PSP_3__phoneSucc" class="pass-item-succ pass-item-succ-phone" style="display:none;"></span>
-		                        <span id="TANGRAM__PSP_3__phoneTip" class="pass-item-tip pass-item-tip-phone" style="display:none">
-		                            <span id="TANGRAM__PSP_3__phoneTipText" class="pass-item-tiptext pass-item-tiptext-phone">请输入中国大陆手机号,其他用户不可见</span></span>
-		                        <span class="pass-item-placeholder" id="TANGRAM__PSP_3__Placeholder" style="display: inline;">可用于登录和找回密码</span></p>
-		                    <input type="password" name="password" style="display:none">
-		                    <p id="TANGRAM__PSP_3__passwordWrapper" class="pass-form-item pass-form-item-password" style="display:">
-		                        <label for="TANGRAM__PSP_3__password" id="TANGRAM__PSP_3__passwordLabel" class="pass-label pass-label-password">密码</label>
-		                        <input type="password" style="display: none;">
-		                        <input id="TANGRAM__PSP_3__password" type="password" name="password" class="pass-text-input pass-text-input-password" autocomplete="new-password" value="" placeholder="请设置登录密码">
-		                        <span id="TANGRAM__PSP_3__password_clearbtn" class="pass-clearbtn pass-clearbtn-password" style="display: none; visibility: hidden;"></span>
-		                        <span id="TANGRAM__PSP_3__passwordError" class="pass-item-error pass-item-error-password" style="display: none;">
-		                            <span class="pwd-strength nopwd">
-		                                <span class="pwd-strength-sum">
-		                                    <em class="pwd-strength-bg">&nbsp;</em>
-		                                    <em class="pwd-strength-sco">&nbsp;</em>
-		                                    <span class="pwd-strength-title"></span>
-		                                </span>
-		                                <span class="pwd-strength-detail">请输入密码</span></span>
-		                        </span>
-		                        <span id="TANGRAM__PSP_3__passwordSucc" class="pass-item-succ pass-item-succ-password" style="display:none;"></span>
-		                        <span id="TANGRAM__PSP_3__passwordTip" class="pass-item-tip pass-item-tip-password" style="display: none;">
-		                            <span id="TANGRAM__PSP_3__passwordTipText" class="pass-item-tiptext pass-item-error pass-item-tiptext-phone">请输入中国大陆手机号,其他用户不可见</span></span>
-		                        </span>
-		                    </p>
-		                    <p id="TANGRAM__PSP_3__verifyCodeSendWrapper" class="pass-form-item pass-form-item-verifyCodeSend">
-		                        <label for="TANGRAM__PSP_3__verifyCode" id="TANGRAM__PSP_3__verifyCodeLabel" class="pass-label pass-label-verifyCode">验证码</label>
-		                        <input id="TANGRAM__PSP_3__verifyCode" type="text" name="verifyCode" class="pass-text-input pass-text-input-verifyCode" autocomplete="off" maxlength="6" placeholder="请输入验证码">
-		                        <span id="TANGRAM__PSP_3__verifyCode_clearbtn" class="pass-clearbtn pass-clearbtn-verifyCode" style="display:none;"></span>
-		                        <input id="TANGRAM__PSP_3__verifyCodeSend" type="button" value="获取短信验证码" class="pass-button pass-button-verifyCodeSend" autocomplete="off">
-		                        <span id="TANGRAM__PSP_3__verifyCodeError" class="pass-item-error pass-item-error-verifyCodeSend"></span>
-		                        <span id="TANGRAM__PSP_3__verifyCodeSendTip" class="pass-item-tip pass-item-tip-verifyCodeSend" style="display: none;">短信激活码已发送,请您在30分钟内填写。<a href="http://help.baidu.com/question?prod_en=passport&amp;class=%D7%A2%B2%E1%BC%B0%B5%C7%C2%BC&amp;id=1000318" target="_blank">无法获取</a>？</span>
-		                    </p>
-		                    <p id="TANGRAM__PSP_3__isAgreeWrapper" class="pass-form-item pass-form-item-isAgree">
-		                        <input name="isAgree" id="TANGRAM__PSP_3__isAgree" type="checkbox" class="pass-checkbox-input pass-checkbox-isAgree" autocomplete="off">
-		                        <label for="TANGRAM__PSP_3__isAgree">阅读并接受</label>
-		                        <a target="_blank" th:href="${setting.domain}">《探果用户协议》</a>及
-		                        <a target="_blank" th:href="${setting.domain}">《探果隐私权保护声明》</a>
-		                        <a>
-		                            <span id="TANGRAM__PSP_3__isAgreeError" class="pass-item-error pass-item-error-isAgree"></span>
-		                        </a>
-		                    </p>
-		                    <p id="TANGRAM__PSP_3__submitWrapper" class="pass-form-item pass-form-item-submit">
-		                        <a>
-		                            <input id="TANGRAM__PSP_3__submit" type="submit" value="注册" class="pass-button pass-button-submit"></a>
-		                    </p>
-		                    <div id="TANGRAM__PSP_3__tip" class="pass-pop-tip" style="left: 420px; top: 102px; display: none;">
-		                        <div class="pass-pop-tip-header"></div>
-		                        <div class="pass-pop-tip-container">
-		                            <div class="pass-pop-tip-body">
-		                                <div class="pass-pop-tip-content" id="TANGRAM__PSP_3__tipContainer"></div>
-		                            </div>
-		                        </div>
-		                    </div>
-		                </form>
+		                <el-form :model="member" :rules="rules" ref="member" label-width="100px" class="demo-ruleForm">
+						  <el-form-item label="用戶名" prop="username">
+						    <el-input v-model="member.username"></el-input>
+						  </el-form-item>
+						  <el-form-item label="科目" prop="kemuId">
+						    <el-cascader
+							    :options="courses"
+							    v-model="member.kemuId">
+							  </el-cascader>
+						  </el-form-item>
+						  <el-form-item label="手机号" prop="mobile">
+						    <el-input v-model="member.mobile"></el-input>
+						  </el-form-item>
+						  <el-form-item label="密码" prop="password">
+						    <el-input type="password" v-model="member.password" auto-complete="off"></el-input>
+						  </el-form-item>
+						  <el-form-item label="确认密码" prop="checkPass">
+						    <el-input type="password" v-model="member.checkPass" auto-complete="off"></el-input>
+						  </el-form-item>
+						  <el-form-item label="验证码" prop="verifyCode">
+						    <el-input v-model="member.verifyCode" style="width:60%;"></el-input>
+						    <el-button @click="sendSms">发送短信</el-button>
+						  </el-form-item>
+						  <el-form-item>
+						  <el-button type="primary" @click="submitForm('member')">立即创建</el-button>
+						    <el-button @click="resetForm('member')">重置</el-button>
+						  </el-form-item>
+						</el-form>
 		            </div>
 		            <div class="login-link" id="login_link">
 		                <span>我已注册，现在就</span>
@@ -120,5 +74,9 @@
 	var mainHttp = [[${setting.domain}]];
 	</script>
 	<script type="text/javascript" src="http://static.tamguo.com/static/js/jquery-1.8.3.min.js" ></script>
+	<script src="https://unpkg.zhimg.com/vue@2.5.16/dist/vue.js"></script>
+    <!-- import JavaScript -->
+    <script src="https://unpkg.zhimg.com/element-ui@2.4.2/lib/index.js"></script>
+	<script src="http://static.tamguo.com/static/js/axios/axios.min.js"></script>
 	<script type="text/javascript" th:src="${setting.domain + 'js/member/register.js'}"></script>
 </html>

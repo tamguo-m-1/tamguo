@@ -3,6 +3,7 @@ package com.tamguo.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.tamguo.config.dao.SuperEntity;
 
@@ -39,6 +40,9 @@ public class MemberEntity extends SuperEntity<MemberEntity> implements Serializa
 	private Integer downNum;
 	
 	private Integer hitsNum;
+	
+	@TableField(exist=false)
+	private String verifyCode;
 
 	public String getUsername() {
 		return username;
@@ -142,5 +146,13 @@ public class MemberEntity extends SuperEntity<MemberEntity> implements Serializa
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	public String getVerifyCode() {
+		return verifyCode;
+	}
+
+	public void setVerifyCode(String verifyCode) {
+		this.verifyCode = verifyCode;
 	}
 }

@@ -75,29 +75,28 @@ public class MemberService extends ServiceImpl<MemberMapper, MemberEntity> imple
 	}
 
 	@Override
-	public Result register(String username, String mobile, String password,
-			String verifyCode) {
-		MemberEntity m = memberMapper.findByUsername(username);
+	public Result register(MemberEntity member) {
+		MemberEntity m = memberMapper.findByUsername(member.getUsername());
 		if(m != null){
 			return Result.result(201, null, "该用户已经存在");
 		}
-		m = memberMapper.findByMobile(mobile);
+		m = memberMapper.findByMobile(member.getMobile());
 		if(m != null){
 			return Result.result(202, null, "该手机号已经存在");
 		}
-		if(!cacheService.isExist(TamguoConstant.ALIYUN_MOBILE_SMS_PREFIX + mobile)){
+		if(!cacheService.isExist(TamguoConstant.ALIYUN_MOBILE_SMS_PREFIX + member.getMobile())){
 			return Result.result(203, null, "验证码错误");
 		}
-		String code = (String) cacheService.getObject(TamguoConstant.ALIYUN_MOBILE_SMS_PREFIX + mobile);
-		if(!code.equals(verifyCode)){
+		String code = (String) cacheService.getObject(TamguoConstant.ALIYUN_MOBILE_SMS_PREFIX + member.getMobile());
+		if(!code.equals(member.getVerifyCode())){
 			return Result.result(204, null, "验证码错误");
 		}
-		MemberEntity member = new MemberEntity();
-		member.setAvatar(TamguoConstant.DEFAULT_MEMBER_AVATAR);
-		member.setMobile(mobile);
-		member.setPassword(new Sha256Hash(password).toHex());
-		member.setUsername(username);
-		member.setNickName(username);
+		MemberEntity entity = new MemberEntity();
+		entity.setAvatar(TamguoConstant.DEFAULT_MEMBER_AVATAR);
+		entity.setMobile(member.getMobile());
+		entity.setPassword(new Sha256Hash(member.getPassword()).toHex());
+		entity.setUsername(member.getUsername());
+		entity.setNickName(member.getUsername());
 		memberMapper.insert(member);
 		return Result.result(200, member, "注册成功");
 	}

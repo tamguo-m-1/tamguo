@@ -1,14 +1,15 @@
 package com.tamguo.web;
 
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tamguo.model.MemberEntity;
 import com.tamguo.service.IMemberService;
 import com.tamguo.util.Result;
 
@@ -36,14 +37,14 @@ public class RegisterController {
 		return iMemberService.checkMobile(mobile);
 	}
 	
-	@RequestMapping(value = "/subRegister", method = RequestMethod.GET)
+	@RequestMapping(value = "/subRegister", method = RequestMethod.POST)
 	@ResponseBody
-	public Result subRegister(String username , String password , String mobile , String verifyCode,HttpSession session){
-		Result result = iMemberService.register(username, mobile, password, verifyCode);
+	public Result subRegister(@RequestBody MemberEntity member , HttpSession session){
+		Result result = iMemberService.register(member);
 		if(result.getCode() == 200){
 			session.setAttribute("currMember", result.getResult());
 		}
-		return result;
+		return Result.successResult(result);
 	}
 	
 }
