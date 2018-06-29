@@ -9,8 +9,8 @@
 		<meta name="copyright" content="Tamguo" />
 		<link rel="stylesheet" th:href="${setting.domain + 'css/reset.css'}" />
 		<link rel="stylesheet" th:href="${setting.domain + 'css/member/register.css'}" />
-		<link rel="stylesheet" href="https://unpkg.zhimg.com/element-ui@2.4.2/lib/theme-chalk/index.css">
 		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui@2.4.2/lib/theme-chalk/index.css">
 	</head>
 	<body>
 		<div id="wrapper" class="">
@@ -76,10 +76,9 @@
 	<script type="text/javascript" th:inline="javascript">
 	var mainHttp = [[${setting.domain}]];
 	</script>
-	<script type="text/javascript" src="http://static.tamguo.com/static/js/jquery-1.8.3.min.js" ></script>
-	<script src="https://unpkg.zhimg.com/vue@2.5.16/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16"></script>
     <!-- import JavaScript -->
-    <script src="https://unpkg.zhimg.com/element-ui@2.4.2/lib/index.js"></script>
-	<script src="http://static.tamguo.com/static/js/axios/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/element-ui@2.4.2/lib/index.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
 	<script type="text/javascript" th:src="${setting.domain + 'js/member/register.js'}"></script>
 </html>
