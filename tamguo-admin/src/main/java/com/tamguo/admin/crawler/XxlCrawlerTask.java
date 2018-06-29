@@ -7,6 +7,7 @@ import com.xuxueli.crawler.annotation.PageFieldSelect;
 import com.xuxueli.crawler.annotation.PageSelect;
 import com.xuxueli.crawler.parser.PageParser;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.UUID;
 
 /**
  * 爬虫示例01：爬取页面数据并封装VO对象
@@ -33,18 +31,16 @@ public class XxlCrawlerTask {
     @Autowired
     private IQuestionService iQuestionService;
 
-    @PageSelect(cssQuery = "body")
+
+    @PageSelect(cssQuery = ".child-wrap")
     public static class PageVo {
 
-        @PageFieldSelect(cssQuery = ".bdjson")
+        @PageFieldSelect(cssQuery = ".que-stem")
         private String question;
 
+        @PageFieldSelect(cssQuery = ".que-options")
+        private String answer;
 
-//        @PageFieldSelect(cssQuery = ".comment-content")
-//        private List<String> answer;
-//
-//        @PageFieldSelect(cssQuery = "#read")
-//        private String analysis;
 
         public String getQuestion() {
             return question;
@@ -54,56 +50,45 @@ public class XxlCrawlerTask {
             this.question = question;
         }
 
-//        public List<String> getAnswer() {
-//            return answer;
-//        }
-//
-//        public void setAnswer(List<String> answer) {
-//            this.answer = answer;
-//        }
-//
-//        public String getAnalysis() {
-//            return analysis;
-//        }
-//
-//        public void setAnalysis(String analysis) {
-//            this.analysis = analysis;
-//        }
+        public String getAnswer() {
+            return answer;
+        }
+
+        public void setAnswer(String answer) {
+            this.answer = answer;
+        }
 
         @Override
         public String toString() {
             return "PageVo{" +
                     "question='" + question + '\'' +
-//                    ", answer=" + answer +
-//                    ", analysis=" + analysis +
+                    "answer='" + answer + '\'' +
                     '}';
         }
     }
 
     @Scheduled(cron = "0 0/1 * * * ?")
     public void crawlerData() {
-        logger.info("jianlaile");
         XxlCrawler crawler = new XxlCrawler.Builder()
-                .setUrls(new HashSet(Arrays.asList(new String[]{"https://tiku.baidu.com/tikupc/paperdetail/be9503eb19e8b8f67c1cb911"})))
-                .setWhiteUrlRegexs(new HashSet(Arrays.asList(new String[]{"https://tiku\\.baidu\\.com/tikupc/paperdetail/[a-zA-Z\\d]+"})))
+                .setUrls("https://tiku.baidu.com/tikupc/paperdetail/4baa90f5f61fb7360b4c656b")
+                .setWhiteUrlRegexs("https://tiku\\.baidu\\.com/tikupc/paperdetail/4baa90f5f61fb7360b4c656b")
                 .setPageParser(new PageParser<PageVo>() {
                     @Override
-                    public void parse(Document document, PageVo pageVo) {
+                    public void parse(Document html, Element pageVoElement, PageVo pageVo) {
                         // 解析封装 PageVo 对象
-                        String pageUrl = document.baseUri();
+                        String pageUrl = html.baseUri();
                         System.out.println(pageUrl + "：" + pageVo.toString());
                         QuestionEntity question = new QuestionEntity();
                         question.setChapterId(new BigInteger("1"));
-                        question.setCourseId("1");
-                        question.setPaperId(new BigInteger("1"));
-                        question.setAnswer("A.12 B.43");
-                        question.setContent(pageVo.getQuestion());
-                        question.setAnalysis("12321");
-                        question.setQuestionType("1");
-                        question.setAuditStatus("1");
-                        question.setReviewPoint("10");
-                        question.setSubjectId("1");
-                        question.setScore(20);
+                        question.setCourseId("1012550050327625730");
+                        question.setPaperId(new BigInteger("1012550408013676545"));
+                        question.setContent(pageVo.getQuestion() == null ? "无" : pageVo.getQuestion());//问题
+                        question.setAnswer(pageVo.getAnswer() == null ? "无" : pageVo.getAnswer());//回答
+                        question.setAnalysis("暂无解释");
+                        question.setQuestionType("5");
+                        question.setReviewPoint("语文");
+                        question.setSubjectId("13");
+                        question.setScore(10);
                         question.setYear("2018");
 
 
