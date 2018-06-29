@@ -32,6 +32,7 @@ var vm = new Vue({
 	el: '#content',
     data() {
       return {
+    	smsDisabled:false,
         member: {
           username: '',
           mobile:'',
@@ -71,6 +72,8 @@ var vm = new Vue({
       submitForm(formName) {
          this.$refs[formName].validate((valid) => {
 	          if (valid) {
+	        	vm.member.courseId = vm.member.kemuId[1];
+	    		vm.member.subjectId = vm.member.kemuId[0];
 	            axios({method: 'post',url: mainHttp + 'subRegister.html',data: vm.member}).then(function(response){
 	      		    if(response.data.code == 200){
 						window.location.href = "/";
@@ -94,12 +97,16 @@ var vm = new Vue({
       },
       sendSms:function(){
     	  // 校验成功才能发送短信
-    	  vm.$refs['member'].validateField('mobile',function(){
-    		  axios.get(mainHttp + 'sms/sendFindPasswordSms.html?mobile='+vm.member.mobile).then(function(response){
-        		  if(response.data.code == 200){
-        			  
-        		  }
-        	  });
+    	  vm.$refs['member'].validateField('mobile',function(message){
+    		  if(message == ""){
+    			  axios.get(mainHttp + 'sms/sendFindPasswordSms.html?mobile='+vm.member.mobile).then(function(response){
+            		  if(response.data.code == 200){
+            			  vm.$message({message: response.data.message,type: 'success'});
+            		  }else{
+            			  vm.$message.error(response.data.message);
+            		  }
+            	  });
+    		  }
     	  });
       }
     }

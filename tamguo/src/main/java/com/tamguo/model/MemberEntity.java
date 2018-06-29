@@ -14,6 +14,10 @@ import com.tamguo.config.dao.SuperEntity;
 @TableName(value="tiku_member")
 public class MemberEntity extends SuperEntity<MemberEntity> implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	private String subjectId;
+	
+	private String courseId;
 
 	private String username;
 	
@@ -154,5 +158,21 @@ public class MemberEntity extends SuperEntity<MemberEntity> implements Serializa
 
 	public void setVerifyCode(String verifyCode) {
 		this.verifyCode = verifyCode;
+	}
+
+	public String getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(String subjectId) {
+		this.subjectId = subjectId;
+	}
+
+	public String getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(String courseId) {
+		this.courseId = courseId;
 	}
 }

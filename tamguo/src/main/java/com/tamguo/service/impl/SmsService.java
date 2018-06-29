@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
@@ -50,9 +51,12 @@ public class SmsService implements ISmsService{
         request.setOutId("yourOutId");
 
         //hint 此处可能会抛出异常，注意catch
-        acsClient.getAcsResponse(request);
-		cacheService.setObject(TamguoConstant.ALIYUN_MOBILE_SMS_PREFIX + mobile , vcode.toString() , 3 * 60);
-        return Result.result(200, null, "");
+        SendSmsResponse response = acsClient.getAcsResponse(request);
+        if("OK".equals(response.getCode())) {
+        	cacheService.setObject(TamguoConstant.ALIYUN_MOBILE_SMS_PREFIX + mobile , vcode.toString() , 3 * 60);
+            return Result.result(200, null, "发送成功");
+        }
+        return Result.result(501, null, response.getMessage());
 	}
 
 }

@@ -29,7 +29,7 @@
 		    </div>
 		    <div id="content">
 		        <div class="mod-reg clearfix mod-reg-">
-		            <div class="reg-content tang-pass-reg" id="reg_content" style="width:50%">
+		            <div class="reg-content tang-pass-reg" id="reg_content" style="width:50%;margin-top:10px;">
 		                <el-form :model="member" :rules="rules" ref="member" label-width="100px" class="demo-ruleForm">
 						  <el-form-item label="用戶名" prop="username">
 						    <el-input v-model="member.username"></el-input>
@@ -51,7 +51,7 @@
 						  </el-form-item>
 						  <el-form-item label="验证码" prop="verifyCode">
 						    <el-input v-model="member.verifyCode" style="width:60%;"></el-input>
-						    <el-button @click="sendSms">发送短信</el-button>
+						    <el-button @click="sendSms" :disabled="smsDisabled">发送短信</el-button>
 						  </el-form-item>
 						  <el-form-item>
 						  <el-button type="primary" @click="submitForm('member')">立即创建</el-button>
@@ -63,10 +63,10 @@
 		                <span>我已注册，现在就</span>
 		                <button class="login-btn" id="login_btn"><a title="探果网登录" th:href="${setting.domain + 'login.html'}">登录</a></button></div>
 		        </div>
-		    <div id="foot">
-		        <div class="mod-footer">
-		            <div class="copy-box">2018&nbsp;©Tamguo</div></div>
-		    </div>
+			    <div id="foot">
+			        <div class="mod-footer">
+			            <div class="copy-box">2018&nbsp;©Tamguo</div></div>
+			    </div>
 		</div>
 	</div>
 	</body>

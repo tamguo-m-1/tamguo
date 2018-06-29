@@ -97,7 +97,9 @@ public class MemberService extends ServiceImpl<MemberMapper, MemberEntity> imple
 		entity.setPassword(new Sha256Hash(member.getPassword()).toHex());
 		entity.setUsername(member.getUsername());
 		entity.setNickName(member.getUsername());
-		memberMapper.insert(member);
+		entity.setSubjectId(member.getSubjectId());
+		entity.setCourseId(member.getCourseId());
+		memberMapper.insert(entity);
 		return Result.result(200, member, "注册成功");
 	}
 
