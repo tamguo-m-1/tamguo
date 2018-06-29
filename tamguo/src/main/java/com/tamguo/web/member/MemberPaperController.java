@@ -4,14 +4,17 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.model.MemberEntity;
 import com.tamguo.model.PaperEntity;
+import com.tamguo.model.enums.QuestionType;
 import com.tamguo.service.IPaperService;
 import com.tamguo.util.ExceptionSupport;
 import com.tamguo.util.Result;
@@ -29,6 +32,12 @@ public class MemberPaperController {
 		MemberEntity member = ((MemberEntity)session.getAttribute("currMember"));
 		model.addObject("paperList", iPaperService.findByCreaterId(member.getUid()));
 		return model;
+	}
+	
+	@RequestMapping(value = "/member/findPaper", method = RequestMethod.GET)
+	@ResponseBody
+	public Result findPaper(String paperId) {
+		return Result.successResult(iPaperService.find(paperId));
 	}
 	
 	@RequestMapping(value = "member/paper/list" , method = RequestMethod.GET)
@@ -53,12 +62,17 @@ public class MemberPaperController {
 		}
 	}
 	
-	@RequestMapping("member/paperList/addPaperQuestionInfo.html")
+	@RequestMapping(value="member/paperList/addPaperQuestionInfo",method=RequestMethod.POST)
 	@ResponseBody
-	public Result addPaperQuestionInfo(String paperId , String title , String name , String type){
+	public Result addPaperQuestionInfo(@RequestBody JSONObject data){
 		try {
+			String paperId ; String title ; String name ;String type;
+			paperId = data.getString("uid");
+			title = data.getString("title");
+			type = data.getString("type");
+			name = QuestionType.getQuestionType(type).getDesc();
 			iPaperService.addPaperQuestionInfo(paperId , title , name , type);
-			return Result.successResult(null);
+			return Result.result(0, null, "修改成功");
 		} catch (Exception e) {
 			return ExceptionSupport.resolverResult("添加questionInfo", this.getClass(), e);
 		}
@@ -69,7 +83,7 @@ public class MemberPaperController {
 	public Result updatePaperQuestionInfo(String paperId , String title , String name , String type , String cuid){
 		try {
 			iPaperService.updatePaperQuestionInfo(paperId , title , name , type , cuid);
-			return Result.successResult(null);
+			return Result.result(0, null, "修改成功");
 		} catch (Exception e) {
 			return ExceptionSupport.resolverResult("修改questionInfo", this.getClass(), e);
 		}
@@ -97,16 +111,26 @@ public class MemberPaperController {
 		}
 	}
 	
-	@RequestMapping("member/paperList/addPaper.html")
+	@RequestMapping(value="member/paperList/addPaper.html",method=RequestMethod.POST)
 	@ResponseBody
-	public Result addPaper(PaperEntity paper,HttpSession session){
+	public Result addPaper(@RequestBody PaperEntity paper,HttpSession session){
 		try {
 			MemberEntity member = (MemberEntity) session.getAttribute("currMember");
 			paper.setCreaterId(member.getUid());
 			iPaperService.addPaper(paper);
-			return Result.successResult(null);
+			return  Result.result(Result.SUCCESS_CODE, paper, "添加成功");
 		} catch (Exception e) {
 			return ExceptionSupport.resolverResult("添加试卷", this.getClass(), e);
+		}
+	}
+	
+	@RequestMapping(value="member/paperList/updatePaper.html",method=RequestMethod.POST)
+	@ResponseBody
+	public Result updatePaper(@RequestBody PaperEntity paper){
+		try {
+			return iPaperService.updatePaper(paper);
+		} catch (Exception e) {
+			return ExceptionSupport.resolverResult("修改试卷", this.getClass(), e);
 		}
 	}
 }

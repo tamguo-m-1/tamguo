@@ -14,6 +14,8 @@ import com.tamguo.dao.PaperMapper;
 import com.tamguo.dao.redis.CacheService;
 import com.tamguo.model.PaperEntity;
 import com.tamguo.service.IPaperService;
+import com.tamguo.util.Result;
+import com.tamguo.util.ShiroUtils;
 import com.tamguo.util.TamguoConstant;
 
 @Service
@@ -206,6 +208,18 @@ public class PaperService extends ServiceImpl<PaperMapper, PaperEntity> implemen
 	public List<PaperEntity> findHotPaper(String subjectId, String courseId) {
 		Page<PaperEntity> page = new Page<>(1,5);
 		return paperMapper.findHotPaper(subjectId , courseId , page);
+	}
+
+	@Transactional(readOnly=false)
+	@Override
+	public Result updatePaper(PaperEntity paper) {
+		PaperEntity entity = paperMapper.selectById(paper.getUid());
+		if(!entity.getCreaterId().equals(ShiroUtils.getMember().getUid())) {
+			return Result.failResult("试卷属于当前用户，不能修改！");
+		}
+		paper.setCreaterId(ShiroUtils.getUserId());
+		paperMapper.updateById(paper);
+		return Result.result(Result.SUCCESS_CODE, paper, "修改成功");
 	}
 
 }

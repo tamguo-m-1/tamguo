@@ -1,10 +1,12 @@
 package com.tamguo.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.Condition;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -31,7 +33,6 @@ public class SchoolService extends ServiceImpl<SchoolMapper, SchoolEntity> imple
 	@Override
 	public List<SchoolEntity> findEliteSchoolPaper(String shcoolId) {
 		List<SchoolEntity> schoolList = (List<SchoolEntity>) cacheService.getObject(TamguoConstant.ELITE_SCHOOL_PAPER);
-		schoolList = null;
 		// 获取名校试卷
 		if(schoolList == null || schoolList.isEmpty()){
 			Page<SchoolEntity> page = new Page<>();
@@ -60,6 +61,12 @@ public class SchoolService extends ServiceImpl<SchoolMapper, SchoolEntity> imple
 			cacheService.setObject(TamguoConstant.ELITE_PAPER, schoolList , 2 * 60 * 60);
 		}
 		return schoolList;
+	}
+
+	@Transactional(readOnly=true)
+	@Override
+	public List<SchoolEntity> findSchoolByAreaId(String areaId) {
+		return schoolMapper.findByAreaIds(Arrays.asList(areaId.split(",")));
 	}
 	
 }

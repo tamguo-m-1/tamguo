@@ -45,6 +45,13 @@ public class PaperEntity extends SuperEntity<PaperEntity> implements Serializabl
 	
 	private String seoDescription;
 	
+	@TableField(value="free")
+	private String free;
+	
+	private String point;
+	
+	private String money;
+	
 	@TableField(exist=false)
 	private String subjectName;
 	
@@ -212,5 +219,28 @@ public class PaperEntity extends SuperEntity<PaperEntity> implements Serializabl
 		this.subjectName = subjectName;
 	}
 
+	public String getPoint() {
+		return point;
+	}
+
+	public void setPoint(String point) {
+		this.point = point;
+	}
+
+	public String getMoney() {
+		return money;
+	}
+
+	public void setMoney(String money) {
+		this.money = money;
+	}
+
+	public String getFree() {
+		return free;
+	}
+
+	public void setFree(String free) {
+		this.free = free;
+	}
 
 }

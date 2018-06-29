@@ -30,4 +30,15 @@ public class SchoolController {
 		return iSchoolService.findEliteSchoolPaper(areaId);
 	}
 	
+	/**
+	 * 根据地区ID获取学校
+	 * @param areaId
+	 * @return
+	 */
+	@RequestMapping(value = {"/school/findByAreaId.html"}, method = RequestMethod.GET)
+	@ResponseBody
+	public List<SchoolEntity> findSchoolByAreaId(String areaId){
+		return iSchoolService.findSchoolByAreaId(areaId);
+	}
+	
 }

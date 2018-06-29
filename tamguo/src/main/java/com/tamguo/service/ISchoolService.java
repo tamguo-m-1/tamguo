@@ -9,5 +9,7 @@ public interface ISchoolService {
 	public List<SchoolEntity> findEliteSchoolPaper(String shcoolId);
 	
 	public List<SchoolEntity> findEliteSchool();
+
+	public List<SchoolEntity> findSchoolByAreaId(String areaId);
 	
 }

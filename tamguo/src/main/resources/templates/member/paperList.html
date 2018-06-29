@@ -7,11 +7,9 @@
 		<link rel="stylesheet" th:href="${setting.domain + 'css/iconfont.css'}" />
 		<link rel="stylesheet" th:href="${setting.domain + 'css/member/paperList.css'}" />
 		<link rel="stylesheet" th:href="${setting.domain + 'css/member/memberMain.css'}" />
-		<link rel="stylesheet" th:href="${setting.domain + 'js/plugins/ztree/css/metroStyle/metroStyle.css'}">
 		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
-		<link rel="stylesheet" th:href="${setting.domain + 'js/plugins/layui/css/layui.css'}"></script>
 		<!-- 引入样式 -->
-		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui@2.4.2/lib/theme-chalk/index.css">
 	</head>
 	<body  style="position: relative;height: auto;min-height: 100%;">
 	
@@ -54,21 +52,20 @@
 			</div>
 		</div>
 		
-		<div class="plist test_public myPositionList ng-scope">
+		<div class="plist test_public myPositionList ng-scope" style="margin-bottom: 20px;">
 		    <div class="topbt topbt-2">
 		        <h3>我的试卷</h3>
 		    </div>
 		
-		    <div class="pageShow">
+		    <div class="pageShow" id="pageShow">
 		        <div class="con_top addNewPaper">
 		            <div style="position:absolute;top:12px;">
 		                <div class="fl">
-		                    <input class="select-n" name="keySearch" type="text" placeholder="试卷名称关键字">
-		                    <a class="select-t" href="javascript:void(0)" v-on:click="reload"></a>
+		                    <input class="select-n" name="keySearch" type="text" v-on:keyup.enter="reload(1)" v-model="q.name" placeholder="试卷名称关键字">
+		                    <a class="select-t" href="javascript:void(0)" v-on:click="reload(1)"></a>
 		                </div>
 		            </div>
-		            <span style="text-align: center;" id="addSiama" v-on:click="addPaperFn()"><a href="javascript:void(0)">+ 新建试卷</a></span>
-		           
+		            <span style="text-align: center;" id="addSiama" v-on:click="paperDialogFormVisible = true"><a href="javascript:void(0)">+ 新建试卷</a></span>
 		        </div>
 		
 		        <table class="public-tab">
@@ -106,10 +103,10 @@
 		
 		                    <td class="plist-x">
 		                    <span>
-		                    	<a href="javascript:void(0)" v-on:click="updatePaperFn(paper.uid , paper.name)">编辑</a>|<a href="javascript:void(0)" v-on:click="deletePaperFn(paper.uid)">删除</a>
+		                    	<a href="javascript:void(0)" v-on:click="updatePaper(paper.uid , paper.name)">编辑</a>|<a href="javascript:void(0)" v-on:click="deletePaperFn(paper.uid)">删除</a>
 		                	</span>
 		                        <ul class="testPaper-list">
-		                            <li><a class="addPaperQuestionInfoBtn" v-on:click="addPaperQuestionInfoFn(paper.uid)">添加子卷</a>
+		                            <li><a class="addPaperQuestionInfoBtn" v-on:click="showPaperInfo(paper.uid)">添加子卷</a>
 		                            </li>
 		                            <li><a href="#" target="_blank" class="ng-scope">预览试卷</a>
 		                        </ul>
@@ -152,38 +149,105 @@
 		            </div>
 		        </div>
 				</div>
-				
 		
-		        <div class="plist-f" style="text-align: center">
+		        <div class="plist-f" style="text-align: center;margin-top:20px;">
 		            <el-pagination
 							  background
 							  layout="prev, pager, next"
 							  @current-change="handleCurrentChange"
-							  page-size="2"
+							  page-size="6"
 							  :total="totalCount">
 							</el-pagination>
 		        </div>
 		        <div class="clear"></div>
-		    </div>
+		        
+		        <el-dialog title="添加试卷" :visible.sync="paperDialogFormVisible">
+					  <el-form :model="paper" :rules="rules" ref="paper" label-width="80px" class="demo-ruleForm" v-loading="loading"> 
+						  <el-form-item label="试卷名称" prop="name">
+						    <el-input v-model="paper.name"></el-input>
+						  </el-form-item>
+						  <el-form-item label="地区" prop="areaIdList">
+					    	<el-cascader :clearable="true" :options="areas" v-model="paper.areaIdList" change-on-select @change="querySchoolByAreaId">
+							</el-cascader>
+						  </el-form-item>
+						  <el-form-item label="学校" prop="schoolIdList">
+						      <el-select v-model="paper.schoolIdList" multiple placeholder="请选择">
+							    <el-option
+							      v-for="school in schools"
+							      :key="school.uid"
+							      :label="school.name"
+							      :value="school.uid">
+							    </el-option>
+							  </el-select>
+						  </el-form-item>
+						  <el-form-item label="科目" prop="courseIdList">
+						    <el-cascader
+							    :options="courses"
+							    v-model="paper.courseIdList">
+							  </el-cascader>
+						  </el-form-item>
+						  <el-form-item label="试卷类型" prop="type">
+						    <el-radio-group v-model="paper.type">
+						      <el-radio label="0">真题试卷</el-radio>
+						      <el-radio label="1">模拟试卷</el-radio>
+						      <el-radio label="2">押题预测</el-radio>
+						      <el-radio label="3">名校精品</el-radio>
+						    </el-radio-group>
+						  </el-form-item>
+						  <el-form-item label="年份" prop="year">
+						    <el-input v-model="paper.year"></el-input>
+						  </el-form-item>
+						  <el-form-item label="是否免费">
+						    <el-switch v-model="paper.free" @click="isFree" inactive-value="0" active-value="1"></el-switch>
+						  </el-form-item>
+						  <el-form-item label="所需积分" prop="point" v-show="paper.free == 1">
+						    <el-input-number v-model="paper.point" :step="1" :min="0" controls-position="right"></el-input-number>
+						  </el-form-item>
+						  <el-form-item label="所需金额" prop="money" v-show="paper.free == 1">
+						    <el-input-number v-model="paper.money" :precision="2" :step="0.1" :max="100" :min="0" controls-position="right"></el-input-number>
+						  </el-form-item>
+					    </el-form-item>
+					  </el-form>
+					  <div slot="footer" class="dialog-footer">
+					    <el-button @click="paperDialogFormVisible = false">取 消</el-button>
+					    <el-button type="primary" @click="savePaper">确 定</el-button>
+					  </div>
+				</el-dialog>
+				
+				<el-dialog title="添加子试卷" :visible.sync="paperInfoDialogFormVisible">
+					  <el-form :model="paperInfo" :rules="pagerInfoRules" ref="paperInfo" label-width="80px" class="demo-ruleForm" v-loading="loading"> 
+						  <el-form-item label="子卷标题" prop="title">
+						    <el-input v-model="paperInfo.title"></el-input>
+						  </el-form-item>
+						  <el-form-item label="试卷类型" prop="type">
+						    <el-radio-group v-model="paperInfo.type">
+						      <el-radio label="1">单选题</el-radio>
+						      <el-radio label="2">多选题</el-radio>
+						      <el-radio label="3">填空题</el-radio>
+						      <el-radio label="4">判断题</el-radio>
+						      <el-radio label="5">问答题</el-radio>
+						    </el-radio-group>
+						  </el-form-item>
+					    </el-form-item>
+					  </el-form>
+					  <div slot="footer" class="dialog-footer">
+					    <el-button @click="paperInfoDialogFormVisible = false">取 消</el-button>
+					    <el-button type="primary" @click="savePaperInfo">确 定</el-button>
+					  </div>
+				</el-dialog>
+		</div>
 		</div>
 		
 		<!-- 尾部-->
 		<div th:replace="include/memberFooter :: memberFooter"></div>
 		
-		<!-- 选择菜单 -->
-		<div id="menuLayer" style="display: none;padding:10px;">
-			<ul id="menuTree" class="ztree"></ul>
-		</div>
-		
 	</body>
 	<script type="text/javascript" th:inline="javascript">
 		var mainHttp = [[${setting.domain}]];
 	</script>
-	<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}" ></script>
-	<script th:src="${setting.domain + 'js/plugins/ztree/jquery.ztree.all.min.js'}"></script>
-	<script th:src="${setting.domain + 'js/plugins/layer/layer.js'}"></script>
-	<script th:src="${setting.domain + 'js/plugins/layui/layui.js'}"></script>
-	<script th:src="${setting.domain + 'libs/vue.min.js'}"></script>
-	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- import JavaScript -->
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16"></script>
+    <script src="https://cdn.jsdelivr.net/npm/element-ui@2.4.2/lib/index.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
 	<script type="text/javascript" th:src="${setting.domain + 'js/member/paperList.js'}" ></script>
 </html>

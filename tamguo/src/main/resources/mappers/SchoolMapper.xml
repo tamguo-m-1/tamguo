@@ -10,4 +10,15 @@
 		where area_id = #{areaId}
 	</select>
 	
+	<select id="findByAreaIds" resultType="SchoolEntity">
+		SELECT
+			s.area_id,s.image,s.`name`,s.uid
+		FROM
+			tiku_school s
+		where 1 = 1 and area_id in
+		<foreach collection="areaIds" index="index" item="areaId" open="(" separator="," close=")">
+            #{areaId}
+        </foreach>
+	</select>
+	
 </mapper>

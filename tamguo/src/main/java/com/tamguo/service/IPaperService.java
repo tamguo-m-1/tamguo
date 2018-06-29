@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.model.PaperEntity;
+import com.tamguo.util.Result;
 
 public interface IPaperService {
 
@@ -49,5 +50,11 @@ public interface IPaperService {
 	 * @return
 	 */
 	List<PaperEntity> findHotPaper(String subjectId, String courseId);
+
+	/**
+	 * 修改试卷
+	 * @param paper
+	 */
+	Result updatePaper(PaperEntity paper);
 
 }
