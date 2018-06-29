@@ -147,6 +147,11 @@
 		    <artifactId>xxl-crawler</artifactId>
 		    <version>1.2.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.xuxueli</groupId>
+			<artifactId>xxl-crawler</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
