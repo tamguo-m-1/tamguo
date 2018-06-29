@@ -18,16 +18,16 @@ var validateUsername = (rule, value, callback) => {
   }
 }
 var validateMobile = (rule, value, callback) => {
-	  if(!/^(undefined|null|\s)$/.test(value)){
-		  axios({method: 'get',url: mainHttp + 'checkMobile.html?mobile='+vm.member.mobile}).then(function(response){
-	 		   if(response.data.code == 201){
-	 			  callback(new Error('该手机号已经存在!'));
-	 		   }else{
-	 			  callback();
-	 		   }
-	 	  });
-	  }
-	}
+  if(!/^(undefined|null|\s)$/.test(value)){
+	  axios({method: 'get',url: mainHttp + 'checkMobile.html?mobile='+vm.member.mobile}).then(function(response){
+ 		   if(response.data.code == 201){
+ 			  callback(new Error('该手机号已经存在!'));
+ 		   }else{
+ 			  callback();
+ 		   }
+ 	  });
+  }
+}
 var vm = new Vue({
 	el: '#content',
     data() {
