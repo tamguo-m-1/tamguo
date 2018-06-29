@@ -53,7 +53,7 @@ public class SmsService implements ISmsService{
         //hint 此处可能会抛出异常，注意catch
         SendSmsResponse response = acsClient.getAcsResponse(request);
         if("OK".equals(response.getCode())) {
-        	cacheService.setObject(TamguoConstant.ALIYUN_MOBILE_SMS_PREFIX + mobile , vcode.toString() , 3 * 60);
+        	cacheService.setObject(TamguoConstant.ALIYUN_MOBILE_SMS_PREFIX + mobile , vcode.toString() , 10 * 60);
             return Result.result(200, null, "发送成功");
         }
         return Result.result(501, null, response.getMessage());

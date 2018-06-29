@@ -33,6 +33,7 @@ var vm = new Vue({
     data() {
       return {
     	smsDisabled:false,
+    	loading:false,
         member: {
           username: '',
           mobile:'',
@@ -64,6 +65,10 @@ var vm = new Vue({
           ],
           kemuId:[
         	  {required: true, message: '请选择科目', trigger: 'change'}
+          ],
+          email:[
+        	  { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+              { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
           ]
         }
       };      
@@ -72,13 +77,19 @@ var vm = new Vue({
       submitForm(formName) {
          this.$refs[formName].validate((valid) => {
 	          if (valid) {
+	        	vm.loading = true;
 	        	vm.member.courseId = vm.member.kemuId[1];
 	    		vm.member.subjectId = vm.member.kemuId[0];
 	            axios({method: 'post',url: mainHttp + 'subRegister.html',data: vm.member}).then(function(response){
 	      		    if(response.data.code == 200){
-						window.location.href = "/";
+	      		    	vm.loading = false;
+	      		    	vm.$message({message: "注册成功",duration:500,type: 'success',onClose:function(){
+	      		    		window.location.href = "member/index.html";
+	      		    	}});
 					}else{
-						this.$refs[formName].validate();
+						vm.loading = false;
+						vm.$message.error(response.data.message);
+						vm.$refs[formName].validate();
 					}
 	      	  	});
 	          } else {

@@ -30,7 +30,7 @@
 		    <div id="content">
 		        <div class="mod-reg clearfix mod-reg-">
 		            <div class="reg-content tang-pass-reg" id="reg_content" style="width:50%;margin-top:10px;">
-		                <el-form :model="member" :rules="rules" ref="member" label-width="100px" class="demo-ruleForm">
+		                <el-form :model="member" :rules="rules" ref="member" label-width="100px" class="demo-ruleForm" v-loading="loading">
 						  <el-form-item label="用戶名" prop="username">
 						    <el-input v-model="member.username"></el-input>
 						  </el-form-item>
@@ -43,6 +43,9 @@
 						  <el-form-item label="手机号" prop="mobile">
 						    <el-input v-model="member.mobile"></el-input>
 						  </el-form-item>
+						  <el-form-item label="邮箱" prop="email">
+						    <el-input v-model="member.email"></el-input>
+						  </el-form-item>
 						  <el-form-item label="密码" prop="password">
 						    <el-input type="password" v-model="member.password" auto-complete="off"></el-input>
 						  </el-form-item>
@@ -54,7 +57,7 @@
 						    <el-button @click="sendSms" :disabled="smsDisabled">发送短信</el-button>
 						  </el-form-item>
 						  <el-form-item>
-						  <el-button type="primary" @click="submitForm('member')">立即创建</el-button>
+						  <el-button type="primary" @click="submitForm('member')">立即注册</el-button>
 						    <el-button @click="resetForm('member')">重置</el-button>
 						  </el-form-item>
 						</el-form>

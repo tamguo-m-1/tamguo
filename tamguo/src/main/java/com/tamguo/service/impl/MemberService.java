@@ -74,6 +74,7 @@ public class MemberService extends ServiceImpl<MemberMapper, MemberEntity> imple
 		return Result.result(200, null, "该手机号可用");
 	}
 
+	@Transactional(readOnly=false)
 	@Override
 	public Result register(MemberEntity member) {
 		MemberEntity m = memberMapper.findByUsername(member.getUsername());
@@ -99,8 +100,9 @@ public class MemberService extends ServiceImpl<MemberMapper, MemberEntity> imple
 		entity.setNickName(member.getUsername());
 		entity.setSubjectId(member.getSubjectId());
 		entity.setCourseId(member.getCourseId());
+		entity.setEmail(member.getEmail());
 		memberMapper.insert(entity);
-		return Result.result(200, member, "注册成功");
+		return Result.result(200, entity, "注册成功");
 	}
 
 	@Override
