@@ -59,12 +59,15 @@ public class QuestionService extends ServiceImpl<QuestionMapper, QuestionEntity>
 
 	@Transactional(readOnly=true)
 	@Override
-	public Page<QuestionEntity> queryQuestionList(String questionType , String uid , String reviewPoint , String paperId ,
+	public Page<QuestionEntity> queryQuestionList(String questionType , String uid , String content , String paperId ,
 			Page<QuestionEntity> page) {
-		if(!StringUtils.isEmpty(reviewPoint)){
-			reviewPoint = "%" + reviewPoint + "%";
+		if(!ShiroUtils.getUserId().equals(paperMapper.selectById(paperId).getCreaterId())) {
+			return page.setRecords(null);
 		}
-		return page.setRecords(questionMapper.queryQuestionList(questionType,  uid , reviewPoint , paperId , page));
+		if(!StringUtils.isEmpty(content)){
+			content = "%" + content + "%";
+		}
+		return page.setRecords(questionMapper.queryQuestionList(questionType,  uid , content , paperId , page));
 	}
 
 	@Transactional(readOnly=false)

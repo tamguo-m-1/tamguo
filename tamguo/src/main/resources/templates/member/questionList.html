@@ -8,7 +8,7 @@
 		<link rel="stylesheet" th:href="${setting.domain + 'css/member/memberMain.css'}" />
 		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
 		<!-- 引入样式 -->
-		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui@2.4.2/lib/theme-chalk/index.css">
 	</head>
 	<body>
 		<!-- 头部-->
@@ -53,7 +53,7 @@
 	        </div>
 	    </div>
 	    
-	    <div id="container" class="plist test_public  prof_t ng-scope" v-cloak>
+	    <div id="container" class="plist test_public  prof_t ng-scope" v-cloak  v-loading="loading">
     		<div class="pronext" style="margin-right: 16px;"><a th:href="${setting.domain + 'member/paper.html'}" class="backM">返回试卷列表页</a></div>
 		    <div class="topbt topbt-2">
 		        <h3>管理试题</h3>
@@ -76,11 +76,10 @@
 										<option :value="type.id" v-for="type in questionTypes">{{type.name}}</option>                         	
 		                            </select>
 		                        <td>试题编号：</td>
-		                        <td><input v-model="q.uid" class="idno ng-pristine ng-untouched ng-valid" type="text" style="left: 71px;"></td>
+		                        <td><input v-model="q.uid" v-on:keyup.enter="queryQuestionList(1)" class="idno ng-pristine ng-untouched ng-valid" type="text" style="left: 71px;"></td>
 		                        <td>题干关键词：</td>
 		                        <td>
-		                        	<input v-model="q.reviewPoint" class="quesTitle ng-pristine ng-untouched ng-valid" type="text" style="width: 230px;">
-		                        	<input id="paperId" name="paperId" type="hidden" th:value="${paper.uid}">
+		                        	<input v-on:keyup.enter="queryQuestionList(1)" v-model="q.content" class="quesTitle ng-pristine ng-untouched ng-valid" type="text" style="width: 230px;">
 		                        </td>
 		                    </tr>
 		                    <tr><td colspan="6"><div class="apa_ri-t5"><p v-on:click="queryQuestionList(1)">搜索试题</p></div></td></tr>
@@ -150,14 +149,15 @@
 </div>
 <!-- 尾部-->
 <div th:replace="include/memberFooter :: memberFooter"></div>
-	</body>
-	<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}" ></script>
-	<script th:src="${setting.domain + 'js/plugins/layer/layer.js'}"></script>
-	<script th:src="${setting.domain + 'libs/vue.min.js'}"></script>
+</body>
+	
 	<!-- 引入组件库 -->
-	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/element-ui@2.4.2/lib/index.js"></script>
 	<script type="text/javascript" th:inline="javascript">
 		var mainHttp = [[${setting.domain}]];
+		var paperId = [[${paper.uid}]];
 	</script>
 	<script type="text/javascript" th:src="${setting.domain + 'js/member/questionList.js'}" ></script>
 </html>

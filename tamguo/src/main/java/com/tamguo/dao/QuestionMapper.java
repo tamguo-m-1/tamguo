@@ -13,7 +13,7 @@ public interface QuestionMapper extends SuperMapper<QuestionEntity>{
 
 	List<QuestionEntity> findByPaperId(@Param(value="paperId")String paperId);
 
-	List<QuestionEntity> queryQuestionList(@Param(value="questionType")String questionType , @Param(value="uid")String uid , @Param(value="reviewPoint")String reviewPoint , @Param(value="paperId")String paperId , Pagination page);
+	List<QuestionEntity> queryQuestionList(@Param(value="questionType")String questionType , @Param(value="uid")String uid , @Param(value="content")String content , @Param(value="paperId")String paperId , Pagination page);
 
 	QuestionEntity selectByUid(@Param(value="uid")String uid);
 

@@ -83,8 +83,8 @@
 			<if test="uid != null and uid != ''">
 				and q.uid = #{uid}
 			</if>
-			<if test="reviewPoint != null and reviewPoint != ''">
-				and q.review_point like #{reviewPoint}
+			<if test="content != null and content != ''">
+				and q.content like #{content}
 			</if>
 			<if test="questionType != null and questionType != ''">
 				and q.question_type = #{questionType}

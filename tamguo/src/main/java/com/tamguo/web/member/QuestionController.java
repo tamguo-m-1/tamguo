@@ -3,11 +3,13 @@ package com.tamguo.web.member;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.model.QuestionEntity;
 import com.tamguo.service.IPaperService;
@@ -49,12 +51,19 @@ public class QuestionController {
 	
 	@RequestMapping(value = "/member/queryQuestionList" , method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> queryQuestionList(String questionType , String uid , String reviewPoint , String paperId ,
-			Integer page , Integer limit){
+	public Map<String, Object> queryQuestionList(@RequestBody JSONObject data){
+		String questionType ; String uid ; String content ; String paperId ;
+			Integer page ; Integer limit;
+		questionType = data.getString("questionType");
+		uid = data.getString("uid");
+		content = data.getString("content");
+		paperId = data.getString("paperId");
+		page = data.getInteger("page");
+		limit = data.getInteger("limit");
 		Page<QuestionEntity> p = new Page<>();
 		p.setCurrent(page);
 		p.setSize(limit);
-		Page<QuestionEntity> list = iQuestionService.queryQuestionList(questionType , uid , reviewPoint , paperId , p);
+		Page<QuestionEntity> list = iQuestionService.queryQuestionList(questionType , uid , content , paperId , p);
 		return Result.jqGridResult(list.getRecords(), list.getTotal(), limit, page, list.getPages());
 	}
 	
@@ -79,9 +88,9 @@ public class QuestionController {
 	}
 	
 	
-	@RequestMapping(value = "/member/deleteQuestion", method = RequestMethod.POST)
+	@RequestMapping(value = "/member/deleteQuestion", method = RequestMethod.GET)
 	@ResponseBody
-	public Result deleteQuestion(String uid) {
+	public Result deleteQuestion(@RequestBody String uid) {
 		return iQuestionService.delete(uid);
 	}
 }
