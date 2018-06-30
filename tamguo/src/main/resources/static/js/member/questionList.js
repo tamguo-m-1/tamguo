@@ -13,7 +13,7 @@ var vm = new Vue({
 		questionList:null
 	},
 	methods: {
-		queryQuestionList:function(currPage){
+		queryQuestionList:function(){
 			axios({method: 'post',url:mainHttp + "member/queryQuestionList" , data:{paperId:paperId,questionType:vm.q.questionType,content:vm.q.content,uid:vm.q.uid,page:vm.currPage,limit:2}}).then(function(response){
         	    	vm.questionList = response.data.list;
 			    	vm.totalCount = response.data.totalCount;
@@ -21,6 +21,7 @@ var vm = new Vue({
       	    });
 		},
 		handleCurrentChange:function(val){
+			vm.currPage = val;
 			vm.queryQuestionList(val);
 		},
 		deleteQuestion:function(uid){
