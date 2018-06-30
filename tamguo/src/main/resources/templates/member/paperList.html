@@ -57,7 +57,7 @@
 		        <h3>我的试卷</h3>
 		    </div>
 		
-		    <div class="pageShow" id="pageShow">
+		    <div class="pageShow" id="pageShow"  v-loading="loading">
 		        <div class="con_top addNewPaper">
 		            <div style="position:absolute;top:12px;">
 		                <div class="fl">
@@ -88,7 +88,7 @@
 		                <tbody>
 		                <tr align="center" valign="middle" style="height:66px">
 		                    <td width="300" class="plist-bt">
-		                        <span>-</span>
+		                        <span @click="openPaperInfo(paper.uid)">{{paper.uid == currPaperUid ? '-' : '+'}}</span>
 		                        <div class="M ng-binding" style="line-height: 40px;" title="软件JAVA">{{paper.name}}
                         		</div>
 		                    </td>
@@ -103,10 +103,10 @@
 		
 		                    <td class="plist-x">
 		                    <span>
-		                    	<a href="javascript:void(0)" v-on:click="updatePaper(paper.uid , paper.name)">编辑</a>|<a href="javascript:void(0)" v-on:click="deletePaperFn(paper.uid)">删除</a>
+		                    	<a href="javascript:void(0)" v-on:click="updatePaper(paper.uid , paper.name)">编辑</a>|<a href="javascript:void(0)" v-on:click="showDeleteDialog(paper.uid , paper.name)">删除</a>
 		                	</span>
 		                        <ul class="testPaper-list">
-		                            <li><a class="addPaperQuestionInfoBtn" v-on:click="showPaperInfo(paper.uid)">添加子卷</a>
+		                            <li><a class="addPaperQuestionInfoBtn" v-on:click="showPaperInfo(paper.uid,paper.queInfo)">添加子卷</a>
 		                            </li>
 		                            <li><a href="#" target="_blank" class="ng-scope">预览试卷</a>
 		                        </ul>
@@ -114,7 +114,7 @@
 		                </tr>
 		                </tbody>
 		            </table>
-		            <div>
+		            <div v-bind:style="{ display: paper.uid == currPaperUid ? 'block' : 'none'}">
 			           <table class="plist-ctab2 able">
 			                <tbody>
 			                <tr class="tr_header" align="center" valign="middle">
@@ -123,8 +123,8 @@
 			                    <td width="100">题目类型</td>
 			                    <td>操作</td>
 			                </tr>
-			                <tr v-for="qInfo in paper.queInfo" class="paperData ng-scope" align="center" valign="middle" data-arrayindex="">
-			                    <td class="ng-binding">{{qInfo.uid}}</td>
+			                <tr v-for="(qInfo,index) in paper.queInfo" class="paperData ng-scope" align="center" valign="middle" data-arrayindex="">
+			                    <td class="ng-binding">{{index+1}}</td>
 			                    <td style="position: relative">
 			                        <div class="paperTitle ng-binding" title="软件JS" style="max-width: 450px;">{{qInfo.title}}</div>
 			                        <span title="" class="ng-binding"></span></td>
@@ -132,8 +132,8 @@
 			                    <td class="plist-x" style="float:none">
 			                        <div>
 			                        <span style="margin-left:0;">
-			                            <a href="javascript:void(0)" class="update_paper2" v-on:click="updatePaperQuestionInfoFn(paper.uid,qInfo.name,qInfo.type,qInfo.title,qInfo.uid)">编辑</a>|
-			                            <a href="javascript:void(0)" class="del" v-on:click="deletePaperQuestionInfoFn(paper.uid , qInfo.uid)">删除</a>
+			                            <a href="javascript:void(0)" class="update_paper2" v-on:click="showUpdatePaperInfo(paper.uid, qInfo.type,qInfo.title,qInfo.uid)">编辑</a>|
+			                            <a href="javascript:void(0)" class="del" v-on:click="showPaperInfoDeleteDialog(paper.uid , qInfo.title , qInfo.uid)">删除</a>
 			                        </span>
 			                            <ul class="addQuestion" style="margin:-3px 0 0;float:none">
 			                                <li class="ng-scope"><a class="add able" v-on:click="addPaperQuestionFn(paper.uid)" href="javascript:(0);">添加试题</a>

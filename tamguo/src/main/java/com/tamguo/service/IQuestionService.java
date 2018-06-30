@@ -3,6 +3,7 @@ package com.tamguo.service;
 import java.util.List;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.model.QuestionEntity;
+import com.tamguo.util.Result;
 
 public interface IQuestionService {
 
@@ -16,14 +17,14 @@ public interface IQuestionService {
 
 	public QuestionEntity select(String questionId);
 
-	public void addQuestion(QuestionEntity question);
+	public Result addQuestion(QuestionEntity question);
 
 	public Page<QuestionEntity> queryQuestionList(String questionType , String uid , String reviewPoint , String paperId ,
 			Page<QuestionEntity> page);
 
-	public void updateQuestion(QuestionEntity question);
+	public Result updateQuestion(QuestionEntity question);
 
-	public void delete(String uid);
+	public Result delete(String uid);
 
 	public List<QuestionEntity> featuredQuestion(String subjectId, String courseId);
 

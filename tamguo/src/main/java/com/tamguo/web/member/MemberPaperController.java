@@ -29,8 +29,6 @@ public class MemberPaperController {
 	@RequestMapping(value = "/member/paper", method = RequestMethod.GET)
 	public ModelAndView paper(ModelAndView model, HttpSession session){
 		model.setViewName("member/paperList");
-		MemberEntity member = ((MemberEntity)session.getAttribute("currMember"));
-		model.addObject("paperList", iPaperService.findByCreaterId(member.getUid()));
 		return model;
 	}
 	
@@ -51,17 +49,6 @@ public class MemberPaperController {
 		return Result.jqGridResult(list.getRecords(), list.getTotal(), limit, page, list.getPages());
 	}
 	
-	@RequestMapping("member/paperList/updatePaperName.html")
-	@ResponseBody
-	public Result updatePaperName(String paperId , String name){
-		try {
-			iPaperService.updatePaperName(paperId , name);
-			return Result.successResult(null);
-		} catch (Exception e) {
-			return ExceptionSupport.resolverResult("修改试卷名称", this.getClass(), e);
-		}
-	}
-	
 	@RequestMapping(value="member/paperList/addPaperQuestionInfo",method=RequestMethod.POST)
 	@ResponseBody
 	public Result addPaperQuestionInfo(@RequestBody JSONObject data){
@@ -80,32 +67,36 @@ public class MemberPaperController {
 	
 	@RequestMapping("member/paperList/updatePaperQuestionInfo.html")
 	@ResponseBody
-	public Result updatePaperQuestionInfo(String paperId , String title , String name , String type , String cuid){
+	public Result updatePaperQuestionInfo(@RequestBody JSONObject data){
 		try {
-			iPaperService.updatePaperQuestionInfo(paperId , title , name , type , cuid);
+			String paperId ; String title ; String name ; String type ; String uid;
+			paperId = data.getString("uid");
+			title = data.getString("title");
+			type = data.getString("type");
+			name = QuestionType.getQuestionType(type).getDesc();
+			uid = data.getString("infoUid");
+			iPaperService.updatePaperQuestionInfo(paperId , title , name , type , uid);
 			return Result.result(0, null, "修改成功");
 		} catch (Exception e) {
 			return ExceptionSupport.resolverResult("修改questionInfo", this.getClass(), e);
 		}
 	}
 	
-	@RequestMapping("member/paperList/deletePaper.html")
+	@RequestMapping("member/paperList/deletePaper")
 	@ResponseBody
 	public Result deletePaper(String paperId){
 		try {
-			iPaperService.deletePaper(paperId);
-			return Result.successResult(null);
+			return iPaperService.deletePaper(paperId);
 		} catch (Exception e) {
 			return ExceptionSupport.resolverResult("删除试卷", this.getClass(), e);
 		}
 	}
 	
-	@RequestMapping("member/paperList/deletePaperQuestionInfoBtn.html")
+	@RequestMapping("member/paperList/deletePaperQuestionInfoBtn")
 	@ResponseBody
-	public Result deletePaperQuestionInfoBtn(String paperId , String cuid){
+	public Result deletePaperQuestionInfoBtn(String paperId , String uid){
 		try {
-			iPaperService.deletePaperQuestionInfoBtn(paperId , cuid);
-			return Result.successResult(null);
+			return iPaperService.deletePaperQuestionInfoBtn(paperId , uid);
 		} catch (Exception e) {
 			return ExceptionSupport.resolverResult("删除子卷", this.getClass(), e);
 		}

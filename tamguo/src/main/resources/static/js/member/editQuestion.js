@@ -82,11 +82,11 @@ var vue = new Vue({
 			    data: vue.question,
 			    success: function(r){
 			    	if(r.code === 0){
-			    		layer.alert('操作成功', function(index){
+			    		layer.alert(r.message, function(index){
 			    			window.location.href = mainHttp + "member/questionList.html?paperId=" + vue.question.paperId;
 						});
 					}else{
-						layer.alert(r.msg);
+						layer.alert(r.message);
 					}
 				}
 			});

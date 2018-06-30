@@ -37,11 +37,11 @@ var vm = new Vue({
 			    data: {"uid":uid},
 			    success: function(r){
 			    	if(r.code === 0){
-			    		layer.alert('操作成功', function(index){
+			    		layer.alert(r.message, function(index){
 			    			window.location.href = mainHttp + "member/questionList.html?paperId=" + question.paperId;
 						});
 					}else{
-						layer.alert(r.msg);
+						layer.alert(r.message);
 					}
 				}
 			});

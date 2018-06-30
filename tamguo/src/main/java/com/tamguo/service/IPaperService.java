@@ -1,7 +1,6 @@
 package com.tamguo.service;
 
 import java.util.List;
-
 import com.baomidou.mybatisplus.plugins.Page;
 import com.tamguo.model.PaperEntity;
 import com.tamguo.util.Result;
@@ -27,15 +26,15 @@ public interface IPaperService {
 
 	void updatePaperName(String paperId, String name);
 
-	void deletePaper(String paperId);
+	Result deletePaper(String paperId);
 
 	void addPaperQuestionInfo(String paperId, String title, String name,
 			String type);
 
 	void updatePaperQuestionInfo(String paperId, String title, String name,
-			String type, String cuid);
+			String type, String uid);
 
-	void deletePaperQuestionInfoBtn(String paperId, String cuid);
+	Result deletePaperQuestionInfoBtn(String paperId, String cuid);
 
 	Page<PaperEntity> memberPaperList(String name, String memberId , Page<PaperEntity> page);
 

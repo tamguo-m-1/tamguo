@@ -1,6 +1,8 @@
 package com.tamguo.service.impl;
 
 import java.util.List;
+import java.util.UUID;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.mapper.Condition;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.tamguo.dao.PaperMapper;
+import com.tamguo.dao.QuestionMapper;
 import com.tamguo.dao.redis.CacheService;
 import com.tamguo.model.PaperEntity;
 import com.tamguo.service.IPaperService;
@@ -25,6 +29,8 @@ public class PaperService extends ServiceImpl<PaperMapper, PaperEntity> implemen
 	private PaperMapper paperMapper;
 	@Autowired
 	private CacheService cacheService;
+	@Autowired
+	private QuestionMapper questionMapper;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -102,9 +108,17 @@ public class PaperService extends ServiceImpl<PaperMapper, PaperEntity> implemen
 		paperMapper.updateById(paper);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void deletePaper(String paperId) {
+	public Result deletePaper(String paperId) {
+		PaperEntity paper = paperMapper.selectById(paperId);
+		if(!ShiroUtils.getUserId().equals(paper.getCreaterId())) {
+			return Result.result(501, null , "不能删除其他人的试卷！");
+		}
 		paperMapper.deleteById(paperId);
+		// 删除试题
+		questionMapper.delete(Condition.create().eq("paper_id", paperId));
+		return Result.result(Result.SUCCESS_CODE, null , "删除成功！");
 	}
 
 	@Transactional(readOnly=false)
@@ -119,13 +133,8 @@ public class PaperService extends ServiceImpl<PaperMapper, PaperEntity> implemen
 		entity.put("name", name);
 		entity.put("title", title);
 		entity.put("type", type);
+		entity.put("uid", UUID.randomUUID().toString());
 		qList.add(entity);
-		
-		// 处理uid 问题
-		for(int i=0 ; i<qList.size(); i++){
-			JSONObject q = qList.getJSONObject(i);
-			q.put("uid", i+1);
-		}
 		
 		paper.setQuestionInfo(qList.toString());
 		paperMapper.updateById(paper);
@@ -134,13 +143,12 @@ public class PaperService extends ServiceImpl<PaperMapper, PaperEntity> implemen
 	@Transactional(readOnly=false)
 	@Override
 	public void updatePaperQuestionInfo(String paperId, String title,
-			String name, String type, String cuid) {
+			String name, String type , String uid) {
 		PaperEntity paper = paperMapper.selectById(paperId);
-		String questionInfo = paper.getQuestionInfo();
-		JSONArray qList = JSONArray.parseArray(questionInfo);
+		JSONArray qList = JSONArray.parseArray(paper.getQuestionInfo());
 		for(int i =0 ; i<qList.size() ; i++){
 			JSONObject q = qList.getJSONObject(i);
-			if(q.getString("uid").equals(cuid)){
+			if(q.getString("uid").equals(uid)){
 				q.put("name", name);
 				q.put("title", title);
 				q.put("type", type);
@@ -152,25 +160,21 @@ public class PaperService extends ServiceImpl<PaperMapper, PaperEntity> implemen
 	}
 
 	@Override
-	public void deletePaperQuestionInfoBtn(String paperId, String cuid) {
+	public Result deletePaperQuestionInfoBtn(String paperId, String uid) {
 		PaperEntity paper = paperMapper.selectById(paperId);
-		String questionInfo = paper.getQuestionInfo();
-		JSONArray qList = JSONArray.parseArray(questionInfo);
+		if(!paper.getCreaterId().equals(ShiroUtils.getMember().getUid())) {
+			return Result.failResult("试卷属于当前用户，不能修改！");
+		}
+		JSONArray qList = JSONArray.parseArray(paper.getQuestionInfo());
 		for(int i =0 ; i<qList.size() ; i++){
 			JSONObject q = qList.getJSONObject(i);
-			if(q.getString("uid").equals(cuid)){
+			if(q.getString("uid").equals(uid)){
 				qList.remove(i);
 			}
 		}
-		
-		// 处理uid 问题
-		for(int i=0 ; i<qList.size(); i++){
-			JSONObject q = qList.getJSONObject(i);
-			q.put("uid", i+1);
-		}
-				
 		paper.setQuestionInfo(qList.toString());
 		paperMapper.updateById(paper);
+		return Result.result(Result.SUCCESS_CODE, null, "删除子卷成功");
 	}
 
 

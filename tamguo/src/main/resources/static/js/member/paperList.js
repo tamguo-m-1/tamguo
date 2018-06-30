@@ -29,6 +29,7 @@ var vm = new Vue({
 		title:null,
 		totalCount:null,
 		currPage:1,
+		currPaperUid:null,
 		paperList:null,
 		paper:{
 			courseId:null,
@@ -75,9 +76,14 @@ var vm = new Vue({
 	},
 	methods: {
 		reload: function (currPage) {
+			vm.loading = true;
 			axios({method: 'get',url: mainHttp + "/member/paper/list.html?name="+vm.q.name+"&page="+currPage+"&limit=6"}).then(function(response){
 				vm.paperList = response.data.list;
+				if(vm.paperList != null && vm.paperList.length > 0 ){
+					vm.currPaperUid = vm.paperList[0].uid;
+				}
 				vm.totalCount = response.data.totalCount;
+				vm.loading = false;
 		 	});
 		},
 		handleCurrentChange:function(val){
@@ -133,7 +139,7 @@ var vm = new Vue({
 		      		    		vm.$refs['paper'].resetFields();
 		      		    		vm.paper.free = "0";
 		      		    		vm.paper.type = null;
-		      		    		vm.reload();
+		      		    		vm.reload(vm.currPage);
 		      		    	}});
 						}else{
 							vm.loading = false;
@@ -158,7 +164,7 @@ var vm = new Vue({
       		    	courseIdList.push(vm.paper.subjectId);
       		    	courseIdList.push(vm.paper.courseId);
       		    	vm.paper.courseIdList = courseIdList;
-      		    	vm.paper.schoolIdList = vm.paper.schoolId.split(",");
+      		    	Vue.set(vm.paper , 'schoolIdList' , vm.paper.schoolId.split(","));
 				}
       	  	});
 	    },
@@ -167,8 +173,12 @@ var vm = new Vue({
 			
 			vm.paperDialogFormVisible = true;
 		},
-		showPaperInfo:function(uid){
+		showPaperInfo:function(uid , queInfo){
+			vm.paperInfo.flag = true;
+			
 			vm.paperInfo.uid = uid;
+			
+			vm.paperInfo.queInfo = queInfo;
 			
 			vm.paperInfoDialogFormVisible = true
 		},
@@ -176,8 +186,14 @@ var vm = new Vue({
 		savePaperInfo:function(){
 			this.$refs['paperInfo'].validate((valid) => {
 		          if (valid) {
+		        	  var url = null;
+		        	  if(vm.paperInfo.flag){
+		        		  url = mainHttp + 'member/paperList/addPaperQuestionInfo.html';
+		        	  }else{
+		        		  url = mainHttp + 'member/paperList/updatePaperQuestionInfo.html';
+		        	  }
 		        	  vm.loading = true;
-		        	  axios({method: 'post',url: mainHttp + 'member/paperList/addPaperQuestionInfo.html',data: vm.paperInfo}).then(function(response){
+		        	  axios({method: 'post',url: url,data: vm.paperInfo}).then(function(response){
 			      		    if(response.data.code == 0){
 			      		    	vm.loading = false;
 			      		    	vm.$message({message: response.data.message ,duration:500,type: 'success',onClose:function(){
@@ -196,7 +212,68 @@ var vm = new Vue({
 		              return false;
 		          }
 	        });
-			vm.paperInfoDialogFormVisible = false;
+		},
+		// 实现修改试卷
+		showUpdatePaperInfo:function(uid , type , title , infoUid){
+			vm.paperInfo.flag = false;
+			vm.paperInfo.uid = uid;
+			vm.paperInfoDialogFormVisible = true
+			
+			vm.paperInfo.name = name;
+			Vue.set(vm.paperInfo , 'type' , type);
+			vm.paperInfo.title = title;
+			vm.paperInfo.infoUid = infoUid;
+		},
+		showDeleteDialog:function(paperId,paperName) {
+	        vm.$confirm('此操作将永久删除【'+paperName+'】, 是否继续?', '提示', {
+	          confirmButtonText: '确定',
+	          cancelButtonText: '取消',
+	          type: 'warning'
+	        }).then(() => {
+	            axios({method: 'get',url: mainHttp + 'member/paperList/deletePaper.html?paperId=' + paperId}).then(function(response){
+	        	    vm.$message({type: 'info',message: response.data.message});
+	        	    if(response.data.code == 0){
+	      		    	vm.reload(vm.currPage);
+					}
+	      	    });
+	        }).catch(() => {
+	          this.$message({
+	            type: 'info',
+	            message: '已取消删除'
+	          });          
+	        });
+	    },
+	    showPaperInfoDeleteDialog:function(paperId , name , uid){
+	    	vm.$confirm('此操作将永久删除【'+name+'】, 是否继续?', '提示', {
+	          confirmButtonText: '确定',
+	          cancelButtonText: '取消',
+	          type: 'warning'
+	        }).then(() => {
+	            axios({method: 'get',url: mainHttp + 'member/paperList/deletePaperQuestionInfoBtn?paperId=' + paperId+'&uid='+uid}).then(function(response){
+	        	    vm.$message({type: 'info',message: response.data.message ,onClose:function(){
+	        	    	if(response.data.code == 0){
+		      		    	vm.reload(vm.currPage);
+						}
+    		    	}});
+	      		    
+	      	    });
+	        }).catch(() => {
+	          this.$message({
+	            type: 'info',
+	            message: '已取消删除'
+	          });          
+	        });
+	    },
+	    openPaperInfo:function(uid){
+	    	if(vm.currPaperUid == uid){
+	    		vm.currPaperUid =  null
+	    	}else{
+		    	vm.currPaperUid = uid;
+	    	}
+	    },
+		// 添加試題
+		addPaperQuestionFn:function(paperId){
+			window.location.href= mainHttp +'member/addQuestion.html?paperId='+paperId; 
 		}
 	}
 });

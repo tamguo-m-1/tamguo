@@ -34,8 +34,7 @@ public class QuestionController {
 	@ResponseBody
 	public Result submitQuestion(QuestionEntity question){
 		try {
-			iQuestionService.addQuestion(question);
-			return Result.successResult(null);
+			return iQuestionService.addQuestion(question);
 		} catch (Exception e) {
 			return ExceptionSupport.resolverResult("添加试题", this.getClass(), e);
 		}
@@ -76,15 +75,13 @@ public class QuestionController {
 	@RequestMapping(value = "/member/updateQuestion", method = RequestMethod.POST)
 	@ResponseBody
 	public Result updateQuestion(QuestionEntity question) {
-		iQuestionService.updateQuestion(question);
-		return Result.successResult(null);
+		return iQuestionService.updateQuestion(question);
 	}
 	
 	
 	@RequestMapping(value = "/member/deleteQuestion", method = RequestMethod.POST)
 	@ResponseBody
 	public Result deleteQuestion(String uid) {
-		iQuestionService.delete(uid);
-		return Result.successResult(null);
+		return iQuestionService.delete(uid);
 	}
 }
