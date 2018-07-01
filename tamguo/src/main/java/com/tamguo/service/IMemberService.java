@@ -32,4 +32,6 @@ public interface IMemberService {
 	public void updateLoginFailureCount(MemberEntity member , Integer loginFailureCount);
 
 	public void updateLastLoginTime(String string);
+
+	public MemberEntity findCurrMember();
 }

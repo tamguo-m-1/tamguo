@@ -173,10 +173,12 @@ public class MemberService extends ServiceImpl<MemberMapper, MemberEntity> imple
 	@Transactional(readOnly=false)
 	@Override
 	public void updateMember(MemberEntity member) {
-		MemberEntity entity = memberMapper.selectById(member.getUid());
+		MemberEntity entity = memberMapper.selectById(ShiroUtils.getUserId());
 		entity.setAvatar(member.getAvatar());
 		entity.setEmail(member.getEmail());
 		entity.setMobile(member.getMobile());
+		entity.setCourseId(member.getCourseId());
+		entity.setSubjectId(member.getSubjectId());
 		entity.setNickName(member.getNickName());
 		
 		memberMapper.updateById(entity);
@@ -200,6 +202,13 @@ public class MemberService extends ServiceImpl<MemberMapper, MemberEntity> imple
 		MemberEntity member = memberMapper.selectById(uid);
 		member.setLastLoginTime(DateUtil.getTime());
 		memberMapper.updateById(member);
+	}
+
+	@Override
+	public MemberEntity findCurrMember() {
+		MemberEntity member = memberMapper.selectById(ShiroUtils.getUserId());
+		member.setPassword(null);
+		return member;
 	}
 	
 }

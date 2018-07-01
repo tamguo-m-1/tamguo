@@ -8,6 +8,35 @@
 		<link rel="stylesheet" th:href="${setting.domain + 'css/member/account.css'}" />
 		<link rel="stylesheet" th:href="${setting.domain + 'css/member/memberMain.css'}" />
 		<link type="favicon" rel="shortcut icon" th:href="${setting.domain + 'images/favicon.png'}" />
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui@2.4.2/lib/theme-chalk/index.css">
+		<style type="text/css">
+		  .avatar-uploader .el-upload {
+		   
+		    border-radius: 6px;
+		    cursor: pointer;
+		    position: relative;
+		    overflow: hidden;
+		  }
+		  .avatar-uploader .el-upload:hover {
+		    border-color: #409EFF;
+		  }
+		  .avatar-uploader-icon {
+		    font-size: 28px;
+		    color: #8c939d;
+		    width: 80px;
+		    height: 80px;
+		    line-height: 80px;
+		    text-align: center;
+		    
+		  }
+		  .avatar {
+		    border: 1px dashed #d9d9d9;
+		    width: 80px;
+		    height: 80px;
+		    display: block;
+		  }
+		</style>
 	</head>
 	<body>
 	<!-- 头部-->
@@ -50,26 +79,25 @@
 			</div>
 		</div>	
 		
-		<div class="acm-container">
+		<div class="acm-container"  >
 			<div class="cnt-box public infoCnt-box contentBox ">
 				<div class="info-cnt">
 					<div class="navLeft">
 	                 <dl>
 							<dt class="down">
-								<img th:src="${setting.domain + 'images/member/index/person.png'}" style="width: 14px;
-	    margin-right: 6px;margin-top: -5px;"> 个人信息 <i class="fa fa-minus icon-w"></i>
+								<img th:src="${setting.domain + 'images/member/index/person.png'}" style="width: 14px;margin-right: 6px;margin-top: -5px;"> 个人信息 <i class="fa fa-minus icon-w"></i>
 							</dt>
 							<div class="list">
-							<a th:href="${setting.domain + 'member/account.html'}"><dd class="activeDd"><i></i>基本信息</dd></a>
-							<!--  <dd>绑定账号</dd> -->
-							<a th:href="${setting.domain + 'member/updatePwd.html'}"><dd><i></i>修改密码</dd></a>
+								<a th:href="${setting.domain + 'member/account.html'}"><dd class="activeDd"><i></i>基本信息</dd></a>
+								<a th:href="${setting.domain + 'member/updatePwd.html'}"><dd><i></i>修改密码</dd></a>
 							</div>
 							<dt class="down">
 								<img th:src="${setting.domain + 'images/member/index/compnew.png'}" style="width: 14px;
-	    margin-right: 6px;margin-top: -5px;"> 公司信息 <i class="fa fa-minus icon-w"></i>
+	    								margin-right: 6px;margin-top: -5px;"> 我的钱包 <i class="fa fa-minus icon-w"></i>
 							</dt>
 							<div class="list">
-							<a href="/b/entInfo"><dd><i></i>基本信息</dd></a>
+							<a href="/b/entInfo"><dd><i></i>我的积分</dd></a>
+							<a href="/b/entInfo"><dd><i></i>我的现金</dd></a>
 							</div>
 							<dt class="down">
 								 <img th:src="${setting.domain + 'images/member/account/cog.png'}" style="width: 14px;
@@ -77,82 +105,46 @@
 							 </dt>
 							 <div class="list">
 								 <a href="/b/order">
-									 <dd><i></i>账户管理</dd>
+									 <dd><i></i>修改手机号</dd>
 								 </a>
 								 <a href="/b/orderBill">
-									 <dd><i></i>发票信息</dd>
+									 <dd><i></i>修改邮箱</dd>
 								 </a>
 							 </div>
 						</dl>
 	              </div>
-					<div class="info-right newsRight">
+					<div class="info-right newsRight" id="app" v-loading="loading">
 						<div class="info-rBox" style="padding-bottom: 20px;">
 								<div class=" user_list clearfix">
-									<table class="info-table" border="0" cellspacing="0" cellpadding="0">
-										<tbody>
-										<tr>
-											<td><label class="info-label" style="left: 30px;"><span></span>头像：</label></td>
-											<td id="app">
-												<my-upload url="uploadFile.html"
-														field="file"
-														key="0"
-														lang-type="zh"
-														:value.sync="show2"
-														:params="otherParams"></my-upload>
-												
-												<div class="clearfix" style="width: ; margin-bottom: 15px">
-												<div class="clearfix" id="upPhoto">
-													<img class="acphoto" id="acphoto" th:src="${setting.domain + member.avatar}">
-													<input type="hidden" name="avatar" th:value="${setting.domain + member.avatar}"></input>
-													<div class="mybtn">
-														<span>支持jpg、jpeg和png格式，最大2M</span><br>
-														<input type="button" id="up_photo" @click="toggleShow2" class="up_photo" value="上传头像">
-														<input type="button" id="def_photo" onclick="defaultAvatar()" class="up_photo" value="默认头像" style="background: #fff;color: #29bdb9;">
-													</div>
-									
-														<input type="text" id="contactPhoto" name="contactPhoto" hidden="" class="cvcadd-text input" placeholder="请输入姓名/昵称" value="/images/defphoto/peopleSix.png">
-												</div>
-	
-											</div>
-											</td>
-											<td>
-	
-											</td>
-										</tr>
-										<tr>
-											<td><label class="info-label" style="left: 30px;"><span>*</span>昵称：</label></td>
-											<td><div class="clearfix" style="width: ; margin-bottom: 15px">
-												<div class="clearfix">
-													<input type="text" name="nickName" class="cvcadd-text input" placeholder="请输入姓名/昵称" th:value="${member.nickName}">
-												</div>
-											</div></td>
-										</tr>
-	
-										<tr>
-	                                        <td><label class="info-label" style="left: 30px;"><span>*</span>邮箱：</label></td>
-	                                        <td><div class="clearfix" style="width: ; margin-bottom: 15px">
-	                                        <div class="clearfix">
-	                                            <input type="text" name="email" class="cvcadd-text input" placeholder="请输入邮箱" th:value="${member.email}">
-	                                        </div>
-	                                    </div></td>
-	                                    </tr>
-	
-										<tr>
-											<td><label class="info-label" style="left: 30px;"><span>*</span>手机：</label></td>
-											<td><div class="clearfix" style="width: ; margin-bottom: 15px">
-												<div class="clearfix">
-													<input type="text" name="mobile" class="cvcadd-text input" placeholder="请输入手机" th:value="${member.mobile}">
-												</div>
-											</div></td>
-										</tr>
-										</tbody>
-									</table>
-									
-									
+									<el-form ref="member" :rules="rules" :model="member" label-width="80px">
+									  <el-form-item label="用户头像">
+									    <el-upload
+										  class="avatar-uploader"
+										  action="uploadFile.html"
+										  :show-file-list="false"
+										  :on-success="handleAvatarSuccess"
+										  :before-upload="beforeAvatarUpload">
+										  <img v-if="member.avatar" :src="member.imageUrl" class="avatar">
+										  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+										 </el-upload>
+									  </el-form-item>
+									  <el-form-item label="用户名" prop="username">
+									    <el-input v-model="member.username" th:value="${member.username}" :disabled="true"></el-input>
+									  </el-form-item>
+									  <el-form-item label="昵称" prop="nickName">
+									    <el-input v-model="member.nickName" th:value="${member.nickName}"></el-input>
+									  </el-form-item>
+									  <el-form-item label="科目" prop="kemuId">
+									    <el-cascader
+										    :options="courses"
+										    v-model="member.kemuId">
+										  </el-cascader>
+									  </el-form-item>
+									  <el-form-item>
+									    <el-button type="primary" @click="onSubmit">立即修改</el-button>
+									  </el-form-item>
+									</el-form>
 								</div>
-								<p class="saveBtn">
-									<a onClick="updateMember()" class="btn_ok" rel="cxdialog" rev="btn_ok" id="confirm_btn" style="position: relative;left: 103px;padding: 5px 60px;top: 10px;">保存</a>
-								</p>
 						</div>
 					</div>
 					<div class="clear"></div>
@@ -163,42 +155,13 @@
 		
 		<!-- 尾部-->
 		<div th:replace="include/memberFooter :: memberFooter"></div>
-		
-		<script type="text/javascript" th:src="${setting.domain + 'js/jquery-1.8.3.min.js'}" ></script>
+
 		<script type="text/javascript" th:inline="javascript">
 			var mainHttp = [[${setting.domain}]];
 		</script>
-		<script type="text/javascript" th:src="${setting.domain + 'libs/vue.min.js'}"></script>
-		<script th:src="${setting.domain + 'js/plugins/layer/layer.js'}"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16"></script>
+   	 	<script src="https://cdn.jsdelivr.net/npm/element-ui@2.4.2/lib/index.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
 		<script type="text/javascript" th:src="${setting.domain + 'js/member/account.js'}"></script>
-		<script type="text/javascript" th:src="${setting.domain + 'js/plugins/vue-image-crop-upload/demo-src.js'}"></script>
-		<script type="text/javascript">
-			function updateMember(){
-				var member = {};
-				member.nickName = $("input[name='nickName']").val();
-				member.email = $("input[name='email']").val();
-				member.mobile = $("input[name='mobile']").val();
-				member.avatar = $("input[name='avatar']").val();
-				$.ajax({
-					type: "POST",
-				    url: mainHttp + "member/account/update.html",
-				    data: member,
-				    dataType:"json",
-				    success: function(r){
-				    	if(r.code === 0){
-				    		layer.alert('操作成功', function(index){
-				    			window.location.reload();
-							});
-						}else{
-							layer.alert(r.message);
-						}
-					}
-				});
-			}
-			function defaultAvatar(){
-				$("input[name='avatar']").val("images/avatar.png");
-				$("#acphoto").attr("src",mainHttp + "images/avatar.png");
-			}
-		</script>
 	</body>
 </html>

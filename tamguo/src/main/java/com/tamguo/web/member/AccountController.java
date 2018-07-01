@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,7 @@ import com.tamguo.service.IMemberService;
 import com.tamguo.util.DateUtils;
 import com.tamguo.util.Result;
 import com.tamguo.util.Setting;
+import com.tamguo.util.ShiroUtils;
 import com.tamguo.util.Status;
 import com.tamguo.util.UploaderMessage;
 
@@ -60,10 +62,8 @@ public class AccountController {
 	
 	@RequestMapping(value = "/member/account/update", method = RequestMethod.POST)
 	@ResponseBody
-	public Result updateMember(MemberEntity member , HttpSession session){
-		MemberEntity m = (MemberEntity) session.getAttribute("currMember");
-		
-		member.setUid(m.getUid());
+	public Result updateMember(@RequestBody MemberEntity member){
+		member.setUid(ShiroUtils.getUserId());
 		memberService.updateMember(member);
 		return Result.successResult(member);
 	}
