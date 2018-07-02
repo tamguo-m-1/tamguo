@@ -202,7 +202,7 @@ public class XxlCrawlerTask {
      * @author sh00859
      * @date 2018/6/29
      */
-    @Scheduled(cron = "0 27 19 * * ?")
+//    @Scheduled(cron = "0 27 19 * * ?")
     public void crawlerWZData() {
         XxlCrawler crawler = new XxlCrawler.Builder()
                 .setUrls("https://tiku.baidu.com/tikupc/paperdetail/acf80b22bcd126fff7050b72")
