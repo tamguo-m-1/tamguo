@@ -52,7 +52,7 @@ var vm = new Vue({
 							}else{
 								vm.loading = false;
 								vm.$message.error(response.data.message);
-								vm.$refs[formName].validate();
+								vm.$refs['member'].validate();
 							}
 			      	  	});
 			          } else {

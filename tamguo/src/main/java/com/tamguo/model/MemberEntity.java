@@ -47,6 +47,9 @@ public class MemberEntity extends SuperEntity<MemberEntity> implements Serializa
 	
 	@TableField(exist=false)
 	private String verifyCode;
+	
+	@TableField(exist=false)
+	private String nowPassword;
 
 	public String getUsername() {
 		return username;
@@ -174,5 +177,13 @@ public class MemberEntity extends SuperEntity<MemberEntity> implements Serializa
 
 	public void setCourseId(String courseId) {
 		this.courseId = courseId;
+	}
+
+	public String getNowPassword() {
+		return nowPassword;
+	}
+
+	public void setNowPassword(String nowPassword) {
+		this.nowPassword = nowPassword;
 	}
 }

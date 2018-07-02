@@ -52,7 +52,7 @@ public class AccountController {
 	
 	public Logger logger = LoggerFactory.getLogger(getClass());
 
-	@RequestMapping(value = "/member/account", method = RequestMethod.GET)
+	@RequestMapping(value = "member/account", method = RequestMethod.GET)
 	public ModelAndView index(ModelAndView model , HttpSession session){
 		model.setViewName("member/account");
 		MemberEntity member = (MemberEntity) session.getAttribute("currMember");
@@ -60,7 +60,7 @@ public class AccountController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/member/account/update", method = RequestMethod.POST)
+	@RequestMapping(value = "member/account/update", method = RequestMethod.POST)
 	@ResponseBody
 	public Result updateMember(@RequestBody MemberEntity member){
 		member.setUid(ShiroUtils.getUserId());
@@ -68,10 +68,16 @@ public class AccountController {
 		return Result.successResult(member);
 	}
 	
-	@RequestMapping(value = "/member/updatePwd", method = RequestMethod.GET)
-	public ModelAndView updatePwd(ModelAndView model){
-		model.setViewName("member/updatePwd");
+	@RequestMapping(value = "member/password", method = RequestMethod.GET)
+	public ModelAndView password(ModelAndView model){
+		model.setViewName("member/password");
 		return model;
+	}
+	
+	@RequestMapping(value = "member/password/update", method = RequestMethod.POST)
+	@ResponseBody
+	public Result updatePwd(@RequestBody MemberEntity member){
+		return memberService.updatePwd(member);
 	}
 	
 	@RequestMapping(value = "/member/uploadFile", method = RequestMethod.POST)

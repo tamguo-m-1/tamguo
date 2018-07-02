@@ -34,4 +34,11 @@ public interface IMemberService {
 	public void updateLastLoginTime(String string);
 
 	public MemberEntity findCurrMember();
+
+	/**
+	 * 修改密码
+	 * @param member
+	 * @return
+	 */
+	public Result updatePwd(MemberEntity member);
 }

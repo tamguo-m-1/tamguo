@@ -211,4 +211,18 @@ public class MemberService extends ServiceImpl<MemberMapper, MemberEntity> imple
 		return member;
 	}
 	
+	@Transactional(readOnly=false)
+	@Override
+	public Result updatePwd(MemberEntity member) {
+		MemberEntity entity = memberMapper.selectById(ShiroUtils.getUserId());
+		if(!entity.getPassword().equals(new Sha256Hash(member.getPassword()).toHex())) {
+			return Result.result(501, null, "旧密码错误！");
+		}
+		if(!cacheService.isExist(TamguoConstant.ALIYUN_MOBILE_SMS_PREFIX + member.getMobile())){
+			return Result.result(502, null, "验证码错误");
+		}
+		entity.setPassword(new Sha256Hash(member.getNowPassword()).toHex());
+		return Result.result(0, null, "修改成功");
+	}
+	
 }
